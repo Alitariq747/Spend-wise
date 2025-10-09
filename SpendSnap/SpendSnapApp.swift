@@ -11,9 +11,7 @@ import SwiftData
 @main
 struct SpendSnapApp: App {
     var sharedModelContainer: ModelContainer = {
-        let schema = Schema([
-            Item.self,
-        ])
+        let schema = Schema([Expense.self, Budget.self, Settings.self])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
 
         do {
@@ -25,7 +23,7 @@ struct SpendSnapApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            RootTabView()
         }
         .modelContainer(sharedModelContainer)
     }
