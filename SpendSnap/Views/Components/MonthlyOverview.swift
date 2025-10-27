@@ -6,16 +6,35 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct MonthlyOverview: View {
+    
+    @Query private var settingsRow: [Settings]
+    
+    private var currencyCode: String {
+        settingsRow.first?.currencyCode ?? "USD"
+    }
     
     let lightBlue = Color(red: 0.85, green: 0.93, blue: 1.0)
     let darkBlue  = Color(red: 0.12, green: 0.36, blue: 0.82)
     
     let onTapped: () -> Void
     let budget: Budget?
+    let spent: Decimal
+    let todaySpent: Decimal
+    let weekSpent: Decimal
+    let currentMonth: Bool
+    
+    private func money(_ x: Decimal) -> String {
+           let f = NumberFormatter(); f.numberStyle = .currency
+           return f.string(from: x as NSDecimalNumber) ?? "\(x)"
+       }
     
     var body: some View {
+        
+        let symbol = CurrencyUtil.symbol(for: currencyCode)
+        
         VStack(spacing: 12) {
             // VStack for monthly
             VStack(alignment: .center, spacing: 28) {
@@ -51,8 +70,8 @@ struct MonthlyOverview: View {
                         Text("Budget")
                             .font(.system(size: 12, weight: .light))
                             .foregroundColor(.black)
-                        Text("$\(budget?.amount ?? 0.00)")
-                            .font(.system(size: 18, weight: .semibold))
+                        Text("\(symbol) \(budget?.amount ?? 0)")
+                            .font(.system(size: 14, weight: .semibold))
                            
                     }
                     Spacer()
@@ -61,8 +80,8 @@ struct MonthlyOverview: View {
                         Text("Spent")
                             .font(.system(size: 12, weight: .light))
                             .foregroundColor(.black)
-                        Text("$50.00")
-                            .font(.system(size: 18, weight: .semibold))
+                        Text("\(symbol) \(spent)")
+                            .font(.system(size: 14, weight: .semibold))
                           
                     }
                     Spacer()
@@ -71,8 +90,9 @@ struct MonthlyOverview: View {
                         Text("Remaining")
                             .font(.system(size: 12, weight: .light))
                             .foregroundColor(.black)
-                        Text("$50.00")
-                            .font(.system(size: 18, weight: .semibold))
+                        let remaining = (budget?.amount ?? 0) - spent
+                        Text("\(symbol) \(remaining)")
+                            .font(.system(size: 14, weight: .semibold))
                           
                     }
                 }
@@ -86,14 +106,17 @@ struct MonthlyOverview: View {
             .overlay(RoundedRectangle(cornerRadius: 16).strokeBorder(Color.white))
             .shadow(color: Color.black.opacity(0.08),
                     radius: 12, x: 0, y: 6)
+            
+            
             // HStack for daily and weekly
+            currentMonth ?
             HStack(spacing: 0) {
                 // VStack for today
                 VStack(alignment: .leading, spacing: 3) {
                     Text("Day")
-                        .font(.system(size: 14, weight: .regular))
-                    Text("$100")
-                        .font(.system(size: 18, weight: .semibold))
+                        .font(.system(size: 12, weight: .regular))
+                    Text("\(symbol) \(todaySpent)")
+                        .font(.system(size: 14, weight: .semibold))
                 }
                 .padding(.vertical, 10)
                 .padding(.horizontal, 12)
@@ -103,9 +126,9 @@ struct MonthlyOverview: View {
                 Spacer()
                 VStack(alignment: .leading, spacing: 3) {
                     Text("This Week")
-                        .font(.system(size: 14, weight: .regular))
-                    Text("$100")
-                        .font(.system(size: 18, weight: .semibold))
+                        .font(.system(size: 12, weight: .regular))
+                    Text("\(symbol) \(weekSpent)")
+                        .font(.system(size: 14, weight: .semibold))
                 }
                 .padding(.vertical, 10)
                 .padding(.horizontal, 12)
@@ -114,7 +137,7 @@ struct MonthlyOverview: View {
                 .overlay(RoundedRectangle(cornerRadius: 12).strokeBorder(Color.cyan.opacity(0.3)))
                 
             }
-            .frame(maxWidth: .infinity)
+            .frame(maxWidth: .infinity) : nil
         }
       
     }

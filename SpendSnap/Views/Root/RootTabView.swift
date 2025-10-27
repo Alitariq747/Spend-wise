@@ -23,7 +23,7 @@ struct RootTabView: View {
             
             NavigationStack {
                 HistoryView() }
-                    .tabItem { Label("History", systemImage: "clock") }
+                    .tabItem { Label("Expenses", systemImage: "clock") }
             
 
                    

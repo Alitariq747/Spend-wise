@@ -6,11 +6,99 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct HistoryView: View {
+    @Environment(\.modelContext) private var ctx
+    @State private var selectedMonth = Date()
+    @State private var showAddExpenseView: Bool = false
+    
+    @State private var monthExpenses: [Expense] = []
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ZStack {
+            Color(.gray).opacity(0.09)
+                .ignoresSafeArea()
+            
+            VStack {
+            
+                
+                MonthPicker(month: $selectedMonth, limitToCurrentMonth: true)
+                // List of expenses
+                List(monthExpenses, id: \.id) { e in
+                    ExpenseCard(expense: e)
+                        .padding(.vertical, 6)
+                        .listRowInsets(EdgeInsets())
+                        .listRowSeparator(.hidden)
+                        .listRowBackground(Color.clear)
+                        .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                            Button(role: .destructive) {
+                                delete(e)
+                            } label: {
+                               Image(systemName: "trash")
+                                    .symbolRenderingMode(.monochrome)
+                                    .font(.caption2)
+                            }
+                        
+                            .tint(Color.red.opacity(0.5))
+                              }
+                }
+                .listStyle(.plain)
+                .scrollContentBackground(.hidden)
+            }
+            .padding()
+    
+            VStack {
+                Spacer()
+                
+                HStack {
+                    Spacer()
+                    Button {
+                        showAddExpenseView = true
+                    } label: {
+                        HStack(spacing: 12) {
+                            Image(systemName: "plus.circle.fill").font(.title2)
+                            
+                        }
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 16)
+                        .background(Color.light, in: RoundedRectangle(cornerRadius: 14))
+                        .foregroundStyle(.white)
+                        .shadow(color: .black.opacity(0.08), radius: 12, x: 0, y: 6)
+                    }
+                }
+                .padding(.trailing, 25)
+                .padding(.bottom, 20)
+            }
+       
+
+        }
+        .onChange(of: selectedMonth, {
+            fetchExpenses()
+        })
+        .onAppear(perform: {
+            fetchExpenses()
+        })
+        .navigationTitle("")
+        .navigationDestination(isPresented: $showAddExpenseView) {
+            AddExpenseSheet(month: $selectedMonth)
+        }
+        .toolbar(.hidden, for: .navigationBar)
     }
+    private func fetchExpenses() {
+        let key = MonthUtil.monthKey(selectedMonth)
+        var desc = FetchDescriptor<Expense>(predicate: #Predicate { $0.monthKey == key })
+        desc.sortBy = [.init(\.date, order: .reverse)]
+        monthExpenses = (try? ctx.fetch(desc)) ?? []
+    }
+    private func delete(_ e: Expense) {
+        withAnimation {
+            ctx.delete(e)
+            try? ctx.save()
+            monthExpenses.removeAll { $0.id == e.id }
+        }
+    }
+
 }
 
 #Preview {

@@ -39,6 +39,9 @@ struct AddBudgetSheet: View {
     var onSave: (() -> Void)? = nil
     
     var body: some View {
+        
+        let symbol = CurrencyUtil.symbol(for: currency)
+        
         VStack(alignment: .center, spacing: 16) {
             
             Image(systemName: "dollarsign.gauge.chart.leftthird.topthird.rightthird").resizable().scaledToFit().frame(width: 80, height: 80).foregroundColor(.darker.opacity(0.8))
@@ -53,7 +56,7 @@ struct AddBudgetSheet: View {
                 }
                 
                 HStack(spacing: 8) {
-                    Text("\(currency):")
+                    Text("\(symbol):")
                        .font(.system(size: 16, weight: .semibold))
                        .foregroundStyle(.dark)
                     

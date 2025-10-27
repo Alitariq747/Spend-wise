@@ -15,59 +15,84 @@ struct HomeView: View {
     @State private var showAddBudget: Bool = false
   
     @State private var budgetForMonth: Budget? = nil
+    @State private var monthExpenses: [Expense] = []
+    
+    private var categoryTotals:[Category: Decimal] {
+        totalsByCategory(_expenses: monthExpenses)
+    }
+    
+    private var spentThisMonth: Decimal {
+        monthExpenses.reduce(0 as Decimal) { $0 + $1.amount }
+    }
     
     var monthKey: String {
         MonthUtil.monthKey(selectedMonth)
     }
 
-    @State private var showManualSheet = false
+    
+    private var isViewingCurrentMonth: Bool {
+        MonthUtil.monthKey(selectedMonth) == MonthUtil.monthKey(Date())
+    }
+
+    private var todayTotal: Decimal {
+        guard isViewingCurrentMonth else { return 0 }
+        return monthExpenses
+            .filter { Calendar.current.isDateInToday($0.date) }
+            .reduce(0 as Decimal) { $0 + $1.amount }
+    }
+
+    private var weekToDateTotal: Decimal {
+        guard isViewingCurrentMonth,
+              let interval = Calendar.current.dateInterval(of: .weekOfYear, for: Date())
+        else { return 0 }
+        return monthExpenses
+            .filter { interval.contains($0.date) }
+            .reduce(0 as Decimal) { $0 + $1.amount }
+    }
+
 
     var body: some View {
         
         ZStack {
-            Color(.systemGroupedBackground)
+            Color(.gray).opacity(0.09)
                 .ignoresSafeArea()
-            VStack {
-                MonthPicker(month: $selectedMonth, limitToCurrentMonth: true)
-                MonthlyOverview(onTapped: {
-                    showAddBudget = true
-                }, budget: budgetForMonth)
-                
-                // CTA button
-                Button {
-                  showManualSheet = true
-                } label: {
-                  HStack(spacing: 12) {
-                    Image(systemName: "plus.circle.fill").font(.title2)
-                    Text("Add Expense")
-                      .font(.system(size: 18, weight: .semibold))
-                  }
-                  .frame(maxWidth: .infinity)
-                  .padding(.vertical, 16)
-                  .background(Color.light, in: RoundedRectangle(cornerRadius: 14))
-                  .foregroundStyle(.white)
-                  .shadow(color: .black.opacity(0.08), radius: 12, x: 0, y: 6)
+            ScrollView(.vertical, showsIndicators: false) {
+                LazyVStack {
+                    MonthPicker(month: $selectedMonth, limitToCurrentMonth: true)
+                    MonthlyOverview(onTapped: {
+                        showAddBudget = true
+                    }, budget: budgetForMonth, spent: spentThisMonth, todaySpent: todayTotal, weekSpent: weekToDateTotal, currentMonth: isViewingCurrentMonth)
+                    
+                    Text("Category highlights \(MonthUtil.fmt.string(from: selectedMonth)) ")
+                        .font(.headline)
+                        .foregroundStyle(.darker)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.bottom, -1)
+                        .padding(.top, 30)
+                    
+                    
+                    ForEach(Category.allCases, id: \.id) { cat in
+                        let spent = categoryTotals[cat] ?? 0
+                        CategorySpendingCard(category: cat, spent:spent , total: spentThisMonth)
+                    }
                 }
-              
+                .padding()
             }
-            .padding()
-            .onChange(of: selectedMonth) { 
+           
+        }
+        .onChange(of: selectedMonth) {
+            fetchBudget()
+            fetchExpenses()
+        }
+        .sheet(isPresented: $showAddBudget, onDismiss: { fetchBudget() }) {
+            AddBudgetSheet(month: $selectedMonth, existingBudget: budgetForMonth, onSave: {
                 fetchBudget()
-            }
-            .sheet(isPresented: $showAddBudget, onDismiss: { fetchBudget() }) {
-                AddBudgetSheet(month: $selectedMonth, existingBudget: budgetForMonth, onSave: {
-                    fetchBudget()
-                })
-                .presentationDetents([ .medium])
-            }
-            .onAppear {
-                fetchBudget()
-            }
-            .navigationTitle("")
-            .navigationDestination(isPresented: $showManualSheet) {
-                AddExpenseSheet(month: $selectedMonth)
-            }
-            .toolbar(.hidden, for: .navigationBar)
+            })
+            .presentationDetents([ .medium])
+        }
+        .onAppear {
+            fetchBudget()
+            fetchExpenses()
         }
     }
     
@@ -79,8 +104,16 @@ struct HomeView: View {
              budgetForMonth = (try? ctx.fetch(desc))?.first
        
     }
+    
+    private func fetchExpenses() {
+        let key = MonthUtil.monthKey(selectedMonth)
+        var desc = FetchDescriptor<Expense>(predicate: #Predicate { $0.monthKey == key })
+        desc.sortBy = [.init(\.date, order: .reverse)]
+        monthExpenses = (try? ctx.fetch(desc)) ?? []
+    }
 }
 
 #Preview {
     HomeView()
 }
+

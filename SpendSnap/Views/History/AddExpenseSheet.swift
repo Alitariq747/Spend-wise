@@ -6,11 +6,18 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct AddExpenseSheet: View {
     
     @Environment(\.modelContext) private var ctx
     @Environment(\.dismiss) private var dismiss
+    
+    @Query private var settingsRow: [Settings]
+    
+    private var currencyCode: String {
+        settingsRow.first?.currencyCode ?? "USD"
+    }
     
     @State private var selectedCategory: Category? = .other
     @State private var amountText = ""
@@ -47,10 +54,10 @@ struct AddExpenseSheet: View {
     @State private var dateActive = false
     
     var body: some View {
-       
+        let symbol = CurrencyUtil.symbol(for: currencyCode)
        
         ZStack {
-            Color(.systemGroupedBackground)
+            Color(.gray).opacity(0.09)
                 .ignoresSafeArea()
             GeometryReader { geo in
                 
@@ -63,9 +70,9 @@ struct AddExpenseSheet: View {
                         HStack {
                             Spacer()
                             VStack {
-                                Image(systemName: "plus.rectangle.on.rectangle.fill").resizable().scaledToFit().frame(width: 60, height: 60).foregroundColor(.darker.opacity(0.8))
+                                Image(systemName: "plus.rectangle.on.rectangle.fill").resizable().scaledToFit().frame(width: 45, height: 45).foregroundColor(.darker.opacity(0.8))
                                 Text("“Every expense, accounted.”")
-                                    .font(.headline)
+                                    .font(.subheadline)
                                     .padding(.top, -10)
                                     .padding(.bottom, 10)
                                     .foregroundStyle(.darker)
@@ -91,7 +98,7 @@ struct AddExpenseSheet: View {
                                 .font(.subheadline)
                                 .foregroundStyle(.darker)
                             
-                            TextField("12.50", text: $amountText)
+                            TextField("\(symbol)", text: $amountText)
                                 .keyboardType(.decimalPad)
                                 .focused($focused, equals: .amount)
                                 .padding(.horizontal, 10)
@@ -172,13 +179,15 @@ struct AddExpenseSheet: View {
                                         Text("Card")
                                             .font(.system(size: 18, weight: .semibold))
                                     }
-                                    
+                                    .frame(maxWidth: .infinity)
+                                    .padding(.vertical, 16)
+                                    .background(Color.dark.opacity(method == .card ? 1 : 0.2), in: RoundedRectangle(cornerRadius: 14))
+                                    .contentShape(RoundedRectangle(cornerRadius: 14))
                                 }
-                                .frame(maxWidth: .infinity)
-                                .padding(.vertical, 16)
-                                .background(Color.dark.opacity(method == .card ? 1 : 0.4), in: RoundedRectangle(cornerRadius: 14))
+                                .buttonStyle(.plain)
                                 .foregroundStyle(.white)
                                 .shadow(color: .black.opacity(0.08), radius: 12, x: 0, y: 6)
+                                
                                 Button {
                                     method = .cash
                                 } label: {
@@ -187,11 +196,12 @@ struct AddExpenseSheet: View {
                                         Text("Cash")
                                             .font(.system(size: 18, weight: .semibold))
                                     }
-                                    
+                                    .frame(maxWidth: .infinity)
+                                    .padding(.vertical, 16)
+                                    .background(Color.dark.opacity(method == .cash ? 1 : 0.2), in: RoundedRectangle(cornerRadius: 14))
+                                    .contentShape(RoundedRectangle(cornerRadius: 14))
                                 }
-                                .frame(maxWidth: .infinity)
-                                .padding(.vertical, 16)
-                                .background(Color.dark.opacity(method == .cash ? 1 : 0.4), in: RoundedRectangle(cornerRadius: 14))
+                                .buttonStyle(.plain)
                                 .foregroundStyle(.white)
                                 .shadow(color: .black.opacity(0.08), radius: 12, x: 0, y: 6)
                             }
@@ -209,7 +219,7 @@ struct AddExpenseSheet: View {
                                 .font(.system(size: 18, weight: .semibold))
                                 .frame(maxWidth: .infinity)
                                 .padding(.vertical, 16)
-                                .background(canSave ? Color.darker : Color.darker.opacity(0.4), in:  RoundedRectangle(cornerRadius: 16))
+                                .background(canSave ? Color.darker : Color.darker.opacity(0.2), in:  RoundedRectangle(cornerRadius: 16))
                                 .foregroundStyle(.white)
                                 .shadow(color: .black.opacity(0.08), radius: 12, x: 0, y: 6)
                         }

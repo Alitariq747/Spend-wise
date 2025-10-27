@@ -12,6 +12,6 @@ enum PaymentMethod: String, Codable, CaseIterable, Identifiable {
     case cash, card
     var id: String { rawValue }
     var title: String { self == .cash ? "Cash" : "Card" }
-    var icon: String { self == .cash ? "banknote.fill" : "creditcard" }
+    var icon: String { self == .cash ? "banknote" : "creditcard" }
 }
 
