@@ -15,20 +15,18 @@ final class Settings {
     var proUnlocked: Bool
     var iCloudSyncOn: Bool
     var currencyCode: String          // e.g., "PKR"
-    var keepReceiptPhotos: Bool
     
 
     init(onboardingComplete: Bool = false,
          proUnlocked: Bool = false,
          iCloudSyncOn: Bool = false,
          currencyCode: String = "PKR",
-         keepReceiptPhotos: Bool = true,)
+        )
         {
      
         self.proUnlocked = proUnlocked
         self.iCloudSyncOn = iCloudSyncOn
         self.currencyCode = currencyCode
-        self.keepReceiptPhotos = keepReceiptPhotos
        
     }
 }
