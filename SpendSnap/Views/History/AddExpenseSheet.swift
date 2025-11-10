@@ -12,6 +12,8 @@ struct AddExpenseSheet: View {
     
     @Environment(\.modelContext) private var ctx
     @Environment(\.dismiss) private var dismiss
+    @Query(sort: \CreditCard.name) private var cards: [CreditCard]
+    @State private var selectedCard: CreditCard? = nil
     
     @Query private var settingsRow: [Settings]
     
@@ -23,7 +25,8 @@ struct AddExpenseSheet: View {
     @State private var amountText = ""
     @State private var merchant = ""
     @State private var date = Date()
-    
+    @State private var showToast = false
+    @State private var toastMessage = ""
     
     @State private var method: PaymentMethod = .cash
     
@@ -44,8 +47,8 @@ struct AddExpenseSheet: View {
     private var canSave: Bool {
         let hasAmount = Decimal(string: amountText) != nil && !amountText.isEmpty
         let hasMerchant = !merchant.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
-        
-        return hasAmount && hasMerchant && isDateOK
+        let methodOK = (method == .cash) || (method == .card && selectedCard != nil)
+        return hasAmount && hasMerchant && isDateOK && methodOK
     }
     
     // Focus State
@@ -172,7 +175,16 @@ struct AddExpenseSheet: View {
                             // HStack to choose b/w cash and card
                             HStack {
                                 Button {
-                                    method = .card
+                                    if cards.isEmpty {
+                                        toastMessage = "No cards yet. Add one in cards tab"
+                                        withAnimation(.spring()) {showToast = true}
+                                        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                                            withAnimation(.spring()) {showToast = false}
+                                        }
+                            
+                                    } else {
+                                        method = .card
+                                    }
                                 } label: {
                                     HStack {
                                         Image(systemName: "creditcard")
@@ -190,6 +202,7 @@ struct AddExpenseSheet: View {
                                 
                                 Button {
                                     method = .cash
+                                    selectedCard = nil
                                 } label: {
                                     HStack {
                                         Image(systemName: "banknote.fill")
@@ -210,6 +223,37 @@ struct AddExpenseSheet: View {
                         .padding(.horizontal)
                         .padding(.vertical, 8)
                         
+                        if method == .card {
+                            HStack {
+                                Label("Pay with", systemImage: "creditcard")
+                                Spacer()
+                                Menu {
+                                    ForEach(cards) { card in
+                                        Button {
+                                            selectedCard = card
+                                        } label: {
+                                            HStack {
+                                                Text(card.name)
+                                                if selectedCard?.id == card.id { Image(systemName: "checkmark") }
+                                            }
+                                        }
+                                    }
+                                } label: {
+                                    HStack(spacing: 6) {
+                                        Text(selectedCard?.name ?? "Select card")
+                                            .foregroundStyle(.secondary)
+                                        Image(systemName: "chevron.down")
+                                            .font(.caption)
+                                            .foregroundStyle(.secondary)
+                                    }
+                                    .padding(.horizontal, 10).padding(.vertical, 8)
+                                    .background(Color(.secondarySystemBackground), in: RoundedRectangle(cornerRadius: 10))
+                                }
+                                .buttonStyle(.plain)
+                            }
+                            .padding(.horizontal)
+                        }
+
                         
                         // CTA Button to add expense
                         Button {
@@ -235,6 +279,23 @@ struct AddExpenseSheet: View {
                 .toolbar(.visible, for: .navigationBar)
             }
         }
+        .overlay(alignment: .bottom) {
+            if showToast {
+                HStack(spacing: 8) {
+                    Image(systemName: "exclamationmark.triangle.fill")
+                        .font(.caption)
+                    Text(toastMessage)
+                        .font(.footnote)
+                }
+                .padding(.horizontal, 14)
+                .padding(.vertical, 10)
+                .background(.thinMaterial, in: Capsule())
+                .shadow(radius: 8)
+                .padding(.bottom, 24)
+                .transition(.move(edge: .bottom).combined(with: .opacity))
+            }
+        }
+
      
     }
     private func saveExpense() {
@@ -243,10 +304,12 @@ struct AddExpenseSheet: View {
             let amt = Decimal(string: amountText),
             amt > 0,
             !trimmedMerchant.isEmpty,
-            trimmedMerchant.count <= 40
+            trimmedMerchant.count <= 40,
+            (method == .cash) || (selectedCard != nil)
         else { return }
         
         let exp = Expense(amount: amt, date: date, merchant: trimmedMerchant, category: selectedCategory ?? .other, method: method)
+        if method == .card { exp.card = selectedCard }
         ctx.insert(exp)
         do {
             try ctx.save()

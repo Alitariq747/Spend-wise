@@ -9,7 +9,7 @@ import SwiftUI
 import SwiftData
 
 struct MonthlyOverview: View {
-    
+    @Environment(\.colorScheme) private var colorScheme
     @Query private var settingsRow: [Settings]
     
     private var currencyCode: String {
@@ -25,6 +25,8 @@ struct MonthlyOverview: View {
     let todaySpent: Decimal
     let weekSpent: Decimal
     let currentMonth: Bool
+    let daysRemaining: Int
+    let idealPerDay: Decimal
     
     private func money(_ x: Decimal) -> String {
            let f = NumberFormatter(); f.numberStyle = .currency
@@ -39,102 +41,98 @@ struct MonthlyOverview: View {
             // VStack for monthly
             VStack(alignment: .center, spacing: 28) {
                 // HStack for monthly and add/ edit button
-                HStack {
-                    Text("Monthly Overview")
-                        .font(.system(size: 16, weight: .regular, design: .default))
-                        .foregroundColor(.black)
-                    
-                    Spacer()
-                    
-                    Button {
-                       onTapped()
-                    } label: {
-                        Text(budget == nil ? "Add" :"Edit")
-                            .font(.system(size: 12, weight: .regular))
-                            .foregroundStyle(darkBlue)
-                            .padding(.horizontal, 10)
-                            .padding(.vertical, 6)
+                HStack(spacing: 30) {
+                    // VStack for monthly and days remaining
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("Monthly")
+                            .font(.system(size: 12, weight: .light))
+                        Text("\(daysRemaining) days left")
+                            .font(.system(size: 14, weight: .regular))
                     }
-                    .background(lightBlue, in: RoundedRectangle(cornerRadius: 8))
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 8)
-                            .stroke(darkBlue.opacity(0.5), lineWidth: 1)
-                    )
+                    Spacer()
+                   // VStack for Budgeted
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("Budgeted")
+                            .font(.system(size: 12, weight: .light))
+                        Text("\(symbol)\(budget?.amount ?? 0)")
+                            .font(.system(size: 14, weight: .regular))
+                    }
+                 
+                    VStack(alignment: .trailing, spacing: 2) {
+                        Text("Left")
+                            .font(.system(size: 12, weight: .light))
+                        let remaining = (budget?.amount ?? 0) - spent
+                       
+                        Text("\(symbol)\(remaining)")
+                            .font(.system(size: 14, weight: .regular))
+                            .foregroundColor(remaining > 0 ? .primary : .red)
+                    }
                 }
                 
                 // HStack for Budget spent and Remaining
-                HStack(alignment: .center, spacing: 10) {
-                    // we need three vstacks here
-                    // Budget VStack
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text("Budget")
-                            .font(.system(size: 12, weight: .light))
-                            .foregroundColor(.black)
-                        Text("\(symbol) \(budget?.amount ?? 0)")
-                            .font(.system(size: 14, weight: .semibold))
-                           
-                    }
-                    Spacer()
-                    // Spent VStack
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text("Spent")
-                            .font(.system(size: 12, weight: .light))
-                            .foregroundColor(.black)
-                        Text("\(symbol) \(spent)")
-                            .font(.system(size: 14, weight: .semibold))
-                          
-                    }
-                    Spacer()
-                    // Remaining VStack
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text("Remaining")
-                            .font(.system(size: 12, weight: .light))
-                            .foregroundColor(.black)
-                        let remaining = (budget?.amount ?? 0) - spent
-                        Text("\(symbol) \(remaining)")
-                            .font(.system(size: 14, weight: .semibold))
-                          
-                    }
-                }
+                
                
              
                
             }
-            .padding(.horizontal,18)
-            .padding(.vertical, 12)
-            .background(in: RoundedRectangle(cornerRadius: 16))
-            .overlay(RoundedRectangle(cornerRadius: 16).strokeBorder(Color.white))
-            .shadow(color: Color.black.opacity(0.08),
-                    radius: 12, x: 0, y: 6)
+            .padding(.horizontal,12)
+            .padding(.vertical, 10)
+            .background(
+                Color(Color(colorScheme == .light ? .systemBackground : .secondarySystemBackground)),
+                in: RoundedRectangle(cornerRadius: 16)
+            )
+            .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color(.systemGray5), lineWidth: 1))
             
+            // HStack for daily and Weekly
             
+            HStack {
+                Text("🪙")
+                Text("Today")
+                    .font(.system(size: 16, weight: .medium))
+                Spacer()
+                
+                HStack(alignment: .center, spacing: 30) {
+                    Text("\(symbol)\(idealPerDay)")
+                        .font(.system(size: 14, weight: .regular))
+                    Text("\(symbol)\(todaySpent)")
+                        .font(.system(size: 14, weight: .regular))
+                }
+                
+            }
+            .padding(.horizontal,12)
+
             // HStack for daily and weekly
             currentMonth ?
             HStack(spacing: 0) {
                 // VStack for today
                 VStack(alignment: .leading, spacing: 3) {
                     Text("Day")
-                        .font(.system(size: 12, weight: .regular))
+                        .font(.system(size: 12, weight: .medium))
+                        .foregroundStyle(.secondary)
                     Text("\(symbol) \(todaySpent)")
                         .font(.system(size: 14, weight: .semibold))
+                        .foregroundStyle(.primary)
                 }
                 .padding(.vertical, 10)
                 .padding(.horizontal, 12)
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .background(.green.opacity(0.2), in: RoundedRectangle(cornerRadius: 12))
-                .overlay(RoundedRectangle(cornerRadius: 12).strokeBorder(Color.green.opacity(0.2)))
+                .background(Color(.secondarySystemBackground), in: RoundedRectangle(cornerRadius: 12))
+                .overlay(RoundedRectangle(cornerRadius: 12).fill(Color.green.opacity(0.3)).stroke(Color.green.opacity(0.3), lineWidth: 1))
                 Spacer()
                 VStack(alignment: .leading, spacing: 3) {
                     Text("This Week")
-                        .font(.system(size: 12, weight: .regular))
+                        .font(.system(size: 12, weight: .medium))
+                        .foregroundStyle(.secondary)
                     Text("\(symbol) \(weekSpent)")
                         .font(.system(size: 14, weight: .semibold))
+                        .foregroundStyle(.primary)
+
                 }
                 .padding(.vertical, 10)
                 .padding(.horizontal, 12)
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .background(.cyan.opacity(0.3), in: RoundedRectangle(cornerRadius: 12))
-                .overlay(RoundedRectangle(cornerRadius: 12).strokeBorder(Color.cyan.opacity(0.3)))
+                .background(Color(.secondarySystemBackground), in: RoundedRectangle(cornerRadius: 12))
+                .overlay(RoundedRectangle(cornerRadius: 12).fill(Color.cyan.opacity(0.3)).stroke(Color.cyan.opacity(0.3), lineWidth: 1))
                 
             }
             .frame(maxWidth: .infinity) : nil
@@ -143,7 +141,6 @@ struct MonthlyOverview: View {
     }
 }
 
-//#Preview {
-//    MonthlyOverview(onTapped: {print("tapped")})
-//        .background(Color.gray.opacity(0.1))
-//}
+#Preview {
+    MonthlyOverview(onTapped: {print("tapped")}, budget: Budget(monthKey: "2025-10", amount: 1000.00), spent: 1200.00, todaySpent: 23.00, weekSpent: 72.00, currentMonth: true, daysRemaining: 20, idealPerDay: 25)
+}

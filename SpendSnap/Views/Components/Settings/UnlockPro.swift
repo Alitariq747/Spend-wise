@@ -9,8 +9,10 @@ import SwiftUI
 
 struct UnlockPro: View {
     
-    
+    let onTap: () -> Void
+
     var body: some View {
+        
         VStack(spacing: 8) {
             HStack {
                 Image(systemName: "arrow.up.square.fill")
@@ -25,7 +27,7 @@ struct UnlockPro: View {
                 .foregroundStyle(Color.darker)
             
             Button(action: {
-                print("Go pro")
+               onTap()
             }, label: {
                 Text("Upgrade")
                     .foregroundStyle(.white)
@@ -41,10 +43,11 @@ struct UnlockPro: View {
         .frame(maxWidth: .infinity)
         .background(Color.blue.opacity(0.1), in: RoundedRectangle(cornerRadius: 12))
         .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color.blue.opacity(0.1), lineWidth: 1))
+        .contentShape(Rectangle())
         
     }
 }
 
-#Preview {
-    UnlockPro()
-}
+//#Preview {
+//    UnlockPro()
+//}

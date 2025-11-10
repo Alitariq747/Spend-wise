@@ -16,6 +16,18 @@ struct SettingsView: View {
     private var settings: Settings? {
         settingsRow.first
     }
+    @State private var showCurrencySheet: Bool = false
+    @State private var showRemindersSheet: Bool = false
+    @State private var showGoProSheet: Bool = false
+    
+    private func requirePro(_ action: () -> Void) {
+        if settings?.proUnlocked == true {
+            action()
+        } else {
+            showGoProSheet = true
+        }
+    }
+
     
     var body: some View {
         
@@ -31,24 +43,17 @@ struct SettingsView: View {
                 if isPro {
                     UpgradeToPro()
                 } else {
-                    UnlockPro()
+                    UnlockPro() {
+                        showGoProSheet = true
+                    }
                 }
              
                 // Parent settings VStack
                 VStack(alignment: .leading) {
                     // Currency Hstack
                    
-                    HStack {
-                        Image(systemName: "cylinder.split.1x2.fill")
-                            .foregroundStyle(Color.yellow.opacity(0.7))
-                            .font(.system(size: 18, weight: .semibold))
-                        Text("Currency")
-                            .font(.system(size: 18, weight: .semibold))
-                        Spacer()
-                        Text("\(symbol)")
-                            .font(.system(size: 14, weight: .light))
-                        Image(systemName: "chevron.right")
-                            .font(.system(size: 16, weight: .semibold))
+                    Currency(symbol: symbol) {
+                        showCurrencySheet = true
                     }
                 
                     Rectangle()
@@ -72,17 +77,11 @@ struct SettingsView: View {
                             .frame(height: 1)
                     
                     // Notifications HStack
-                    HStack {
-                        Image(systemName: "bell.fill")
-                            .foregroundStyle(Color.blue.opacity(0.9))
-                            .font(.system(size: 18, weight: .semibold))
-                        Text("Gentle Reminders")
-                            .font(.system(size: 18, weight: .semibold))
-                        Spacer()
-                        Image(systemName: "chevron.right")
-                            .font(.system(size: 16, weight: .semibold))
+                    Reminders(level: settings?.reminderLevel ?? .quiet) {
+                        requirePro {
+                            showRemindersSheet = true
+                        }
                     }
-                    .padding(.top, 10)
                     Rectangle()
                             .fill(Color.gray.opacity(0.15))
                             .frame(height: 1)
@@ -214,10 +213,41 @@ struct SettingsView: View {
                 .padding()
                 .background(Color.white, in: RoundedRectangle(cornerRadius: 12))
                 .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color.white, lineWidth: 1))
+                
+             
+
             }
             .padding(.vertical)
             .padding(.horizontal, 12)
         }
+        .sheet(isPresented: $showCurrencySheet) {
+            CurrencyPickerSheet(allCurrencies: CurrencyOption.allCurrencies, selectedCode: settings?.currencyCode ?? "USD") {
+                newCode in
+                settings?.currencyCode = newCode
+                try? modelContext.save()
+            }
+                .presentationDetents([.medium])
+        }
+        .sheet(isPresented: $showRemindersSheet) {
+            RemindersSelectionView(selectedReminderLevel: settings?.reminderLevel ?? .quiet) {  newLevel in
+                settings?.reminderLevel = newLevel
+                try? modelContext.save()
+                if newLevel == .quiet {
+                           NotificationManager.shared.clearAll()
+                       } else {
+                           NotificationManager.shared.requestPermission()
+                           NotificationManager.shared.schedule(times: newLevel.times)
+                       }
+            }
+            .presentationDetents([.medium])
+        }
+        .sheet(isPresented: $showGoProSheet) {
+            GoProSheet() {
+                settings?.proUnlocked = true
+                try? modelContext.save()
+            }
+        }
+        .presentationDetents([.large])
     }
 }
 

@@ -19,25 +19,22 @@ struct RootTabView: View {
                 HomeView() }
                     .tabItem { Label("Home", systemImage: "house") }
             
-                  
-            
+            NavigationStack {
+                CreditCardView() }
+            .tabItem { Label("Credit Card", systemImage: "creditcard") }
+  
             NavigationStack {
                 HistoryView() }
                     .tabItem { Label("Expenses", systemImage: "clock") }
-            
 
-                   
             NavigationStack {
                 InsightsView() }
                     .tabItem { Label("Insights", systemImage: "chart.bar") }
-            
-               
+
             NavigationStack {
                 SettingsView() }
                     .tabItem { Label("Settings", systemImage: "gearshape") }
-            
 
-                  
                }
         .task {
             if settingsRows.isEmpty { modelContext.insert(Settings()); try? modelContext.save()}

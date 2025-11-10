@@ -28,7 +28,7 @@ enum Category: String, CaseIterable, Identifiable, Codable {
       case .education: "Education"
       case .utilities: "Utilities"
       case .creditCard: "Credit Card"
-    case .other: "Other"
+      case .other: "Other"
     }
   }
 
@@ -67,4 +67,23 @@ enum Category: String, CaseIterable, Identifiable, Codable {
       case .other: .gray
     }
   }
+    
+    var emoji: String {
+        switch self {
+        case .food:          "🍽️"      // meals, dine-out
+        case .groceries:     "🛒"      // supermarket
+        case .transport:     "🚗"      // car, ride, fuel
+        case .travel:        "✈️"      // trips / flights
+        case .health:        "🩺"      // medical / pharmacy
+        case .bills:         "🧾"      // invoices / subscriptions
+        case .shopping:      "🛍️"      // clothes / random buys
+        case .home:          "🏡"      // rent / house
+        case .entertainment: "🎬"      // movies / fun
+        case .education:     "🎓"      // courses / books
+        case .utilities:     "💡"      // electricity / gas / internet
+        case .creditCard:    "💳"      // card payments
+        case .other:         "✨"      // misc
+        }
+    }
+
 }

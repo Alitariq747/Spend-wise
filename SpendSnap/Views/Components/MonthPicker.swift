@@ -8,36 +8,39 @@
 import SwiftUI
 
 struct MonthPicker: View {
+  @Environment(\.colorScheme) private var colorScheme
+    
   @Binding var month: Date
   var limitToCurrentMonth = true
 
   var body: some View {
-    HStack(spacing: 12) {
+    HStack(spacing: 8) {
       Button { withAnimation(.snappy) { month = MonthUtil.addMonths(month, -1) } } label: {
-          Image(systemName: "chevron.left")
-              .font(.headline)
+          Image(systemName: "chevron.left.circle")
+              .font(.subheadline)
               .symbolRenderingMode(.monochrome)
-              .foregroundStyle(.black)
+              .foregroundStyle(.primary)
       }
-      
+      .buttonStyle(.plain)
    
       Text(MonthUtil.fmt.string(from: month))
-        .font(.headline).frame(maxWidth: .infinity)
+        .font(.headline)
 
       Button {
         withAnimation(.snappy) { month = MonthUtil.addMonths(month, 1) }
       } label: {
-        Image(systemName: "chevron.right").font(.headline)
+        Image(systemName: "chevron.right.circle").font(.subheadline)
               .symbolRenderingMode(.monochrome)
-              .foregroundStyle(.black)
+              .foregroundStyle(.primary)
       }
-     
+      .buttonStyle(.plain)
       .disabled(limitToCurrentMonth && MonthUtil.monthKey(month) == MonthUtil.monthKey(Date()))
       .opacity(limitToCurrentMonth && MonthUtil.monthKey(month) == MonthUtil.monthKey(Date()) ? 0.2 : 1)
     }
     .padding(.vertical, 16)
     .padding(.horizontal, 12)
-    .background(.white, in: RoundedRectangle(cornerRadius: 16))
+   
+
   }
 }
 

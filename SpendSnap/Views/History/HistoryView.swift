@@ -10,6 +10,8 @@ import SwiftData
 
 struct HistoryView: View {
     @Environment(\.modelContext) private var ctx
+    @Environment(\.colorScheme) private var colorScheme
+    
     @State private var selectedMonth = Date()
     @State private var showAddExpenseView: Bool = false
     
@@ -56,16 +58,17 @@ struct HistoryView: View {
                     Button {
                         showAddExpenseView = true
                     } label: {
-                        HStack(spacing: 12) {
-                            Image(systemName: "plus.circle.fill").font(.title2)
-                            
-                        }
-                        .padding(.horizontal, 16)
-                        .padding(.vertical, 16)
-                        .background(Color.light, in: RoundedRectangle(cornerRadius: 14))
-                        .foregroundStyle(.white)
-                        .shadow(color: .black.opacity(0.08), radius: 12, x: 0, y: 6)
+                        Image(systemName: "plus")
+                            .font(.title2)
+                            .foregroundColor(colorScheme == .dark ? .black : .white)   // icon color
+                            .padding(16)
+                            .background(
+                                Circle()
+                                    .fill(colorScheme == .dark ? Color.white : Color.black) // bg color
+                            )
+                            .shadow(color: .black.opacity(0.08), radius: 12, x: 0, y: 6)
                     }
+
                 }
                 .padding(.trailing, 25)
                 .padding(.bottom, 20)

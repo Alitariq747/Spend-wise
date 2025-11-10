@@ -53,24 +53,33 @@ struct HomeView: View {
 
     var body: some View {
         
-        ZStack {
-            Color(.gray).opacity(0.09)
-                .ignoresSafeArea()
+      
             ScrollView(.vertical, showsIndicators: false) {
-                LazyVStack {
-                    MonthPicker(month: $selectedMonth, limitToCurrentMonth: true)
+                LazyVStack(alignment: .leading, spacing: 18) {
+                    HStack {
+                        Text("💸")
+                            .font(.system(size: 20, weight: .bold))
+                      Spacer()
+                        MonthPicker(month: $selectedMonth, limitToCurrentMonth: true)
+                        Spacer()
+                        Button {
+                          showAddBudget = true
+                        } label: {
+                            Image(systemName: "pencil")
+                                .font(.system(size: 12, weight: .medium))
+                                .tint(Color(.systemGray))
+                                .padding(.horizontal, 10)
+                                .padding(.vertical, 6)
+                        }
+                        .background(Color(.secondarySystemBackground), in: RoundedRectangle(cornerRadius: 8))
+
+                    }
+                    
                     MonthlyOverview(onTapped: {
                         showAddBudget = true
-                    }, budget: budgetForMonth, spent: spentThisMonth, todaySpent: todayTotal, weekSpent: weekToDateTotal, currentMonth: isViewingCurrentMonth)
+                    }, budget: budgetForMonth, spent: spentThisMonth, todaySpent: todayTotal, weekSpent: weekToDateTotal, currentMonth: isViewingCurrentMonth, daysRemaining: daysRemaining(in: selectedMonth), idealPerDay: idealPerDay(budget: budgetForMonth?.amount ?? 0, month: selectedMonth))
                     
-                    Text("Category highlights \(MonthUtil.fmt.string(from: selectedMonth)) ")
-                        .font(.headline)
-                        .foregroundStyle(.darker)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.bottom, -1)
-                        .padding(.top, 30)
-                    
-                    
+                                  
                     ForEach(Category.allCases, id: \.id) { cat in
                         let spent = categoryTotals[cat] ?? 0
                         CategorySpendingCard(category: cat, spent:spent , total: spentThisMonth)
@@ -79,7 +88,7 @@ struct HomeView: View {
                 .padding()
             }
            
-        }
+        
         .onChange(of: selectedMonth) {
             fetchBudget()
             fetchExpenses()

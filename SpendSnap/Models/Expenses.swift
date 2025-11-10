@@ -38,4 +38,6 @@ final class Expense {
             let f = DateFormatter(); f.dateFormat = "yyyy-MM"
             self.monthKey = f.string(from: date)
         }
+    
+    @Relationship var card: CreditCard?
 }

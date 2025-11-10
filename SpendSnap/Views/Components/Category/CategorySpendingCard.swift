@@ -42,36 +42,34 @@ struct CategorySpendingCard: View {
         VStack(alignment: .leading, spacing: 8) {
             // HStack row for icon title and spent
             HStack {
-                Image(systemName: category.icon)
-                    .foregroundStyle(category.color)
-                    .font(.system(size: 14, weight: .bold))
-                    .padding(.vertical, 4)
-                    .padding(.horizontal, 4)
-                    .background(category.color.opacity(0.3), in: RoundedRectangle(cornerRadius: 8))
-                    .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray.opacity(0.2), lineWidth: 1))
+                Text(category.emoji)
+                .font(.system(size: 18, weight: .bold))
+                    .padding(.vertical, 7)
+                    .padding(.horizontal, 7)
+                    .background(category.color.opacity(0.9), in: Circle())
+                    .overlay(Circle().stroke(category.color.opacity(0.9), lineWidth: 1))
                 
-                Text(category.name)
-                    .font(.system(size: 12, weight: .light))
+                VStack(alignment: .leading) {
+                    Text(category.name)
+                        .font(.system(size: 14, weight: .regular))
+                    Text("Spent: \(symbol)\(spent)")
+                        .font(.system(size: 12, weight: .medium))
+                }
                 
                 Spacer()
+                Image(systemName: "chevron.right")
+                    .symbolRenderingMode(.monochrome)
+                    .foregroundColor(Color(.systemGray))
                 
-                Text("\(symbol) \(spent) / \(total)")
-                    .font(.system(size: 10, weight: .light))
             }
             // Progress Bar -> depends on amount spent
             // value: 0…1
-            ProgressView(value: min(1, ratio(spent: spent, total: total)))
-                .progressViewStyle(.linear)
-                .tint(category.color)
-            
-            Text("\(percent(spent: spent, total: total)) %")
-                   .font(.system(size: 10, weight: .light))
-
+           
+          
         }
-        .padding(.vertical, 10)
+      
         .padding(.horizontal, 12)
-        .background(category.color.opacity(0.1), in: RoundedRectangle(cornerRadius: 12))
-        .overlay(RoundedRectangle(cornerRadius: 12).stroke(category.color.opacity(0.1), lineWidth: 1))
+       
     }
 }
 

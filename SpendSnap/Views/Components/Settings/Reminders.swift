@@ -1,5 +1,5 @@
 //
-//  Currency.swift
+//  Reminders.swift
 //  SpendSnap
 //
 //  Created by Ahmad Ali Tariq on 29/10/2025.
@@ -7,23 +7,24 @@
 
 import SwiftUI
 
-struct Currency: View {
-    let symbol: String
+struct Reminders: View {
+    let level: ReminderLevel
     let onTap: () -> Void
     
     var body: some View {
         HStack {
-            Image(systemName: "cylinder.split.1x2.fill")
-                .foregroundStyle(Color.yellow.opacity(0.7))
+            Image(systemName: "bell.fill")
+                .foregroundStyle(Color.blue.opacity(0.9))
                 .font(.system(size: 18, weight: .semibold))
-            Text("Currency")
+            Text("Gentle Reminders")
                 .font(.system(size: 18, weight: .semibold))
             Spacer()
-            Text("\(symbol)")
-                .font(.system(size: 14, weight: .light))
+            Text(level.emoji)
+                .font(.system(size: 14))
             Image(systemName: "chevron.right")
                 .font(.system(size: 16, weight: .semibold))
         }
+        .padding(.top, 10)
         .contentShape(Rectangle())
         .onTapGesture {
             onTap()
@@ -32,5 +33,5 @@ struct Currency: View {
 }
 
 #Preview {
-    Currency(symbol: "$", onTap: { print("Tapped") })
+    Reminders(level: .quiet, onTap: {print("reminders tapped")})
 }
