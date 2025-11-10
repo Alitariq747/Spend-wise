@@ -17,7 +17,7 @@ struct HomeView: View {
     @State private var budgetForMonth: Budget? = nil
     @State private var monthExpenses: [Expense] = []
     
-    private var categoryTotals:[Category: Decimal] {
+    private var categoryTotals:[CategoryEntity: Decimal] {
         totalsByCategory(_expenses: monthExpenses)
     }
     
@@ -80,10 +80,6 @@ struct HomeView: View {
                     }, budget: budgetForMonth, spent: spentThisMonth, todaySpent: todayTotal, weekSpent: weekToDateTotal, currentMonth: isViewingCurrentMonth, daysRemaining: daysRemaining(in: selectedMonth), idealPerDay: idealPerDay(budget: budgetForMonth?.amount ?? 0, month: selectedMonth))
                     
                                   
-                    ForEach(Category.allCases, id: \.id) { cat in
-                        let spent = categoryTotals[cat] ?? 0
-                        CategorySpendingCard(category: cat, spent:spent , total: spentThisMonth)
-                    }
                 }
                 .padding()
             }

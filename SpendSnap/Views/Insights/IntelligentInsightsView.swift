@@ -26,7 +26,7 @@ struct IntelligentInsightsView: View {
            // Budget Forecast Card
             difference < 0 ? BudgetAlertCard(spent: spent, budgetAmount: budgetAmount) : nil
             MonthlyForecastCard(expenses: expenses, budget: budget, month: selectedMonth)
-            TopCategoryCard(expenses: expenses)
+          
             AverageSpendingCard(month: selectedMonth, expenses: expenses, budget: budget)
             PaymentMethodSplitCard(expenses: expenses)
             TopMerchantCard(expenses: expenses)

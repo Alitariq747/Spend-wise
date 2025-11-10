@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CategoryPill: View {
     
-    let category: Category
+    let category: CategoryEntity
     let selected: Bool
     
     var bgColor: Color { selected ? category.color.opacity(0.12) : Color(.white)}
@@ -20,9 +20,7 @@ struct CategoryPill: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            Image(systemName: category.icon)
-                .font(.system(size: Self.iconSize * 0.55, weight: .semibold))
-                .frame(width: Self.iconSize, height: Self.iconSize)
+            Text(category.emoji)
                 .foregroundColor(category.color)
                 .background(bgColor, in: RoundedRectangle(cornerRadius: 12))
             
@@ -45,6 +43,6 @@ struct CategoryPill: View {
     }
 }
 
-#Preview {
-    CategoryPill(category: Category.food, selected: true)
-}
+//#Preview {
+//    CategoryPill(category: Category.food, selected: true)
+//}

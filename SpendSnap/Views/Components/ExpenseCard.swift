@@ -23,12 +23,12 @@ struct ExpenseCard: View {
         
         HStack {
             // Image from category
-            Image(systemName: expense.category.icon)
-                .foregroundStyle(expense.category.color)
+            Text(expense.category?.emoji ?? "🔥")
+                .foregroundStyle(expense.category?.color  ?? Color(.systemGray6))
                 .font(.system(size: 14, weight: .bold))
                 .padding(.vertical, 4)
                 .padding(.horizontal, 4)
-                .background(expense.category.color.opacity(0.2), in: RoundedRectangle(cornerRadius: 8))
+                .background(expense.category?.color.opacity(0.2) ?? Color(.systemGray6), in: RoundedRectangle(cornerRadius: 8))
                 .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray.opacity(0.2), lineWidth: 1))
             
             VStack(alignment: .leading, spacing: 0) {
@@ -51,7 +51,7 @@ struct ExpenseCard: View {
                 // expense method
                 Image(systemName: expense.method.icon)
                     .font(.caption)
-                    .foregroundStyle(expense.category.color.opacity(0.7))
+                    .foregroundStyle(expense.category?.color.opacity(0.7) ?? Color(.systemGray6))
             }
            
         }
@@ -63,6 +63,4 @@ struct ExpenseCard: View {
     }
 }
 
-#Preview {
-    ExpenseCard(expense: Expense(amount:   800, date: Date(), merchant: "Careem",      category: .bills, method: .cash))
-}
+

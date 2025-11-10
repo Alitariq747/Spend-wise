@@ -16,14 +16,16 @@ final class Expense {
         var amount: Decimal
         var date: Date
         var merchant: String
-        var category: Category
+     
         var method: PaymentMethod
         var monthKey: String
 
+    @Relationship var category: CategoryEntity?
+    
         init(amount: Decimal,
              date: Date = .now,
              merchant: String = "",
-             category: Category = .other ,
+             category: CategoryEntity? = nil ,
              method: PaymentMethod = .cash,
            )
         {

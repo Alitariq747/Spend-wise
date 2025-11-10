@@ -7,10 +7,10 @@
 
 import Foundation
 
-func totalsByCategory(_expenses: [Expense]) -> [Category: Decimal] {
-    var dict: [Category: Decimal] = [:]
+func totalsByCategory(_expenses: [Expense]) -> [CategoryEntity: Decimal] {
+    var dict: [CategoryEntity: Decimal] = [:]
     for e in _expenses {
-        dict[e.category, default: 0] += e.amount
+        dict[e.category ?? CategoryEntity(name: "Other", emoji: "👆🏻", colorHex: "9CA3AF"), default: 0] += e.amount
     }
     return dict
 }

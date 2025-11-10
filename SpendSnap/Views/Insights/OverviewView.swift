@@ -9,13 +9,13 @@ import SwiftUI
 import SwiftData
 
 struct OverviewView: View {
-
+    @Query(sort: \CategoryEntity.name) private var categories: [CategoryEntity]
     @Binding var selectedMonth: Date
     
     let budgetForMonth: Budget?
     let monthExpenses: [Expense]
     
-    private var categoryTotals:[Category: Decimal] {
+    private var categoryTotals:[CategoryEntity: Decimal] {
         totalsByCategory(_expenses: monthExpenses)
     }
     
@@ -53,7 +53,7 @@ struct OverviewView: View {
                     .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color.white,  lineWidth: 1))
                     
                     // Catgeory Analytics here.
-                    CategoryAnalytics(expenses: monthExpenses, budgetAmount: budgetForMonth?.amount)
+                   
                 }
             }
         
@@ -74,7 +74,7 @@ struct OverviewView: View {
             return max(0, min(1, n / d))
         }
 
-        return Category.allCases.compactMap { cat in
+        return categories.compactMap { cat in
             let spent = byCat[cat] ?? 0
             let f = ratio(spent, denom)
             return f > 0 ? .init(fraction: f, color: cat.color) : nil

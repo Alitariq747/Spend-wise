@@ -57,9 +57,7 @@ struct CategorySpendingCard: View {
                 }
                 
                 Spacer()
-                Image(systemName: "chevron.right")
-                    .symbolRenderingMode(.monochrome)
-                    .foregroundColor(Color(.systemGray))
+               
                 
             }
             // Progress Bar -> depends on amount spent

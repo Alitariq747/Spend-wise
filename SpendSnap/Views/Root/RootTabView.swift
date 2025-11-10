@@ -39,7 +39,11 @@ struct RootTabView: View {
         .task {
             if settingsRows.isEmpty { modelContext.insert(Settings()); try? modelContext.save()}
         }
+        .onAppear {
+            CategoryEntity.seedDefaultsIfNeeded(in: modelContext)
+        }
     }
+    
 }
 
 #Preview {

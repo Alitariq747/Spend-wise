@@ -44,7 +44,7 @@ struct CategoryMacroCard: View {
             // HStack for catgeory icon and amount and no of transactions
             HStack {
                 // icon
-                Image(systemName: category.icon)
+                Text(category.emoji)
                     .font(.system(size: 18, weight: .medium))
                     .foregroundStyle(category.color)
                 // VStack for name and transaction count
@@ -81,5 +81,5 @@ struct CategoryMacroCard: View {
 }
 
 #Preview {
-    CategoryMacroCard(category: .creditCard, count: 4, total: 2450, spent: 250)
+    CategoryMacroCard(category: .food, count: 4, total: 2450, spent: 250)
 }

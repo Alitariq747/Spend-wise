@@ -21,7 +21,7 @@ struct AddExpenseSheet: View {
         settingsRow.first?.currencyCode ?? "USD"
     }
     
-    @State private var selectedCategory: Category? = .other
+    @State private var selectedCategory: CategoryEntity?
     @State private var amountText = ""
     @State private var merchant = ""
     @State private var date = Date()
@@ -48,7 +48,8 @@ struct AddExpenseSheet: View {
         let hasAmount = Decimal(string: amountText) != nil && !amountText.isEmpty
         let hasMerchant = !merchant.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
         let methodOK = (method == .cash) || (method == .card && selectedCard != nil)
-        return hasAmount && hasMerchant && isDateOK && methodOK
+        let hasCategory = selectedCategory != nil
+        return hasAmount && hasMerchant && isDateOK && methodOK && hasCategory
     }
     
     // Focus State
@@ -91,8 +92,8 @@ struct AddExpenseSheet: View {
                                 .font(.subheadline)
                                 .padding(.horizontal)
                                 .foregroundStyle(.darker)
+                           
                             CategorySelector(selected: $selectedCategory)
-                            
                         }
                         
                         // Add Amount
@@ -308,7 +309,7 @@ struct AddExpenseSheet: View {
             (method == .cash) || (selectedCard != nil)
         else { return }
         
-        let exp = Expense(amount: amt, date: date, merchant: trimmedMerchant, category: selectedCategory ?? .other, method: method)
+        let exp = Expense(amount: amt, date: date, merchant: trimmedMerchant, category: selectedCategory, method: method)
         if method == .card { exp.card = selectedCard }
         ctx.insert(exp)
         do {
@@ -320,6 +321,6 @@ struct AddExpenseSheet: View {
     }
 }
 
-#Preview {
-    AddExpenseSheet(month: .constant(Calendar.current.date(from: .init(year: 2025, month: 9))!))
-}
+//#Preview {
+//    AddExpenseSheet(month: .constant(Calendar.current.date(from: .init(year: 2025, month: 9))!))
+//}

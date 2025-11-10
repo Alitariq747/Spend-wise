@@ -38,6 +38,8 @@ struct MonthlyOverview: View {
         let symbol = CurrencyUtil.symbol(for: currencyCode)
         
         VStack(spacing: 12) {
+            
+           
             // VStack for monthly
             VStack(alignment: .center, spacing: 28) {
                 // HStack for monthly and add/ edit button
@@ -65,7 +67,7 @@ struct MonthlyOverview: View {
                        
                         Text("\(symbol)\(remaining)")
                             .font(.system(size: 14, weight: .regular))
-                            .foregroundColor(remaining > 0 ? .primary : .red)
+                            .foregroundColor(remaining >= 0 ? .primary : .red)
                     }
                 }
                 
@@ -83,23 +85,7 @@ struct MonthlyOverview: View {
             )
             .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color(.systemGray5), lineWidth: 1))
             
-            // HStack for daily and Weekly
-            
-            HStack {
-                Text("🪙")
-                Text("Today")
-                    .font(.system(size: 16, weight: .medium))
-                Spacer()
-                
-                HStack(alignment: .center, spacing: 30) {
-                    Text("\(symbol)\(idealPerDay)")
-                        .font(.system(size: 14, weight: .regular))
-                    Text("\(symbol)\(todaySpent)")
-                        .font(.system(size: 14, weight: .regular))
-                }
-                
-            }
-            .padding(.horizontal,12)
+          
 
             // HStack for daily and weekly
             currentMonth ?
@@ -109,30 +95,38 @@ struct MonthlyOverview: View {
                     Text("Day")
                         .font(.system(size: 12, weight: .medium))
                         .foregroundStyle(.secondary)
-                    Text("\(symbol) \(todaySpent)")
-                        .font(.system(size: 14, weight: .semibold))
+                    Text("\(symbol)\(todaySpent)")
+                        .font(.system(size: 14, weight: .regular))
                         .foregroundStyle(.primary)
                 }
+                .padding(.horizontal,12)
                 .padding(.vertical, 10)
-                .padding(.horizontal, 12)
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .background(Color(.secondarySystemBackground), in: RoundedRectangle(cornerRadius: 12))
-                .overlay(RoundedRectangle(cornerRadius: 12).fill(Color.green.opacity(0.3)).stroke(Color.green.opacity(0.3), lineWidth: 1))
+                .background(
+                    Color(Color(colorScheme == .light ? .systemBackground : .secondarySystemBackground)),
+                    in: RoundedRectangle(cornerRadius: 16)
+                )
+                .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color(.systemGray5), lineWidth: 1))
+                
                 Spacer()
+                
                 VStack(alignment: .leading, spacing: 3) {
                     Text("This Week")
                         .font(.system(size: 12, weight: .medium))
                         .foregroundStyle(.secondary)
-                    Text("\(symbol) \(weekSpent)")
-                        .font(.system(size: 14, weight: .semibold))
+                    Text("\(symbol)\(weekSpent)")
+                        .font(.system(size: 14, weight: .regular))
                         .foregroundStyle(.primary)
 
                 }
                 .padding(.vertical, 10)
                 .padding(.horizontal, 12)
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .background(Color(.secondarySystemBackground), in: RoundedRectangle(cornerRadius: 12))
-                .overlay(RoundedRectangle(cornerRadius: 12).fill(Color.cyan.opacity(0.3)).stroke(Color.cyan.opacity(0.3), lineWidth: 1))
+                .background(
+                    Color(Color(colorScheme == .light ? .systemBackground : .secondarySystemBackground)),
+                    in: RoundedRectangle(cornerRadius: 16)
+                )
+                .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color(.systemGray5), lineWidth: 1))
                 
             }
             .frame(maxWidth: .infinity) : nil
@@ -142,5 +136,5 @@ struct MonthlyOverview: View {
 }
 
 #Preview {
-    MonthlyOverview(onTapped: {print("tapped")}, budget: Budget(monthKey: "2025-10", amount: 1000.00), spent: 1200.00, todaySpent: 23.00, weekSpent: 72.00, currentMonth: true, daysRemaining: 20, idealPerDay: 25)
+    MonthlyOverview(onTapped: {print("tapped")}, budget: Budget(monthKey: "2025-10", amount: 1000.00), spent: 1200.00, todaySpent: 26.00, weekSpent: 72.00, currentMonth: true, daysRemaining: 20, idealPerDay: 25)
 }
