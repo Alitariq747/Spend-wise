@@ -11,11 +11,14 @@ import PhotosUI
 
 struct HomeView: View {
     @Environment(\.modelContext) private var ctx
+    @Query(sort: \CategoryEntity.name) private var categories: [CategoryEntity]
     @State private var selectedMonth = Date()
     @State private var showAddBudget: Bool = false
   
     @State private var budgetForMonth: Budget? = nil
     @State private var monthExpenses: [Expense] = []
+    
+    @State private var chosenCategory: CategoryEntity? = nil
     
     private var categoryTotals:[CategoryEntity: Decimal] {
         totalsByCategory(_expenses: monthExpenses)
@@ -49,6 +52,10 @@ struct HomeView: View {
             .filter { interval.contains($0.date) }
             .reduce(0 as Decimal) { $0 + $1.amount }
     }
+    
+    private func filteredExpenses(for category: CategoryEntity) -> [Expense] {
+        monthExpenses.filter { $0.category?.persistentModelID == category.persistentModelID }
+    }
 
 
     var body: some View {
@@ -79,7 +86,23 @@ struct HomeView: View {
                         showAddBudget = true
                     }, budget: budgetForMonth, spent: spentThisMonth, todaySpent: todayTotal, weekSpent: weekToDateTotal, currentMonth: isViewingCurrentMonth, daysRemaining: daysRemaining(in: selectedMonth), idealPerDay: idealPerDay(budget: budgetForMonth?.amount ?? 0, month: selectedMonth))
                     
-                                  
+                 
+                      
+                    LazyVStack(alignment: .leading, spacing: 0) {
+                        ForEach(Array(categories.enumerated()), id: \.element) { index, category in
+                            VStack(spacing: 0) {
+                                Button {
+                                    chosenCategory = category
+                                } label: {
+                                    let spent = categoryTotals[category]
+                                    CategorySpendingCard(category: category, spent: spent ?? 0)
+                                        .padding(.vertical, 8)
+                                } 
+                                .buttonStyle(.plain)
+                            }
+                        }
+                    }
+
                 }
                 .padding()
             }
@@ -95,6 +118,10 @@ struct HomeView: View {
             })
             .presentationDetents([ .medium])
         }
+        .sheet(item: $chosenCategory, content: { cat in
+            let spent = categoryTotals[cat] ?? 0
+            CategoryDetailSheet(category: cat, spent: spent, expenses: filteredExpenses(for: cat))
+        })
         .onAppear {
             fetchBudget()
             fetchExpenses()

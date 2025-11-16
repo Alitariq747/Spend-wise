@@ -14,14 +14,16 @@ final class CategoryEntity {
     var name: String
     var emoji: String
     var monthlyBudget: Decimal
-    
+    var isSystemOther: Bool = false
+
     var colorHex: String
     
-    init(name: String, emoji: String, monthlyBudget: Decimal = .zero, colorHex: String = "CCCCCC") {
+    init(name: String, emoji: String, monthlyBudget: Decimal = .zero, colorHex: String = "CCCCCC", isSystemOther: Bool = false) {
         self.name = name
         self.emoji = emoji
         self.monthlyBudget = monthlyBudget
         self.colorHex = colorHex
+        self.isSystemOther = isSystemOther
     }
     
     var color: Color {
@@ -62,3 +64,4 @@ extension CategoryEntity {
         try? context.save()
     }
 }
+

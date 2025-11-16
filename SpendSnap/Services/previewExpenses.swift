@@ -33,7 +33,7 @@ let previewExpenses: [Expense] = {
     // newest → oldest
     return [
         Expense(amount: 1_599, date: day(0), merchant: "Daraz",
-                category: cat[.other], method: .card),
+                category: cat[.food], method: .card),
 
         Expense(amount:   800, date: day(1), merchant: "Careem",
                 category: cat[.bills], method: .card),
@@ -51,27 +51,27 @@ let previewExpenses: [Expense] = {
                 category: cat[.health], method: .cash),
 
         Expense(amount:   320, date: day(9), merchant: "Bykea",
-                category: cat[.other], method: .cash),
+                category: cat[.entertainment], method: .cash),
 
         Expense(amount: 1_199, date: day(10), merchant: "Spotify",
-                category: cat[.other], method: .cash),
+                category: cat[.education], method: .cash),
 
         Expense(amount: 2_799, date: day(11), merchant: "GulAhmed",
-                category: cat[.other], method: .cash),
+                category: cat[.groceries], method: .cash),
 
         Expense(amount:   270, date: day(12), merchant: "Tea Stall",
-                category: cat[.other], method: .cash),
+                category: cat[.health], method: .cash),
 
         Expense(amount: 5_600, date: day(14), merchant: "PSO Fuel",
-                category: cat[.other], method: .cash),
+                category: cat[.transport], method: .cash),
 
         Expense(amount:   680, date: day(15), merchant: "Bakery",
-                category: cat[.other], method: .cash),
+                category: cat[.utilities], method: .cash),
 
         Expense(amount: 1_050, date: day(17), merchant: "Pharmacy",
-                category: cat[.other], method: .cash),
+                category: cat[.health], method: .cash),
 
         Expense(amount: 3_999, date: day(19), merchant: "IKEA",
-                category: cat[.other], method: .cash),
+                category: cat[.shopping], method: .cash),
     ]
 }()

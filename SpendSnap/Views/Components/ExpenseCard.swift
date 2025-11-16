@@ -63,4 +63,6 @@ struct ExpenseCard: View {
     }
 }
 
-
+#Preview {
+    ExpenseCard(expense: Expense(amount: 23, date: Date(), merchant: "Apple"))
+}

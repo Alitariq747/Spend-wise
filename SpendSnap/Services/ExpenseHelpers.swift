@@ -7,13 +7,17 @@
 
 import Foundation
 
+
 func totalsByCategory(_expenses: [Expense]) -> [CategoryEntity: Decimal] {
     var dict: [CategoryEntity: Decimal] = [:]
     for e in _expenses {
-        dict[e.category ?? CategoryEntity(name: "Other", emoji: "👆🏻", colorHex: "9CA3AF"), default: 0] += e.amount
+        if let cat = e.category {                
+            dict[cat, default: 0] += e.amount
+        }
     }
     return dict
 }
+
 
 struct WeekTotal {
     let title: String
@@ -48,3 +52,12 @@ func round2(_ x: Decimal) -> Decimal {
     NSDecimalRound(&r, &a, 2, .plain)   // .plain = standard rounding
     return r
 }
+
+func string(from dec: Decimal) -> String {
+       let n = NSDecimalNumber(decimal: dec)
+       let f = NumberFormatter()
+       f.numberStyle = .decimal       // no currency symbol inside the field text
+       f.minimumFractionDigits = 0
+       f.maximumFractionDigits = 2
+       return f.string(from: n) ?? "\(n)"
+   }

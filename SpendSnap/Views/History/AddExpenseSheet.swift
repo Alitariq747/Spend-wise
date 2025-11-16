@@ -10,6 +10,7 @@ import SwiftData
 
 struct AddExpenseSheet: View {
     
+    @Query(sort: \CategoryEntity.name) private var categories: [CategoryEntity]
     @Environment(\.modelContext) private var ctx
     @Environment(\.dismiss) private var dismiss
     @Query(sort: \CreditCard.name) private var cards: [CreditCard]
@@ -29,6 +30,7 @@ struct AddExpenseSheet: View {
     @State private var toastMessage = ""
     
     @State private var method: PaymentMethod = .cash
+    @State private var showCalendar = false
     
     @Binding var month: Date
     private let cal = Calendar.current
@@ -52,177 +54,135 @@ struct AddExpenseSheet: View {
         return hasAmount && hasMerchant && isDateOK && methodOK && hasCategory
     }
     
-    // Focus State
-    enum Field: Hashable { case amount, merchant }
-    @FocusState private var focused: Field?
-    @State private var dateActive = false
+
     
     var body: some View {
         let symbol = CurrencyUtil.symbol(for: currencyCode)
-       
-        ZStack {
-            Color(.gray).opacity(0.09)
-                .ignoresSafeArea()
-            GeometryReader { geo in
-                
-                
+        let labelW: CGFloat = 92
                 ScrollView {
                     
                     // Vstack parent
-                    VStack(alignment: .leading) {
+                    VStack(alignment: .leading, spacing: 4) {
                         
+                        // HStack for amount
                         HStack {
-                            Spacer()
-                            VStack {
-                                Image(systemName: "plus.rectangle.on.rectangle.fill").resizable().scaledToFit().frame(width: 45, height: 45).foregroundColor(.darker.opacity(0.8))
-                                Text("“Every expense, accounted.”")
-                                    .font(.subheadline)
-                                    .padding(.top, -10)
-                                    .padding(.bottom, 10)
-                                    .foregroundStyle(.darker)
-                            }
-                          
-                            Spacer()
-                        }
-                        
-                        
-                        // Horizontal Scrolling list of categories
-                        VStack(alignment: .leading, spacing: 0) {
-                            Text("Pick a category:")
-                                .font(.subheadline)
-                                .padding(.horizontal)
-                                .foregroundStyle(.darker)
-                           
-                            CategorySelector(selected: $selectedCategory)
-                        }
-                        
-                        // Add Amount
-                        VStack(alignment: .leading, spacing: 8) {
-                            Text("Enter amount:")
-                                .font(.subheadline)
-                                .foregroundStyle(.darker)
-                            
-                            TextField("\(symbol)", text: $amountText)
+                            Text("Amount")
+                                .font(.system(size: 16, weight: .medium))
+                                .frame(width: labelW, alignment: .leading)
+                            TextField("\(symbol) 0.00", text: $amountText)
                                 .keyboardType(.decimalPad)
-                                .focused($focused, equals: .amount)
-                                .padding(.horizontal, 10)
-                                .padding(.vertical, 12)
-                                .background(Color.white, in: RoundedRectangle(cornerRadius: 12))
-                                .overlay(RoundedRectangle(cornerRadius: 12).stroke(focused == .amount ? Color.darker : Color.gray.opacity(0.2), lineWidth: focused == .amount ? 2 : 1))
-                                .shadow(color: .black.opacity(0.06), radius: 10, y: 4)
+                                .padding(.vertical, 8)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                            
                         }
                         .padding(.horizontal)
-                        
-                        // Add merchant
-                        VStack(alignment: .leading, spacing: 8) {
-                            Text("Enter merchant:")
-                                .font(.subheadline)
-                                .foregroundStyle(.darker)
-                            
+                        Divider()
+    
+                        HStack {
+                            Text("Merchant")
+                                .font(.system(size: 16, weight: .medium))
+                                .frame(width: labelW, alignment: .leading)
                             TextField("Walmart", text: $merchant)
                                 .keyboardType(.alphabet)
-                                .focused($focused, equals: .merchant)
-                                .padding(.horizontal, 10)
-                                .padding(.vertical, 12)
-                                .background(Color.white, in: RoundedRectangle(cornerRadius: 12))
-                                .overlay(RoundedRectangle(cornerRadius: 12).stroke( focused == .merchant ? Color.darker : Color.gray.opacity(0.2), lineWidth: focused == .merchant ? 2 : 1))
-                                .shadow(color: .black.opacity(0.06), radius: 10, y: 4)
-                                .onChange(of: merchant) {
-                                    merchant = String(merchant.replacingOccurrences(of: "\n", with: " ").prefix(40))
-                                }
+                                .padding(.vertical, 8)
+                                .frame(maxWidth: .infinity, alignment: .leading)
                         }
                         .padding(.horizontal)
-                        .padding(.vertical, 8)
+                        Divider()
                         
-                        // Date
-                        VStack(alignment: .leading, spacing: 8) {
-                            Text("Pick date:")
-                                .font(.subheadline)
-                                .foregroundStyle(.darker)
-                            
-                            // Styled tappable row
-                            HStack {
-                                DatePicker("Date:", selection: $date, in: allowedRange, displayedComponents: .date)
-                                    .datePickerStyle(.compact)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
+                        // HStack for Date
+                        
+                        HStack {
+                            Text("Date")
+                                .font(.system(size: 16, weight: .medium))
+                                .frame(width: labelW, alignment: .leading)
+                            Button {
+                                showCalendar = true
+                            } label: {
+                                HStack(spacing: 8) {
+                                    Image(systemName: "calendar")
+                                        .font(.body)
+                                        .foregroundStyle(.primary)
+                                    Text(date.formatted(date: .abbreviated, time: .omitted))
+                                        .font(.body)
+                                        .foregroundStyle(.primary)
+                                }
+                             
+                             
+                                .background(.clear) // no gray background
+                                .contentShape(Rectangle()) // easy tap
                             }
-                            .padding(.horizontal, 10)
-                            .padding(.vertical, 8)
-                            .background(Color.white, in: RoundedRectangle(cornerRadius: 12))
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 12)
-                                    .stroke(dateActive ? Color.darker : Color.gray.opacity(0.2),
-                                            lineWidth: dateActive ? 2 : 1)
-                            )
-                            .shadow(color: .black.opacity(0.06), radius: 10, y: 4)
-                            .contentShape(Rectangle())
-                            .simultaneousGesture(
-                                TapGesture().onEnded {
-                                    dateActive = true
-                                    focused = nil
-                                }
-                            )
-                            .onChange(of: focused) { if focused != nil { dateActive = false } }
-                        }
-                        .padding(.horizontal)
-                        .padding(.vertical, 4)
-                        
-                        
-                        // Picker for method
-                        VStack(alignment: .leading, spacing: 8) {
-                            Text("Pick Method:")
-                                .font(.subheadline)
-                                .foregroundStyle(.darker)
-                            // HStack to choose b/w cash and card
-                            HStack {
-                                Button {
-                                    if cards.isEmpty {
-                                        toastMessage = "No cards yet. Add one in cards tab"
-                                        withAnimation(.spring()) {showToast = true}
-                                        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                                            withAnimation(.spring()) {showToast = false}
-                                        }
-                            
-                                    } else {
-                                        method = .card
-                                    }
-                                } label: {
-                                    HStack {
-                                        Image(systemName: "creditcard")
-                                        Text("Card")
-                                            .font(.system(size: 18, weight: .semibold))
-                                    }
-                                    .frame(maxWidth: .infinity)
-                                    .padding(.vertical, 16)
-                                    .background(Color.dark.opacity(method == .card ? 1 : 0.2), in: RoundedRectangle(cornerRadius: 14))
-                                    .contentShape(RoundedRectangle(cornerRadius: 14))
-                                }
-                                .buttonStyle(.plain)
-                                .foregroundStyle(.white)
-                                .shadow(color: .black.opacity(0.08), radius: 12, x: 0, y: 6)
-                                
-                                Button {
-                                    method = .cash
-                                    selectedCard = nil
-                                } label: {
-                                    HStack {
-                                        Image(systemName: "banknote.fill")
-                                        Text("Cash")
-                                            .font(.system(size: 18, weight: .semibold))
-                                    }
-                                    .frame(maxWidth: .infinity)
-                                    .padding(.vertical, 16)
-                                    .background(Color.dark.opacity(method == .cash ? 1 : 0.2), in: RoundedRectangle(cornerRadius: 14))
-                                    .contentShape(RoundedRectangle(cornerRadius: 14))
-                                }
-                                .buttonStyle(.plain)
-                                .foregroundStyle(.white)
-                                .shadow(color: .black.opacity(0.08), radius: 12, x: 0, y: 6)
+                            .buttonStyle(.plain)
+                            .popover(isPresented: $showCalendar) {           // on iPhone this becomes a sheet
+                                DatePicker(
+                                    "",
+                                    selection: $date,
+                                    in: allowedRange,
+                                    displayedComponents: .date
+                                )
+                                .datePickerStyle(.graphical)
+                                .labelsHidden()
+                                .padding()
+                                .presentationDetents([.medium])              // nice size on iPhone
                             }
-                            .frame(maxWidth: .infinity)
                         }
-                        .padding(.horizontal)
                         .padding(.vertical, 8)
+                        .padding(.horizontal)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        Divider()
+                        HStack {
+                            
+                        Text("Method:")
+                                .font(.system(size: 16, weight: .medium))
+                                .frame(width: labelW, alignment: .leading)
+                        // HStack to choose b/w cash and card
+                            HStack(spacing: 27) {
+                            Button {
+                                method = .cash
+                                selectedCard = nil
+                            } label: {
+                                HStack {
+                                    Image(systemName: "banknote.fill")
+                                        .font(.body)
+                                        .foregroundStyle(method == .cash ? .primary : Color(.systemGray3))
+                                    Text("Cash")
+                                        .font(.body)
+                                        .foregroundStyle(method == .cash ? .primary : Color(.systemGray3))
+                                }
+                            
+                                .padding(.vertical, 8)
+                              
+                            }
+                            .buttonStyle(.plain)
+                            
+                            Button {
+                                if cards.isEmpty {
+                                    toastMessage = "No cards yet. Add one in cards tab"
+                                    withAnimation(.spring()) {showToast = true}
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                                        withAnimation(.spring()) {showToast = false}
+                                    }
+                                    
+                                } else {
+                                    method = .card
+                                }
+                            } label: {
+                                HStack {
+                                    Image(systemName: "creditcard")
+                                        .font(.body)
+                                        .foregroundStyle(method == .card ? .primary : Color(.systemGray3))
+                                    Text("Card")
+                                        .font(.body)
+                                    .foregroundStyle(method == .card ? .primary : Color(.systemGray3))                                }
+                            
+                                .padding(.vertical, 8)
+                            
+                            }
+                            .buttonStyle(.plain)
+                        }
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                    }
+                        .padding(.horizontal)
                         
                         if method == .card {
                             HStack {
@@ -254,48 +214,53 @@ struct AddExpenseSheet: View {
                             }
                             .padding(.horizontal)
                         }
-
                         
-                        // CTA Button to add expense
-                        Button {
-                            saveExpense()
-                        } label: {
-                            Text("Confirm")
-                                .font(.system(size: 18, weight: .semibold))
-                                .frame(maxWidth: .infinity)
-                                .padding(.vertical, 16)
-                                .background(canSave ? Color.darker : Color.darker.opacity(0.2), in:  RoundedRectangle(cornerRadius: 16))
-                                .foregroundStyle(.white)
-                                .shadow(color: .black.opacity(0.08), radius: 12, x: 0, y: 6)
+                        // VStack with scrolling categories
+                        VStack(alignment: .leading, spacing: 12) {
+                            Text("CATEGORIES")
+                                .tracking(2)
+                                .font(.system(size: 16, weight: .medium))
+                                .foregroundStyle(.primary)
+                                .padding(.vertical, 6)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .background(Color(.secondarySystemBackground))
+                            
+                           CategorySelector(categories: categories, selected: $selectedCategory)
+
                         }
-                        .padding(.horizontal)
-                        .disabled(!canSave)
-                        .animation(.easeInOut(duration: 0.2), value: canSave)
+                        .padding(.horizontal, 8)
                     }
-                    .frame(minHeight: geo.size.height, alignment: .center)
                 }
                 .scrollDismissesKeyboard(.interactively)
-                .navigationTitle("Add Expense")
+                .navigationTitle("\(amountText)")
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar(.visible, for: .navigationBar)
-            }
-        }
-        .overlay(alignment: .bottom) {
-            if showToast {
-                HStack(spacing: 8) {
-                    Image(systemName: "exclamationmark.triangle.fill")
-                        .font(.caption)
-                    Text(toastMessage)
-                        .font(.footnote)
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button("Add") {
+                            saveExpense()
+                        }
+                        .disabled(!canSave)
+                    }
                 }
-                .padding(.horizontal, 14)
-                .padding(.vertical, 10)
-                .background(.thinMaterial, in: Capsule())
-                .shadow(radius: 8)
-                .padding(.bottom, 24)
-                .transition(.move(edge: .bottom).combined(with: .opacity))
-            }
-        }
+                .overlay(alignment: .bottom) {
+                    if showToast {
+                        HStack(spacing: 8) {
+                            Image(systemName: "exclamationmark.triangle.fill")
+                                .font(.caption)
+                            Text(toastMessage)
+                                .font(.footnote)
+                        }
+                        .padding(.horizontal, 14)
+                        .padding(.vertical, 10)
+                        .background(.thinMaterial, in: Capsule())
+                        .shadow(radius: 8)
+                        .padding(.bottom, 24)
+                        .transition(.move(edge: .bottom).combined(with: .opacity))
+                    }
+                }
+     
+    
 
      
     }
@@ -321,6 +286,6 @@ struct AddExpenseSheet: View {
     }
 }
 
-//#Preview {
-//    AddExpenseSheet(month: .constant(Calendar.current.date(from: .init(year: 2025, month: 9))!))
-//}
+#Preview {
+    AddExpenseSheet(month: .constant(Calendar.current.date(from: .init(year: 2025, month: 9))!))
+}

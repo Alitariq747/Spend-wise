@@ -59,9 +59,9 @@ struct HistoryView: View {
                         showAddExpenseView = true
                     } label: {
                         Image(systemName: "plus")
-                            .font(.title2)
+                            .font(.system(size: 20, weight: .bold))
                             .foregroundColor(colorScheme == .dark ? .black : .white)   // icon color
-                            .padding(16)
+                            .padding(8)
                             .background(
                                 Circle()
                                     .fill(colorScheme == .dark ? Color.white : Color.black) // bg color

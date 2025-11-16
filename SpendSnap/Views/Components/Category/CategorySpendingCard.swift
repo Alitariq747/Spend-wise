@@ -16,9 +16,9 @@ struct CategorySpendingCard: View {
         settingsRow.first?.currencyCode ?? "USD"
     }
     
-    let category: Category
+    let category: CategoryEntity
     let spent: Decimal
-    let total: Decimal
+  
     
     func ratio(spent: Decimal, total: Decimal) -> Double {
         guard total > 0 else { return 0 }
@@ -39,38 +39,38 @@ struct CategorySpendingCard: View {
         
         let symbol = CurrencyUtil.symbol(for: currencyCode)
         
-        VStack(alignment: .leading, spacing: 8) {
-            // HStack row for icon title and spent
-            HStack {
+    
+        HStack(spacing: 8) {
                 Text(category.emoji)
-                .font(.system(size: 18, weight: .bold))
-                    .padding(.vertical, 7)
-                    .padding(.horizontal, 7)
+                .font(.subheadline)
+                    .padding(.vertical, 5)
+                    .padding(.horizontal, 5)
                     .background(category.color.opacity(0.9), in: Circle())
                     .overlay(Circle().stroke(category.color.opacity(0.9), lineWidth: 1))
                 
-                VStack(alignment: .leading) {
+           
                     Text(category.name)
                         .font(.system(size: 14, weight: .regular))
-                    Text("Spent: \(symbol)\(spent)")
-                        .font(.system(size: 12, weight: .medium))
-                }
+                
                 
                 Spacer()
-               
-                
+                // Budgeted
+            HStack(spacing: 30) {
+                Text("\(symbol)\(category.monthlyBudget)")
+                    .font(.system(size: 14, weight: .regular))
+                let left = category.monthlyBudget - spent
+                Text("\(symbol)\(left)")
+                    .font(.system(size: 14, weight: .regular))
+                    .foregroundStyle(left >= 0 ? Color.green : Color.red)
+                    .padding(4)
+                    .background(left >= 0 ? Color.green.opacity(0.2) : Color.red.opacity(0.2), in: RoundedRectangle(cornerRadius: 18))
             }
-            // Progress Bar -> depends on amount spent
-            // value: 0…1
-           
-          
-        }
-      
-        .padding(.horizontal, 12)
+            }
+        .padding(.horizontal, 6)
        
     }
 }
 
 #Preview {
-    CategorySpendingCard(category: .bills, spent: 1100, total: 900)
+    CategorySpendingCard(category: previewCategories.first ?? CategoryEntity(name: "Food", emoji: "😀"), spent: 1100)
 }

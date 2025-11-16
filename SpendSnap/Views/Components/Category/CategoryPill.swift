@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct CategoryPill: View {
+    @Environment(\.colorScheme) private var colorScheme
     
     let category: CategoryEntity
     let selected: Bool
@@ -19,30 +20,42 @@ struct CategoryPill: View {
     private static let iconSize: CGFloat = 34
     
     var body: some View {
-        VStack(spacing: 0) {
+        HStack(spacing: 20) {
             Text(category.emoji)
-                .foregroundColor(category.color)
-                .background(bgColor, in: RoundedRectangle(cornerRadius: 12))
+                .font(.system(size: 24, weight: .semibold))
+                .padding(.horizontal, 8)
+                .padding(.vertical, 8)
+                .background(colorScheme == .dark ? category.color.opacity(0.8) : category.color.opacity(0.7), in: Circle())
             
             Text(category.name)
-                .font(.caption)
-                .foregroundColor(.black.opacity(0.8))
+                .font(.subheadline)
+                .foregroundColor(.primary)
                 .lineLimit(1)
                 .minimumScaleFactor(0.8)
                 .multilineTextAlignment(.center)
-                .frame(width: Self.pillWidth - 16)
+            
+            Spacer()
+            
+            if selected {
+                Image(systemName: "checkmark.circle.fill")
+                    .foregroundStyle(category.color)
+                    .font(.system(size: 20, weight: .medium))
+            } else {
+                Image(systemName: "circle")
+                    .font(.system(size: 20, weight: .medium))
+                    .foregroundStyle(Color(.systemGray4))
+            }
+          
+            
+              
             
         }
         .padding(.vertical, 12)
-   
-        .frame(width: Self.pillWidth)
-        .background(bgColor, in: RoundedRectangle(cornerRadius: 14, style: .continuous))
-        .overlay(RoundedRectangle(cornerRadius: 14, style: .continuous).stroke(borderColor, lineWidth: selected ? 2 : 1))
-        .contentShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
-        .animation(.easeInOut(duration: 0.2), value: selected)
+        .padding(.horizontal, 8)
+       
     }
 }
 
-//#Preview {
-//    CategoryPill(category: Category.food, selected: true)
-//}
+#Preview {
+    CategoryPill(category: previewCategories.first ?? CategoryEntity(name: "Food", emoji: "😀", monthlyBudget: .zero), selected: false)
+}

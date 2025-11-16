@@ -9,12 +9,12 @@ import SwiftUI
 import SwiftData
 
 struct CategorySelector: View {
-    @Query(sort: \CategoryEntity.name) private var categories: [CategoryEntity]
+    let categories: [CategoryEntity]
     @Binding var selected: CategoryEntity?
     
     var body: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: 12) {
+
+            VStack(spacing: 4) {
                 ForEach(categories) { cat in
                     Button{
                         selected = cat
@@ -24,10 +24,11 @@ struct CategorySelector: View {
                     .buttonStyle(.plain)
                 }
             }
-            .padding(.horizontal)
-            .padding(.vertical, 8)
-        }
+         
     }
 }
 
 
+#Preview {
+    CategorySelector(categories: previewCategories, selected: .constant(previewCategories[0]))
+}

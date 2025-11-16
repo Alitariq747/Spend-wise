@@ -10,7 +10,7 @@ import Foundation
 import SwiftUI
 
 enum Category: String, CaseIterable, Identifiable, Codable {
-  case food, groceries, transport, health, bills, shopping, home, entertainment, education, utilities, other
+  case food, groceries, transport, health, bills, shopping, entertainment, education, utilities
 
   var id: String { rawValue }
 
@@ -19,16 +19,13 @@ enum Category: String, CaseIterable, Identifiable, Codable {
       case .food: "Dine out"
       case .groceries: "Groceries"
       case .transport: "Transport"
-   
       case .health: "Health"
       case .bills: "Bills"
       case .shopping: "Shopping"
-      case .home: "Home"
       case .entertainment: "Entertainment"
       case .education: "Education"
       case .utilities: "Utilities"
     
-      case .other: "Other"
     }
   }
 
@@ -38,16 +35,13 @@ enum Category: String, CaseIterable, Identifiable, Codable {
       case .food: .orange
       case .groceries: .green
       case .transport: .blue
-     
       case .health: .red
       case .bills: .indigo
       case .shopping: .pink
-      case .home: .brown
       case .entertainment: .purple
       case .education: .cyan
       case .utilities: .yellow
-     
-      case .other: .gray
+
     }
   }
     
@@ -59,11 +53,9 @@ enum Category: String, CaseIterable, Identifiable, Codable {
          case .health:        return "EF4444" // red
          case .bills:         return "4F46E5" // indigo
          case .shopping:      return "EC4899" // pink
-         case .home:          return "A16207" // brown-ish
          case .entertainment: return "8B5CF6" // purple
          case .education:     return "06B6D4" // cyan
          case .utilities:     return "EAB308" // yellow
-         case .other:         return "9CA3AF" // gray
          }
      }
     
@@ -71,17 +63,13 @@ enum Category: String, CaseIterable, Identifiable, Codable {
         switch self {
         case .food:          "🍽️"      // meals, dine-out
         case .groceries:     "🛒"      // supermarket
-        case .transport:     "🚗"      // car, ride, fuel
-       
+        case .transport:     "🚗"      // car, ride, fuel       
         case .health:        "🩺"      // medical / pharmacy
         case .bills:         "🧾"      // invoices / subscriptions
         case .shopping:      "🛍️"      // clothes / random buys
-        case .home:          "🏡"      // rent / house
         case .entertainment: "🎬"      // movies / fun
         case .education:     "🎓"      // courses / books
         case .utilities:     "💡"      // electricity / gas / internet
-     
-        case .other:         "✨"      // misc
         }
     }
 
