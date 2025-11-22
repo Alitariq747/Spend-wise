@@ -20,17 +20,14 @@ struct InsightsView: View {
     @State private var tab: InsightsTab = .overview
     
     var body: some View {
-        ZStack {
-            Color(.gray).opacity(0.09)
-                .ignoresSafeArea()
-            
+      
             VStack {
                 MonthPicker(month: $selectedMonth)
                 
                 HStack(spacing: 8) {
                       TabPill("Overview", .overview,  selection: $tab)
                       TabPill("Trends",   .trends,    selection: $tab)
-                      TabPill("Insights", .insights,  selection: $tab)
+                    
                   }
 
                   Group {
@@ -40,13 +37,11 @@ struct InsightsView: View {
                       case .trends:
                         
                           TrendsView(selectedMonth: $selectedMonth, expenses: monthExpenses, budget: budgetForMonth)
-                      case .insights:
-                          IntelligentInsightsView(selectedMonth: $selectedMonth, expenses: monthExpenses, budget: budgetForMonth)
+                     
                       }
                   }
             }
             .padding()
-        }
         .onAppear {
             fetchBudget()
             fetchExpenses()

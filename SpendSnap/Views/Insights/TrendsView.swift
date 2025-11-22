@@ -40,8 +40,10 @@ struct TrendsView: View {
                 HStack {
                     Image(systemName: "chart.bar")
                         .font(.system(size: 12, weight: .semibold))
+                        .foregroundStyle(.primary)
                     Text("Weekly Trends")
                         .font(.system(size: 12, weight: .semibold))
+                        .foregroundStyle(.primary)
                 }
                 
                 // HStack for weekly bars
@@ -76,28 +78,30 @@ struct TrendsView: View {
                 }
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 12)
-                .background(Color.gray.opacity(0.09), in: RoundedRectangle(cornerRadius: 12))
-                .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color.gray.opacity(0.09), lineWidth: 1))
+                .background(Color(.systemGray6), in: RoundedRectangle(cornerRadius: 12))
+                .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color(.systemGray6), lineWidth: 1))
             }
             .padding(.horizontal, 12)
             .padding(.vertical, 20)
-            .background(Color.white, in: RoundedRectangle(cornerRadius: 12))
-            .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color.white, lineWidth: 1))
+            .background(Color(.systemBackground), in: RoundedRectangle(cornerRadius: 12))
+            .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color(.systemGray5), lineWidth: 2))
             
             // Daily Burn
             VStack(alignment: .center) {
                 HStack {
                     Image(systemName: "chart.bar.xaxis.ascending.badge.clock")
                         .font(.system(size: 12, weight: .semibold))
+                        .foregroundStyle(.primary)
                     Text("Daily Burn")
                         .font(.system(size: 12, weight: .semibold))
+                        .foregroundStyle(.primary)
                 }
                 DailyBurn(expenses: expenses, month: selectedMonth, budgetAmount: budget?.amount ?? 0)
             }
             .padding(.horizontal, 12)
-            .padding(.vertical, 20)
-            .background(Color.white, in: RoundedRectangle(cornerRadius: 12))
-            .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color.white, lineWidth: 1))
+            .padding(.vertical, 30)
+            .background(Color(.systemBackground), in: RoundedRectangle(cornerRadius: 12))
+            .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color(.systemGray5), lineWidth: 2))
                 
             let points = makePaceSeries(expenses: expenses, month: selectedMonth, budget: budget?.amount)
             let bands  = makeBands(from: points)

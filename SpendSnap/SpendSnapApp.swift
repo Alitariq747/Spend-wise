@@ -11,7 +11,7 @@ import SwiftData
 @main
 struct SpendSnapApp: App {
     var sharedModelContainer: ModelContainer = {
-        let schema = Schema([Expense.self, Budget.self, Settings.self])
+        let schema = Schema([Expense.self, Budget.self, Settings.self, CategoryEntity.self, CategoryMonthlyBudget.self, CreditCard.self])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
 
         do {

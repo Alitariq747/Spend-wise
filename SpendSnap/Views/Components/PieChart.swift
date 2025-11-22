@@ -60,7 +60,7 @@ struct PieChart: View {
         }
         // Optional remainder (light gray) if total < 1
         if cursor < 1.0 {
-            out.append(Slice(startDeg: cursor * 360, endDeg: 360, color: .gray.opacity(0.09)))
+            out.append(Slice(startDeg: cursor * 360, endDeg: 360, color: Color(.secondarySystemBackground)))
         }
         return out
     }

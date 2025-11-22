@@ -26,6 +26,17 @@ struct CreditCardView: View {
     @State private var selectedCard: CreditCard? = nil
     @State private var selected: CardSnapShot? = nil
     
+    private func makeSnapshot(for card: CreditCard) -> CardSnapShot {
+        let cycle = cardCycleAndDue(statementDay: card.statementDay, dueDay: card.dueDay)
+        let expensesThisCycle = allExpenses.filter {
+            $0.method == .card &&
+            $0.card == card &&
+            $0.date >= cycle.start && $0.date < cycle.end
+        }
+        let spent = expensesThisCycle.reduce(.zero) { $0 + $1.amount}
+        return CardSnapShot(card: card, cycle: cycle, expensesThisCycle: expensesThisCycle, spentThisCycle: spent)
+    }
+    
     var body: some View {
         ZStack(alignment: .topLeading) {
             Color(.systemBackground).ignoresSafeArea()
@@ -54,14 +65,7 @@ struct CreditCardView: View {
                     NoCardView()
                 } else {
                     CreditCardList(creditCards: cards) { card in
-                        let cycle = cardCycleAndDue(statementDay: card.statementDay, dueDay: card.dueDay)
-                        let expensesThisCycle = allExpenses.filter {
-                            $0.method == .card &&
-                            $0.card == card &&
-                            $0.date >= cycle.start && $0.date < cycle.end
-                        }
-                        let spent = expensesThisCycle.reduce(.zero) { $0 + $1.amount }
-                        selected = CardSnapShot(card: card, cycle: cycle, expensesThisCycle: expensesThisCycle, spentThisCycle: spent)
+                        selected = makeSnapshot(for: card)
                     }
                 }
                     

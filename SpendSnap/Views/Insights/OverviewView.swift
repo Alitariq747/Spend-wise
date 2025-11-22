@@ -32,7 +32,7 @@ struct OverviewView: View {
                     HStack(alignment: .center, spacing: 16) {
                         
                         VStack(alignment: .leading, spacing: 8) {
-                        ForEach(Category.allCases, id: \.id) { c in
+                        ForEach(categories, id: \.id) { c in
                             
                             HStack {
                                 Image(systemName: "circle.fill").foregroundStyle(c.color).font(.caption)
@@ -49,10 +49,10 @@ struct OverviewView: View {
                     }
                     .padding(.horizontal)
                     .padding(.vertical)
-                    .background(Color.white, in: RoundedRectangle(cornerRadius: 12))
-                    .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color.white,  lineWidth: 1))
+                    .background(Color(.systemBackground), in: RoundedRectangle(cornerRadius: 12))
+                    .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color(.systemGray5),  lineWidth: 1))
                     
-                    // Catgeory Analytics here.
+                   
                    
                 }
             }

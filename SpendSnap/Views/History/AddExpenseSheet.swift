@@ -113,7 +113,7 @@ struct AddExpenseSheet: View {
                                 .contentShape(Rectangle()) // easy tap
                             }
                             .buttonStyle(.plain)
-                            .popover(isPresented: $showCalendar) {           // on iPhone this becomes a sheet
+                            .popover(isPresented: $showCalendar) {
                                 DatePicker(
                                     "",
                                     selection: $date,
@@ -123,7 +123,7 @@ struct AddExpenseSheet: View {
                                 .datePickerStyle(.graphical)
                                 .labelsHidden()
                                 .padding()
-                                .presentationDetents([.medium])              // nice size on iPhone
+                                .presentationDetents([.medium])
                             }
                         }
                         .padding(.vertical, 8)
@@ -195,7 +195,7 @@ struct AddExpenseSheet: View {
                                         } label: {
                                             HStack {
                                                 Text(card.name)
-                                                if selectedCard?.id == card.id { Image(systemName: "checkmark") }
+                                                if selectedCard?.persistentModelID == card.persistentModelID { Image(systemName: "checkmark") }
                                             }
                                         }
                                     }

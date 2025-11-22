@@ -9,6 +9,15 @@ import SwiftUI
 import SwiftData
 
 struct CategoryDetailSheet: View {
+    let category: CategoryEntity
+    let spent: Decimal
+    let expenses: [Expense]
+    var onDataChanged: (() -> Void)? = nil
+    let activeMonth: Date
+    
+    private var activeMonthKey: String {
+        MonthUtil.monthKey(activeMonth)
+    }
     
     @Environment(\.dismiss) private var dismiss
     
@@ -20,11 +29,15 @@ struct CategoryDetailSheet: View {
         settingsRow.first?.currencyCode ?? "USD"
     }
     
-    let category: CategoryEntity
-    let spent: Decimal
-    let expenses: [Expense]
+    @State private var showCategoryEditSheet: Bool = false
     
-    private var budget: Decimal { category.monthlyBudget }
+    private var budget: Decimal {
+        if let override = category.monthlyBudgets.first(where: { $0.monthKey == activeMonthKey}) {
+            return override.amount
+        } else {
+            return category.monthlyBudget
+        }
+    }
     private var progress: Double {
         guard budget > 0 else { return 0 }
         let spentD  = NSDecimalNumber(decimal: spent).doubleValue
@@ -58,7 +71,7 @@ struct CategoryDetailSheet: View {
                 Spacer()
                 
                 Button {
-                    print("Edit")
+                    showCategoryEditSheet = true
                 } label: {
                     Image(systemName: "pencil")
                         .font(.system(size: 16, weight: .medium))
@@ -88,14 +101,14 @@ struct CategoryDetailSheet: View {
                         .font(.caption2)
                         .foregroundStyle(.secondary)
                 }
-                .gaugeStyle(.accessoryCircular)          // ⟵ circular ring
-                .tint(tintColor)                    // ⟵ your category accent color
+                .gaugeStyle(.accessoryCircular)        
+                .tint(tintColor)
                 .frame(width: 64, height: 64)
                 
                 Spacer()
                 
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("Budgeted: \(symbol)\(category.monthlyBudget)")
+                    Text("Budgeted: \(symbol)\(budget)")
                         .font(.system(size: 15, weight: .regular))
                         .foregroundStyle(.primary)
                     Text("Spent: \(symbol)\(spent)")
@@ -142,12 +155,17 @@ struct CategoryDetailSheet: View {
         }
         .padding()
         .sheet(item: $selectedExpense, content: { expense in
-            ExpenseDetailSheet(expense: expense)
+            ExpenseDetailSheet(expense: expense, onDeleteExpense: { onDataChanged?() })
         })
         .presentationDetents([.large])
+        .sheet(isPresented: $showCategoryEditSheet) {
+            CategoryEditSheet(category: category, activeMonth: activeMonth, onSaved: { onDataChanged?()
+            dismiss()
+            })
+        }
         }
 }
 
 #Preview {
-    CategoryDetailSheet(category: previewCategories.first!, spent: 50.00, expenses: previewExpenses)
+    CategoryDetailSheet(category: previewCategories.first!, spent: 50.00, expenses: previewExpenses, activeMonth: .now)
 }

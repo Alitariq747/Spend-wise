@@ -11,45 +11,67 @@ import SwiftData
 struct HistoryView: View {
     @Environment(\.modelContext) private var ctx
     @Environment(\.colorScheme) private var colorScheme
+    @Query private var settingsRow: [Settings]
+    
+    private var currencyCode: String {
+        settingsRow.first?.currencyCode ?? "USD"
+    }
     
     @State private var selectedMonth = Date()
     @State private var showAddExpenseView: Bool = false
     
     @State private var monthExpenses: [Expense] = []
+    @State private var selectedExpense: Expense? = nil
+    @State private var showExpenseDetailSheet: Bool = false
     
     var body: some View {
+        let symbol = CurrencyUtil.symbol(for: currencyCode)
+            
         ZStack {
-            Color(.gray).opacity(0.09)
-                .ignoresSafeArea()
-            
             VStack {
-            
+                
                 
                 MonthPicker(month: $selectedMonth, limitToCurrentMonth: true)
                 // List of expenses
-                List(monthExpenses, id: \.id) { e in
-                    ExpenseCard(expense: e)
-                        .padding(.vertical, 6)
-                        .listRowInsets(EdgeInsets())
-                        .listRowSeparator(.hidden)
-                        .listRowBackground(Color.clear)
-                        .swipeActions(edge: .trailing, allowsFullSwipe: true) {
-                            Button(role: .destructive) {
-                                delete(e)
-                            } label: {
-                               Image(systemName: "trash")
-                                    .symbolRenderingMode(.monochrome)
-                                    .font(.caption2)
+                ScrollView(showsIndicators: false) {
+                    VStack(alignment: .leading) {
+                        ForEach(monthExpenses, id: \.id) { exp in
+                            VStack(alignment: .leading, spacing: 12) {
+                                HStack {
+                                    Text(exp.date, style: .date)
+                                        .font(.system(size: 14, weight: .light))
+                                    Spacer()
+                                    Button {
+                                        selectedExpense = exp
+                                        
+                                    } label: {
+                                        Image(systemName: "ellipsis")
+                                            .font(.system(size: 12, weight: .light))
+                                            .tint(Color(.systemGray4))
+                                    }
+                                    .buttonStyle(.plain)
+                                    
+                                }
+                                HStack {
+                                    Circle().fill(exp.category?.color ?? Color(.systemGray5))
+                                        .frame(width: 12, height: 12)
+                                    Text(exp.merchant)
+                                        .font(.system(size: 16, weight: .regular))
+                                    Spacer()
+                                    Text("\(symbol)\(exp.amount)")
+                                }
                             }
-                        
-                            .tint(Color.red.opacity(0.5))
-                              }
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 12)
+                        }
+                    }
+                    
                 }
-                .listStyle(.plain)
-                .scrollContentBackground(.hidden)
+                .padding(.horizontal)
             }
-            .padding()
-    
+            
+            
+            
             VStack {
                 Spacer()
                 
@@ -61,21 +83,24 @@ struct HistoryView: View {
                         Image(systemName: "plus")
                             .font(.system(size: 20, weight: .bold))
                             .foregroundColor(colorScheme == .dark ? .black : .white)   // icon color
-                            .padding(8)
+                            .padding(12)
                             .background(
                                 Circle()
                                     .fill(colorScheme == .dark ? Color.white : Color.black) // bg color
                             )
                             .shadow(color: .black.opacity(0.08), radius: 12, x: 0, y: 6)
                     }
-
+                    
                 }
                 .padding(.trailing, 25)
                 .padding(.bottom, 20)
             }
-       
-
         }
+            .sheet(item: $selectedExpense, content: { expense in
+                ExpenseDetailSheet(expense: expense, onDeleteExpense: { fetchExpenses() })
+            })
+
+        
         .onChange(of: selectedMonth, {
             fetchExpenses()
         })
@@ -94,14 +119,6 @@ struct HistoryView: View {
         desc.sortBy = [.init(\.date, order: .reverse)]
         monthExpenses = (try? ctx.fetch(desc)) ?? []
     }
-    private func delete(_ e: Expense) {
-        withAnimation {
-            ctx.delete(e)
-            try? ctx.save()
-            monthExpenses.removeAll { $0.id == e.id }
-        }
-    }
-
 }
 
 #Preview {

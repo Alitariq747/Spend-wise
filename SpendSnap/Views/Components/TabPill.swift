@@ -7,9 +7,11 @@
 
 import SwiftUI
 
-enum InsightsTab { case overview, trends, insights }
+enum InsightsTab { case overview, trends }
 
 struct TabPill: View {
+    @Environment(\.colorScheme) private var colorScheme
+    
     let title: String
     let tab: InsightsTab
     @Binding var selection: InsightsTab
@@ -24,12 +26,12 @@ struct TabPill: View {
         } label: {
             Text(title)
                 .font(.subheadline.weight(.semibold))
-                .foregroundStyle(selection == tab ? Color.white : Color.black.opacity(0.7))
+                .foregroundStyle(selection == tab ? Color.white : Color.primary)
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 8)
                 .background(
                     RoundedRectangle(cornerRadius: 12)
-                        .fill(selection == tab ? Color.light2 : Color.gray.opacity(0.15))
+                        .fill(selection == tab ? Color.indigo : Color(.systemGray5))
                 )
                 .foregroundStyle(.black)
         }

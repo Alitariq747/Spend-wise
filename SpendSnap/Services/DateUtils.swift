@@ -119,3 +119,14 @@ func dueLabel(for date: Date, calendar: Calendar = .current) -> String {
     }
     return monthDateFormatter.string(from: date)
 }
+
+func monthRange(for d: Date) -> ClosedRange<Date> {
+    let cal = Calendar.current
+    if let interval = cal.dateInterval(of: .month, for: d) {
+        let start = interval.start
+        // make end inclusive by subtracting 1 second from the start of next month
+        let end = cal.date(byAdding: .second, value: -1, to: interval.end) ?? interval.end
+        return start...end
+    }
+    return d...d
+}

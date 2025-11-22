@@ -84,7 +84,7 @@ struct DailyBurn: View {
                 VStack(spacing: 4) {
                     ZStack(alignment: .bottom) {
                         Capsule()
-                            .fill(Color.gray.opacity(0.09))
+                            .fill(Color(.systemGray6))
                             .frame(width: 7, height: trackH)
                         
                         if d.amount > 0 {
@@ -96,7 +96,7 @@ struct DailyBurn: View {
 
                     Text(weekdayLetter(for: d.day))
                         .font(.system(size: 8, weight: .medium))
-                            .foregroundStyle(Color.darker)
+                        .foregroundStyle(.primary)
                             .frame(width: 7)
                 }
 //                .frame(width: 10, height: trackH, alignment: .bottom)

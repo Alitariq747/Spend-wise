@@ -29,6 +29,10 @@ final class CategoryEntity {
     var color: Color {
         Color(hex: colorHex)
     }
+    
+    @Relationship(deleteRule: .cascade)
+    var monthlyBudgets: [CategoryMonthlyBudget] = []
+
 }
 
 extension Color {

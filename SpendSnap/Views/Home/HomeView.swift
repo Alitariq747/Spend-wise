@@ -14,6 +14,7 @@ struct HomeView: View {
     @Query(sort: \CategoryEntity.name) private var categories: [CategoryEntity]
     @State private var selectedMonth = Date()
     @State private var showAddBudget: Bool = false
+    @State private var showAddCategorySheet: Bool = false
   
     @State private var budgetForMonth: Budget? = nil
     @State private var monthExpenses: [Expense] = []
@@ -56,6 +57,16 @@ struct HomeView: View {
     private func filteredExpenses(for category: CategoryEntity) -> [Expense] {
         monthExpenses.filter { $0.category?.persistentModelID == category.persistentModelID }
     }
+    
+    private func resolveBudget(for category: CategoryEntity) -> Decimal {
+        if let override = category.monthlyBudgets.first(where: {$0.monthKey == monthKey}) {
+            return override.amount
+        } else {
+            return category.monthlyBudget
+        }
+    }
+    
+    @State private var showCategoryDetailSheet: Bool = false
 
 
     var body: some View {
@@ -87,22 +98,30 @@ struct HomeView: View {
                     }, budget: budgetForMonth, spent: spentThisMonth, todaySpent: todayTotal, weekSpent: weekToDateTotal, currentMonth: isViewingCurrentMonth, daysRemaining: daysRemaining(in: selectedMonth), idealPerDay: idealPerDay(budget: budgetForMonth?.amount ?? 0, month: selectedMonth))
                     
                  
-                      
-                    LazyVStack(alignment: .leading, spacing: 0) {
-                        ForEach(Array(categories.enumerated()), id: \.element) { index, category in
-                            VStack(spacing: 0) {
-                                Button {
-                                    chosenCategory = category
-                                } label: {
-                                    let spent = categoryTotals[category]
-                                    CategorySpendingCard(category: category, spent: spent ?? 0)
-                                        .padding(.vertical, 8)
-                                } 
-                                .buttonStyle(.plain)
+                    LazyVStack(spacing: 12) {
+                        ForEach(categories, id: \.self) { cat in
+                            let spent = categoryTotals[cat] ?? 0
+                            let budget = resolveBudget(for: cat)
+                            CategorySpendingCard(category: cat, spent: spent, budget: budget) {
+                                // open detail sheet
+                                chosenCategory = cat
+                                showCategoryDetailSheet = true
                             }
                         }
                     }
-
+                    Button {
+                        showAddCategorySheet = true
+                    } label: {
+                       Text( "Add new category")
+                            .font(.system(size: 14, weight: .regular))
+                            .foregroundStyle(Color(.systemGray2))
+                            .frame(maxWidth:.infinity, alignment: .center)
+                            .padding(.vertical, 12)
+                            .background(Color(.systemBackground), in: RoundedRectangle(cornerRadius: 12))
+                            .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color(.systemGray5)))
+                    }
+                    .padding(.top, categories.count == 0 ? -18 : -6)
+                    .padding(.horizontal, 2)
                 }
                 .padding()
             }
@@ -120,8 +139,12 @@ struct HomeView: View {
         }
         .sheet(item: $chosenCategory, content: { cat in
             let spent = categoryTotals[cat] ?? 0
-            CategoryDetailSheet(category: cat, spent: spent, expenses: filteredExpenses(for: cat))
+            CategoryDetailSheet(category: cat, spent: spent, expenses: filteredExpenses(for: cat), onDataChanged: { fetchExpenses() }, activeMonth: selectedMonth)
         })
+        .sheet(isPresented: $showAddCategorySheet, content: {
+            AddCategorySheet(activeMonth: selectedMonth)
+        })
+        .presentationDetents([.large])
         .onAppear {
             fetchBudget()
             fetchExpenses()

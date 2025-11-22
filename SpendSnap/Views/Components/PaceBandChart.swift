@@ -41,8 +41,8 @@ struct PaceBandChart: View {
         }
         .padding(.horizontal, 12)
         .padding(.vertical, 20)
-        .background(Color.white, in: RoundedRectangle(cornerRadius: 12))
-        .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color.white, lineWidth: 1))
+        .background(Color(.systemBackground), in: RoundedRectangle(cornerRadius: 12))
+        .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color(.systemGray6), lineWidth: 2))
     }
 }
 

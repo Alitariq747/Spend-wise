@@ -17,10 +17,13 @@ struct CardDetailSheet: View {
     let snapshot: CardSnapShot
   
     var onClose: (() -> Void)? = nil
+    var onExpensesChanged: (() -> Void)? = nil
     
     private var currencyCode: String {
         settingsRow.first?.currencyCode ?? "USD"
     }
+    @State private var selectedExpense: Expense? = nil
+    
     
     var body: some View {
        
@@ -60,9 +63,33 @@ struct CardDetailSheet: View {
 
             }
             Divider()
-            List(snapshot.expensesThisCycle) { exp in
-            ExpenseCard(expense: exp)
+            ScrollView(showsIndicators: false) {
+                VStack(alignment: .leading) {
+                    ForEach(snapshot.expensesThisCycle, id: \.id) { exp in
+                        VStack(alignment: .leading, spacing: 12) {
+                            HStack {
+                                Text(exp.date, style: .date)
+                                    .font(.system(size: 14, weight: .light))
+                                Spacer()
+                              
+                              
+                            }
+                            HStack {
+                                Circle().fill(exp.category?.color ?? Color(.systemGray5))
+                                    .frame(width: 12, height: 12)
+                                Text(exp.merchant)
+                                    .font(.system(size: 16, weight: .regular))
+                                Spacer()
+                                Text("\(symbol)\(exp.amount)")
+                            }
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 12)
+                    }
+                }
+              
             }
+
         }
         .padding()
         .sheet(isPresented: $showEditSheet) {
@@ -71,6 +98,9 @@ struct CardDetailSheet: View {
             })
         }
         .presentationDetents([.large])
+        .sheet(item: $selectedExpense, content: { expense in
+            ExpenseDetailSheet(expense: expense, onDeleteExpense: { onExpensesChanged?() })
+        })
     }
 }
 
