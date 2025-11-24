@@ -20,45 +20,37 @@ struct OverviewView: View {
     }
     
     var body: some View {
-        
         let segs = pieSegments(
             monthExpenses: monthExpenses,
-            budgetAmount: budgetForMonth?.amount   
+            budgetAmount: budgetForMonth?.amount
         )
-        
-            ScrollView {
-                LazyVStack {
-                    // Our cicular category split
-                    HStack(alignment: .center, spacing: 16) {
-                        
-                        VStack(alignment: .leading, spacing: 8) {
-                        ForEach(categories, id: \.id) { c in
-                            
-                            HStack {
-                                Image(systemName: "circle.fill").foregroundStyle(c.color).font(.caption)
-                                Text(c.name)
-                                    .font(.caption2)
-                            }
-                                
-                            }
-                        }
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        
-                        PieChart(segments: segs)
-                            .frame(width: 180, height: 180)
+
+        HStack(alignment: .center, spacing: 16) {
+            VStack(alignment: .leading, spacing: 8) {
+                ForEach(categories, id: \.id) { c in
+                    HStack {
+                        Image(systemName: "circle.fill")
+                            .foregroundStyle(c.color)
+                            .font(.caption)
+                        Text(c.name)
+                            .font(.caption2)
                     }
-                    .padding(.horizontal)
-                    .padding(.vertical)
-                    .background(Color(.systemBackground), in: RoundedRectangle(cornerRadius: 12))
-                    .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color(.systemGray5),  lineWidth: 1))
-                    
-                   
-                   
                 }
             }
-        
-    
+            .frame(maxWidth: .infinity, alignment: .leading)
+
+            PieChart(segments: segs)
+                .frame(width: 180, height: 180)
+        }
+        .padding(.horizontal)
+        .padding(.vertical)
+        .background(Color(.systemBackground), in: RoundedRectangle(cornerRadius: 12))
+        .overlay(
+            RoundedRectangle(cornerRadius: 12)
+                .stroke(Color(.systemGray5), lineWidth: 2)
+        )
     }
+
     
   
     

@@ -12,9 +12,13 @@ import PhotosUI
 struct HomeView: View {
     @Environment(\.modelContext) private var ctx
     @Query(sort: \CategoryEntity.name) private var categories: [CategoryEntity]
+    @Environment(\.colorScheme) private var colorScheme
+    
     @State private var selectedMonth = Date()
     @State private var showAddBudget: Bool = false
     @State private var showAddCategorySheet: Bool = false
+    @State private var showAddExpenseSheet = false
+
   
     @State private var budgetForMonth: Budget? = nil
     @State private var monthExpenses: [Expense] = []
@@ -71,61 +75,84 @@ struct HomeView: View {
 
     var body: some View {
         
-      
-            ScrollView(.vertical, showsIndicators: false) {
-                LazyVStack(alignment: .leading, spacing: 18) {
-                    HStack {
-                        Text("💸")
-                            .font(.system(size: 20, weight: .bold))
-                      Spacer()
-                        MonthPicker(month: $selectedMonth, limitToCurrentMonth: true)
-                        Spacer()
-                        Button {
-                          showAddBudget = true
-                        } label: {
-                            Image(systemName: "pencil")
-                                .font(.system(size: 12, weight: .medium))
-                                .tint(Color(.systemGray))
-                                .padding(.horizontal, 10)
-                                .padding(.vertical, 6)
-                        }
-                        .background(Color(.secondarySystemBackground), in: RoundedRectangle(cornerRadius: 8))
-
-                    }
-                    
-                    MonthlyOverview(onTapped: {
-                        showAddBudget = true
-                    }, budget: budgetForMonth, spent: spentThisMonth, todaySpent: todayTotal, weekSpent: weekToDateTotal, currentMonth: isViewingCurrentMonth, daysRemaining: daysRemaining(in: selectedMonth), idealPerDay: idealPerDay(budget: budgetForMonth?.amount ?? 0, month: selectedMonth))
-                    
-                 
-                    LazyVStack(spacing: 12) {
-                        ForEach(categories, id: \.self) { cat in
-                            let spent = categoryTotals[cat] ?? 0
-                            let budget = resolveBudget(for: cat)
-                            CategorySpendingCard(category: cat, spent: spent, budget: budget) {
-                                // open detail sheet
-                                chosenCategory = cat
-                                showCategoryDetailSheet = true
-                            }
-                        }
-                    }
+        ZStack {
+        ScrollView(.vertical, showsIndicators: false) {
+            LazyVStack(alignment: .leading, spacing: 18) {
+                HStack {
+                    Text("💸")
+                        .font(.system(size: 20, weight: .bold))
+                    Spacer()
+                    MonthPicker(month: $selectedMonth, limitToCurrentMonth: true)
+                    Spacer()
                     Button {
-                        showAddCategorySheet = true
+                        showAddBudget = true
                     } label: {
-                       Text( "Add new category")
-                            .font(.system(size: 14, weight: .regular))
-                            .foregroundStyle(Color(.systemGray2))
-                            .frame(maxWidth:.infinity, alignment: .center)
-                            .padding(.vertical, 12)
-                            .background(Color(.systemBackground), in: RoundedRectangle(cornerRadius: 12))
-                            .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color(.systemGray5)))
+                        Image(systemName: "pencil")
+                            .font(.system(size: 12, weight: .medium))
+                            .tint(Color(.systemGray))
+                            .padding(.horizontal, 10)
+                            .padding(.vertical, 6)
                     }
-                    .padding(.top, categories.count == 0 ? -18 : -6)
-                    .padding(.horizontal, 2)
+                    .background(Color(.secondarySystemBackground), in: RoundedRectangle(cornerRadius: 8))
+                    
                 }
-                .padding()
+                
+                MonthlyOverview(onTapped: {
+                    showAddBudget = true
+                }, budget: budgetForMonth, spent: spentThisMonth, todaySpent: todayTotal, weekSpent: weekToDateTotal, currentMonth: isViewingCurrentMonth, daysRemaining: daysRemaining(in: selectedMonth), idealPerDay: idealPerDay(budget: budgetForMonth?.amount ?? 0, month: selectedMonth))
+                
+                
+                LazyVStack(spacing: 12) {
+                    ForEach(categories, id: \.self) { cat in
+                        let spent = categoryTotals[cat] ?? 0
+                        let budget = resolveBudget(for: cat)
+                        CategorySpendingCard(category: cat, spent: spent, budget: budget) {
+                            // open detail sheet
+                            chosenCategory = cat
+                            showCategoryDetailSheet = true
+                        }
+                    }
+                }
+                Button {
+                    showAddCategorySheet = true
+                } label: {
+                    Text( "Add new category")
+                        .font(.system(size: 14, weight: .regular))
+                        .foregroundStyle(Color(.systemGray2))
+                        .frame(maxWidth:.infinity, alignment: .center)
+                        .padding(.vertical, 12)
+                        .background(Color(.systemBackground), in: RoundedRectangle(cornerRadius: 12))
+                        .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color(.systemGray5)))
+                }
+                .padding(.top, categories.count == 0 ? -18 : -6)
+                .padding(.horizontal, 2)
             }
-           
+            .padding()
+        }
+            VStack {
+                Spacer()
+                
+                HStack {
+                    Spacer()
+                    Button {
+                        showAddExpenseSheet = true
+                    } label: {
+                        Image(systemName: "plus")
+                            .font(.system(size: 20, weight: .bold))
+                            .foregroundColor(colorScheme == .dark ? .black : .white)   // icon color
+                            .padding(12)
+                            .background(
+                                Circle()
+                                    .fill(colorScheme == .dark ? Color.white : Color.black) // bg color
+                            )
+                            .shadow(color: .black.opacity(0.08), radius: 12, x: 0, y: 6)
+                    }
+                    
+                }
+                .padding(.trailing, 25)
+                .padding(.bottom, 20)
+            }
+    }
         
         .onChange(of: selectedMonth) {
             fetchBudget()
@@ -145,10 +172,15 @@ struct HomeView: View {
             AddCategorySheet(activeMonth: selectedMonth)
         })
         .presentationDetents([.large])
+        .navigationTitle("")
+        .navigationDestination(isPresented: $showAddExpenseSheet, destination: {
+            AddExpenseSheet(month: $selectedMonth)
+        })
         .onAppear {
             fetchBudget()
             fetchExpenses()
         }
+
     }
     
     private func fetchBudget() {

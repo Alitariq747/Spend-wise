@@ -11,31 +11,53 @@ import SwiftData
 struct RootTabView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var settingsRows: [Settings]
+    @State private var selection: MainTab = .home
+    
+    @State private var isKeyboardVisible = false
     
     
     var body: some View {
-        TabView {
-            NavigationStack {
-                HomeView() }
-                    .tabItem { Label("Home", systemImage: "house") }
+        ZStack(alignment: .bottom) {
+                  TabView(selection: $selection) {
+                      NavigationStack { HomeView() }
+                          .tag(MainTab.home)
+
+                      NavigationStack { HistoryView() }
+                          .tag(MainTab.history)
+
+                      NavigationStack { CreditCardView() }
+                          .tag(MainTab.cards)
+
+                      NavigationStack { InsightsView() }
+                          .tag(MainTab.insights)
+                      
+                      NavigationStack { SettingsView() }
+                          .tag(MainTab.settings)
+                  }
+                  // hide the system tab bar
+                  .toolbar(.hidden, for: .tabBar)
+
+                
+            if !isKeyboardVisible {
+                           CustomTabBar(selection: $selection)
+                       }
+              }
             
-            NavigationStack {
-                CreditCardView() }
-            .tabItem { Label("Credit Card", systemImage: "creditcard") }
-  
-            NavigationStack {
-                HistoryView() }
-                    .tabItem { Label("Expenses", systemImage: "clock") }
-
-            NavigationStack {
-                InsightsView() }
-                    .tabItem { Label("Insights", systemImage: "chart.bar") }
-
-            NavigationStack {
-                SettingsView() }
-                    .tabItem { Label("Settings", systemImage: "gearshape") }
-
-               }
+        .ignoresSafeArea(edges:.bottom)
+        .onReceive(NotificationCenter.default.publisher(
+                    for: UIResponder.keyboardWillShowNotification
+                )) { _ in
+                    withAnimation(.easeOut(duration: 0.25)) {
+                        isKeyboardVisible = true
+                    }
+                }
+                .onReceive(NotificationCenter.default.publisher(
+                    for: UIResponder.keyboardWillHideNotification
+                )) { _ in
+                    withAnimation(.easeOut(duration: 0.25)) {
+                        isKeyboardVisible = false
+                    }
+                }
         .task {
             if settingsRows.isEmpty { modelContext.insert(Settings()); try? modelContext.save()}
         }

@@ -50,7 +50,7 @@ struct CategorySpendingCard: View {
                                     .foregroundStyle(.primary)
                             }
                             Spacer()
-                            Image(systemName: "chevron.right")
+                            Image(systemName: "ellipsis")
                                 .foregroundStyle(.secondary)
                                 .font(.system(size:14, weight:.medium))
                         }

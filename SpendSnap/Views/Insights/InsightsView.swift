@@ -20,28 +20,29 @@ struct InsightsView: View {
     @State private var tab: InsightsTab = .overview
     
     var body: some View {
-      
-            VStack {
-                MonthPicker(month: $selectedMonth)
-                
-                HStack(spacing: 8) {
-                      TabPill("Overview", .overview,  selection: $tab)
-                      TabPill("Trends",   .trends,    selection: $tab)
-                    
-                  }
+        VStack {
+            MonthPicker(month: $selectedMonth)
 
-                  Group {
-                      switch tab {
-                      case .overview:
-                          OverviewView(selectedMonth: $selectedMonth, budgetForMonth: budgetForMonth, monthExpenses: monthExpenses)  
-                      case .trends:
-                        
-                          TrendsView(selectedMonth: $selectedMonth, expenses: monthExpenses, budget: budgetForMonth)
-                     
-                      }
-                  }
+            ScrollView {
+                VStack(spacing: 16) {
+                    // 1) Pie overview
+                    OverviewView(
+                        selectedMonth: $selectedMonth,
+                        budgetForMonth: budgetForMonth,
+                        monthExpenses: monthExpenses
+                    )
+
+                    // 2) Trends sections
+                    TrendsView(
+                        selectedMonth: $selectedMonth,
+                        expenses: monthExpenses,
+                        budget: budgetForMonth
+                    )
+                }
+                .padding(.top, 8)
             }
-            .padding()
+        }
+        .padding()
         .onAppear {
             fetchBudget()
             fetchExpenses()
@@ -51,6 +52,7 @@ struct InsightsView: View {
             fetchExpenses()
         }
     }
+
     
     private func fetchBudget() {
        

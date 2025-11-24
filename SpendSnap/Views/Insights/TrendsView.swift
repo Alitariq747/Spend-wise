@@ -31,7 +31,7 @@ struct TrendsView: View {
 
         
         // parent vStack
-        ScrollView {
+        VStack(spacing: 16) {
             // VStack for mothly overview
             VStack(alignment: .center) {
                 
