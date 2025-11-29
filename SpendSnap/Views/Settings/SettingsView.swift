@@ -22,6 +22,7 @@ struct SettingsView: View {
     @State private var showRemindersSheet: Bool = false
     @State private var showGoProSheet: Bool = false
     @State private var showDeleteConfirmation: Bool = false
+    @State private var showWidgetInfoSheet: Bool = false
     
     private func requirePro(_ action: () -> Void) {
         if settings?.proUnlocked == true {
@@ -68,17 +69,9 @@ struct SettingsView: View {
                     }                  
                     
                     // HStack for widgets
-                    HStack {
-                        Image(systemName: "rectangle.grid.2x2.fill")
-                            .foregroundStyle(Color.orange.opacity(0.7))
-                            .font(.system(size: 18, weight: .semibold))
-                        Text("Widgets")
-                            .font(.system(size: 18, weight: .semibold))
-                        Spacer()
-                        Image(systemName: "chevron.right")
-                            .font(.system(size: 16, weight: .semibold))
-                    }
-                    .padding(.top, 10)
+                    WidgetRow(onTap: {
+                        showWidgetInfoSheet = true
+                    })
                     
                     Text("DATA")
                         .font(.system(size: 14, weight: .light))
@@ -278,6 +271,9 @@ struct SettingsView: View {
             .padding(.horizontal, 16)
             .presentationDetents([.height(250)])
             .presentationDragIndicator(.hidden)
+        }
+        .sheet(isPresented: $showWidgetInfoSheet) {
+            WidgetInfoSheet()
         }
     }
 

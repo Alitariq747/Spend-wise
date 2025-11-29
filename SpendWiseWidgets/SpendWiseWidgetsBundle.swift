@@ -14,6 +14,7 @@ struct SpendWiseWidgetsBundle: WidgetBundle {
       
         MonthOverviewWidget()
         WeeklySpentWidget()
+        CreditCardsWidget()
     }
 }
 

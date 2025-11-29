@@ -13,8 +13,39 @@ import SwiftData
 
 
 struct WeekSpentWigetView: View {
+    @Environment(\.colorScheme) private var colorScheme
     
     let entry: MonthOverviewEntry
+    
+    private var textColor: Color {
+        colorScheme == .dark ? .white : .black
+    }
+    
+    private var secondary: Color {
+        textColor.opacity(0.78)
+    }
+    
+    private var backgroundGradient: LinearGradient {
+        if colorScheme == .dark {
+            return LinearGradient(
+                colors: [
+                    color(hex: 0x0B1020),
+                    color(hex: 0x121A30)
+                ],
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+        } else {
+            return LinearGradient(
+                colors: [
+                    color(hex: 0xDFF5EF),
+                    color(hex: 0xB9E6D6)
+                ],
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+        }
+    }
     
     private func weeklyBudget(monthBudget: Decimal, divisor: Decimal = 4.25) -> Int {
         guard monthBudget > 0, divisor > 0 else { return 0 }
@@ -47,7 +78,7 @@ struct WeekSpentWigetView: View {
             HStack {
                 Text("\(entry.currencyCode)\(entry.weekSpent)")
                     .font(.system(size: 20, weight: .bold))
-                    .foregroundStyle(.white)
+                    .foregroundStyle(textColor)
                     .padding(.bottom, 8)
                 Spacer()
                 
@@ -58,23 +89,34 @@ struct WeekSpentWigetView: View {
             VStack(alignment: .leading) {
                 Text("of \(entry.currencyCode)\(weeklyBudget)")
                     .font(.system(size: 12, weight: .light))
-                    .foregroundStyle(.white)
+                    .foregroundStyle(secondary)
                 Text("spent this week")
                     .font(.system(size: 12, weight: .light))
-                    .foregroundStyle(.white)
+                    .foregroundStyle(secondary)
             }
            
             ProgressView(value: progress)
                 .progressViewStyle(.linear)
-                .tint(progress >= 1 ? .red : .green)
+                .tint(progress >= 1 ? .red : (colorScheme == .dark ? .green.opacity(0.8) : .green))
                 .scaleEffect(x: 1, y: 1.6, anchor: .center)
            
         }
     
         .containerBackground(for: .widget) {
-            Color.mint.opacity(2.5)
-                    }
+            backgroundGradient
+                .overlay(
+                    RoundedRectangle(cornerRadius: 16)
+                        .stroke(Color.white.opacity(colorScheme == .dark ? 0.08 : 0.14), lineWidth: 1)
+                )
+        }
     }
+}
+
+private func color(hex: UInt32) -> Color {
+    let r = Double((hex >> 16) & 0xFF) / 255
+    let g = Double((hex >> 8) & 0xFF) / 255
+    let b = Double(hex & 0xFF) / 255
+    return Color(.sRGB, red: r, green: g, blue: b, opacity: 1.0)
 }
 
 struct WeeklySpentWidget: Widget {
@@ -102,4 +144,3 @@ struct WeeklySpentWidget: Widget {
         daysRemaining: 9
     )
 }
-
