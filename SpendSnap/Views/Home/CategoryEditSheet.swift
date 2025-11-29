@@ -59,7 +59,7 @@ struct CategoryEditSheet: View {
 
         // 2) figure out month-specific vs default budget
         let key = MonthUtil.monthKey(activeMonth)
-        if let override = category.monthlyBudgets.first(where: { $0.monthKey == key }) {
+        if let override = category.monthlyBudgets?.first(where: { $0.monthKey == key }) {
             // this month has its own override
             _categoryBudget = State(initialValue: Self.string(from: override.amount))
             _budgetScope = State(initialValue: .thisMonth)
@@ -270,7 +270,7 @@ struct CategoryEditSheet: View {
             }
             .padding(.horizontal, 16)
             .presentationDetents([.height(200)])
-            .presentationDragIndicator(.visible)
+            .presentationDragIndicator(.hidden)
         }
     }
     
@@ -301,13 +301,13 @@ struct CategoryEditSheet: View {
 
             // for the active month, we want that same default,
             // so remove any specific override for this month if it exists
-            if let override = category.monthlyBudgets.first(where: { $0.monthKey == activeMonthKey }) {
+            if let override = category.monthlyBudgets?.first(where: { $0.monthKey == activeMonthKey }) {
                 modelContext.delete(override)
             }
 
         case .thisMonth:
            
-            if let override = category.monthlyBudgets.first(where: { $0.monthKey == activeMonthKey }) {
+            if let override = category.monthlyBudgets?.first(where: { $0.monthKey == activeMonthKey }) {
                 override.amount = newBudget
             } else {
                 let override = CategoryMonthlyBudget(

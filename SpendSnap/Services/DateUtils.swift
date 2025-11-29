@@ -36,7 +36,7 @@ func daysRemaining(in month: Date) -> Int {
 
    
     let comps = cal.dateComponents([.day], from: today, to: monthInterval.end)
-    return comps.day ?? 0     // already “inclusive of today”
+    return comps.day ?? 0     
 }
 
 

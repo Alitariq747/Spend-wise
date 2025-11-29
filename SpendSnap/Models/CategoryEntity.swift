@@ -11,12 +11,12 @@ import SwiftData
 
 @Model
 final class CategoryEntity {
-    var name: String
-    var emoji: String
-    var monthlyBudget: Decimal
+    var name: String = ""
+    var emoji: String = "📁"
+    var monthlyBudget: Decimal = 0
     var isSystemOther: Bool = false
 
-    var colorHex: String
+    var colorHex: String = "CCCCCC"
     
     init(name: String, emoji: String, monthlyBudget: Decimal = .zero, colorHex: String = "CCCCCC", isSystemOther: Bool = false) {
         self.name = name
@@ -30,8 +30,11 @@ final class CategoryEntity {
         Color(hex: colorHex)
     }
     
-    @Relationship(deleteRule: .cascade)
-    var monthlyBudgets: [CategoryMonthlyBudget] = []
+    @Relationship(deleteRule: .cascade, inverse: \CategoryMonthlyBudget.category)
+    var monthlyBudgets: [CategoryMonthlyBudget]? = []
+    
+    @Relationship(deleteRule: .cascade , inverse: \Expense.category)
+    var expenses: [Expense]? = []
 
 }
 
@@ -50,22 +53,5 @@ extension Color {
     }
 }
 
-extension CategoryEntity {
-    static func seedDefaultsIfNeeded(in context: ModelContext) {
-        let existing = try? context.fetch(FetchDescriptor<CategoryEntity>())
-        if let existing, !existing.isEmpty {
-            return
-        }
-        for cat in Category.allCases {
-            let entity = CategoryEntity(
-                name: cat.name,
-                emoji: cat.emoji,
-                monthlyBudget: .zero,
-                colorHex: cat.colorHex
-            )
-            context.insert(entity)
-        }
-        try? context.save()
-    }
-}
+
 

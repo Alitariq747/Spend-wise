@@ -24,6 +24,15 @@ struct HistoryView: View {
     @State private var selectedExpense: Expense? = nil
     @State private var showExpenseDetailSheet: Bool = false
     
+    // for url link from wiget
+    @Binding var deepLinkMonth: Date?
+    
+    init(deepLinkMonth: Binding<Date?> = .constant(nil)) {
+           _deepLinkMonth = deepLinkMonth
+       
+           _selectedMonth = State(initialValue: deepLinkMonth.wrappedValue ?? Date())
+       }
+    
     var body: some View {
         let symbol = CurrencyUtil.symbol(for: currencyCode)
             
@@ -72,6 +81,7 @@ struct HistoryView: View {
             
             
             
+            
             VStack {
                 Spacer()
                 
@@ -106,7 +116,11 @@ struct HistoryView: View {
         })
         .onAppear(perform: {
             fetchExpenses()
+            handleDeepLinkIfNeeded()
         })
+        .onChange(of: deepLinkMonth) {
+            handleDeepLinkIfNeeded()
+               }
         .navigationTitle("")
         .navigationDestination(isPresented: $showAddExpenseView) {
             AddExpenseSheet(month: $selectedMonth)
@@ -118,6 +132,13 @@ struct HistoryView: View {
         var desc = FetchDescriptor<Expense>(predicate: #Predicate { $0.monthKey == key })
         desc.sortBy = [.init(\.date, order: .reverse)]
         monthExpenses = (try? ctx.fetch(desc)) ?? []
+    }
+    
+    private func handleDeepLinkIfNeeded() {
+        guard let month = deepLinkMonth else { return }
+        selectedMonth = month
+        showAddExpenseView = true
+        deepLinkMonth = nil    // consume the trigger so it doesn’t re-open
     }
 }
 

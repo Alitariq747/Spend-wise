@@ -16,9 +16,12 @@ struct SettingsView: View {
     private var settings: Settings? {
         settingsRow.first
     }
+  
+    
     @State private var showCurrencySheet: Bool = false
     @State private var showRemindersSheet: Bool = false
     @State private var showGoProSheet: Bool = false
+    @State private var showDeleteConfirmation: Bool = false
     
     private func requirePro(_ action: () -> Void) {
         if settings?.proUnlocked == true {
@@ -34,9 +37,7 @@ struct SettingsView: View {
         let isPro = settings?.proUnlocked ?? false
         let symbol = CurrencyUtil.symbol(for: settings?.currencyCode ?? "USD")
         
-        ZStack {
-            Color(.gray).opacity(0.09)
-                .ignoresSafeArea()
+       
             
             ScrollView {
                 // Big Pro / Basic section
@@ -55,36 +56,16 @@ struct SettingsView: View {
                     Currency(symbol: symbol) {
                         showCurrencySheet = true
                     }
-                
-                    Rectangle()
-                            .fill(Color.gray.opacity(0.15))
-                            .frame(height: 1)
-                    
+ 
                     // Appearance HStack
-                    HStack {
-                        Image(systemName: "moon.stars")
-                            .foregroundStyle(Color.indigo.opacity(0.7))
-                            .font(.system(size: 18, weight: .semibold))
-                        Text("Appearence")
-                            .font(.system(size: 18, weight: .semibold))
-                        Spacer()
-                        Image(systemName: "chevron.right")
-                            .font(.system(size: 16, weight: .semibold))
-                    }
-                    .padding(.top, 10)
-                    Rectangle()
-                            .fill(Color.gray.opacity(0.15))
-                            .frame(height: 1)
+                  AppearanceRow(settings: settings)
                     
                     // Notifications HStack
                     Reminders(level: settings?.reminderLevel ?? .quiet) {
                         requirePro {
                             showRemindersSheet = true
                         }
-                    }
-                    Rectangle()
-                            .fill(Color.gray.opacity(0.15))
-                            .frame(height: 1)
+                    }                  
                     
                     // HStack for widgets
                     HStack {
@@ -214,12 +195,24 @@ struct SettingsView: View {
                 .background(Color.white, in: RoundedRectangle(cornerRadius: 12))
                 .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color.white, lineWidth: 1))
                 
-             
+             // Delete Button
+                Button {
+                    showDeleteConfirmation = true
+                } label: {
+                    Text("Delete Account")
+                        .font(.system(size: 16, weight: .medium))
+                        .foregroundStyle(.white)
+                        .padding(.vertical, 12)
+                        .frame(maxWidth: .infinity)
+                        .background(Color.red, in: RoundedRectangle(cornerRadius: 12))
+                        .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color.red, lineWidth: 1))
+                }
+                .padding(.horizontal)
 
             }
             .padding(.vertical)
-            .padding(.horizontal, 12)
-        }
+           
+     
         .sheet(isPresented: $showCurrencySheet) {
             CurrencyPickerSheet(allCurrencies: CurrencyOption.allCurrencies, selectedCode: settings?.currencyCode ?? "USD") {
                 newCode in
@@ -248,7 +241,70 @@ struct SettingsView: View {
             }
         }
         .presentationDetents([.large])
+        .sheet(isPresented: $showDeleteConfirmation) {
+            VStack(spacing: 16) {
+                Capsule()
+                    .frame(width: 40, height: 4)
+                    .foregroundColor(Color(.systemGray4))
+                    .padding(.top, 8)
+
+                Text("Delete Everything!")
+                    .font(.headline)
+
+                Text("This will delete everything including expenses, categories,cards and your currency settings. This action cannot be undone.")
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
+                    .multilineTextAlignment(.center)
+
+                HStack(spacing: 12) {
+                    Button("Cancel") {
+                        showDeleteConfirmation = false
+                    }
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 10)
+                    .background(Color(.secondarySystemBackground), in: RoundedRectangle(cornerRadius: 12))
+
+                    Button("Delete") {
+                        deleteAllData()
+                        showDeleteConfirmation = false
+                    }
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 10)
+                    .background(Color.red, in: RoundedRectangle(cornerRadius: 12))
+                    .foregroundColor(.white)
+                }
+                .padding(.bottom, 8)
+            }
+            .padding(.horizontal, 16)
+            .presentationDetents([.height(250)])
+            .presentationDragIndicator(.hidden)
+        }
     }
+
+    private func deleteAllData() {
+        do {
+            try deleteAll(of: Expense.self)
+            try deleteAll(of: CategoryMonthlyBudget.self)
+            try deleteAll(of: CategoryEntity.self)
+            try deleteAll(of: Budget.self)
+            try deleteAll(of: CreditCard.self)
+            try deleteAll(of: Settings.self)
+
+            try modelContext.save()
+            print("✅ Deleted all data")
+        } catch {
+            print("❌ Failed to delete all data: \(error)")
+        }
+    }
+
+    private func deleteAll<T: PersistentModel>(of type: T.Type) throws {
+        let descriptor = FetchDescriptor<T>()
+        let items = try modelContext.fetch(descriptor)
+        for item in items {
+            modelContext.delete(item)
+        }
+    }
+
 }
 
 #Preview {

@@ -6,8 +6,42 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		308B19AB2ED7310E00E7674D /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 308B19AA2ED7310E00E7674D /* WidgetKit.framework */; };
+		308B19AD2ED7310E00E7674D /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 308B19AC2ED7310E00E7674D /* SwiftUI.framework */; };
+		308B19B82ED7311000E7674D /* SpendWiseWidgetsExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 308B19A82ED7310E00E7674D /* SpendWiseWidgetsExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		308B19B62ED7311000E7674D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 304F7A2E2E8BD16F00F6EEB0 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 308B19A72ED7310E00E7674D;
+			remoteInfo = SpendWiseWidgetsExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		308B19BD2ED7311000E7674D /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				308B19B82ED7311000E7674D /* SpendWiseWidgetsExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		304F7A362E8BD16F00F6EEB0 /* SpendSnap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpendSnap.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		308B19A82ED7310E00E7674D /* SpendWiseWidgetsExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SpendWiseWidgetsExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		308B19AA2ED7310E00E7674D /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		308B19AC2ED7310E00E7674D /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		308B19CF2ED86FD900E7674D /* SpendWiseWidgetsExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SpendWiseWidgetsExtension.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -18,6 +52,30 @@
 			);
 			target = 304F7A352E8BD16F00F6EEB0 /* SpendSnap */;
 		};
+		308B19BC2ED7311000E7674D /* Exceptions for "SpendWiseWidgets" folder in "SpendWiseWidgetsExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 308B19A72ED7310E00E7674D /* SpendWiseWidgetsExtension */;
+		};
+		308B19C12ED8581B00E7674D /* Exceptions for "SpendSnap" folder in "SpendWiseWidgetsExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Models/Budget.swift,
+				Models/Category.swift,
+				Models/CategoryEntity.swift,
+				Models/CategoryMonthlyBudget.swift,
+				Models/CreditCard.swift,
+				Models/Expenses.swift,
+				Models/PaymentMethod.swift,
+				Models/ReminderLevel.swift,
+				Models/Settings.swift,
+				Services/CurrencyHelpers.swift,
+				Services/DateUtils.swift,
+			);
+			target = 308B19A72ED7310E00E7674D /* SpendWiseWidgetsExtension */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -25,8 +83,17 @@
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				304F7A432E8BD17100F6EEB0 /* Exceptions for "SpendSnap" folder in "SpendSnap" target */,
+				308B19C12ED8581B00E7674D /* Exceptions for "SpendSnap" folder in "SpendWiseWidgetsExtension" target */,
 			);
 			path = SpendSnap;
+			sourceTree = "<group>";
+		};
+		308B19AE2ED7310E00E7674D /* SpendWiseWidgets */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				308B19BC2ED7311000E7674D /* Exceptions for "SpendWiseWidgets" folder in "SpendWiseWidgetsExtension" target */,
+			);
+			path = SpendWiseWidgets;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -39,13 +106,25 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		308B19A52ED7310E00E7674D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				308B19AD2ED7310E00E7674D /* SwiftUI.framework in Frameworks */,
+				308B19AB2ED7310E00E7674D /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		304F7A2D2E8BD16F00F6EEB0 = {
 			isa = PBXGroup;
 			children = (
+				308B19CF2ED86FD900E7674D /* SpendWiseWidgetsExtension.entitlements */,
 				304F7A382E8BD16F00F6EEB0 /* SpendSnap */,
+				308B19AE2ED7310E00E7674D /* SpendWiseWidgets */,
+				308B19A92ED7310E00E7674D /* Frameworks */,
 				304F7A372E8BD16F00F6EEB0 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -54,8 +133,18 @@
 			isa = PBXGroup;
 			children = (
 				304F7A362E8BD16F00F6EEB0 /* SpendSnap.app */,
+				308B19A82ED7310E00E7674D /* SpendWiseWidgetsExtension.appex */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		308B19A92ED7310E00E7674D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				308B19AA2ED7310E00E7674D /* WidgetKit.framework */,
+				308B19AC2ED7310E00E7674D /* SwiftUI.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -68,10 +157,12 @@
 				304F7A322E8BD16F00F6EEB0 /* Sources */,
 				304F7A332E8BD16F00F6EEB0 /* Frameworks */,
 				304F7A342E8BD16F00F6EEB0 /* Resources */,
+				308B19BD2ED7311000E7674D /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				308B19B72ED7311000E7674D /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				304F7A382E8BD16F00F6EEB0 /* SpendSnap */,
@@ -82,6 +173,28 @@
 			productName = SpendSnap;
 			productReference = 304F7A362E8BD16F00F6EEB0 /* SpendSnap.app */;
 			productType = "com.apple.product-type.application";
+		};
+		308B19A72ED7310E00E7674D /* SpendWiseWidgetsExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 308B19B92ED7311000E7674D /* Build configuration list for PBXNativeTarget "SpendWiseWidgetsExtension" */;
+			buildPhases = (
+				308B19A42ED7310E00E7674D /* Sources */,
+				308B19A52ED7310E00E7674D /* Frameworks */,
+				308B19A62ED7310E00E7674D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				308B19AE2ED7310E00E7674D /* SpendWiseWidgets */,
+			);
+			name = SpendWiseWidgetsExtension;
+			packageProductDependencies = (
+			);
+			productName = SpendWiseWidgetsExtension;
+			productReference = 308B19A82ED7310E00E7674D /* SpendWiseWidgetsExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -94,6 +207,9 @@
 				LastUpgradeCheck = 1640;
 				TargetAttributes = {
 					304F7A352E8BD16F00F6EEB0 = {
+						CreatedOnToolsVersion = 16.4;
+					};
+					308B19A72ED7310E00E7674D = {
 						CreatedOnToolsVersion = 16.4;
 					};
 				};
@@ -113,12 +229,20 @@
 			projectRoot = "";
 			targets = (
 				304F7A352E8BD16F00F6EEB0 /* SpendSnap */,
+				308B19A72ED7310E00E7674D /* SpendWiseWidgetsExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		304F7A342E8BD16F00F6EEB0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		308B19A62ED7310E00E7674D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -135,7 +259,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		308B19A42ED7310E00E7674D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		308B19B72ED7311000E7674D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 308B19A72ED7310E00E7674D /* SpendWiseWidgetsExtension */;
+			targetProxy = 308B19B62ED7311000E7674D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		304F7A452E8BD17100F6EEB0 /* Debug */ = {
@@ -150,6 +289,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SpendSnap/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = SpendWise;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
 				INFOPLIST_KEY_NSCameraUsageDescription = "“We use the camera to scan receipt totals.”";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -162,7 +302,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ahmad.SpendSnap;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ahmad.SpendWise;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -182,6 +322,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SpendSnap/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = SpendWise;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
 				INFOPLIST_KEY_NSCameraUsageDescription = "“We use the camera to scan receipt totals.”";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -194,7 +335,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ahmad.SpendSnap;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ahmad.SpendWise;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -323,6 +464,62 @@
 			};
 			name = Release;
 		};
+		308B19BA2ED7311000E7674D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = SpendWiseWidgetsExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8Q2JY29B23;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SpendWiseWidgets/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = SpendWiseWidgets;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ahmad.SpendWise.SpendWiseWidgets;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		308B19BB2ED7311000E7674D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = SpendWiseWidgetsExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8Q2JY29B23;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SpendWiseWidgets/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = SpendWiseWidgets;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ahmad.SpendWise.SpendWiseWidgets;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -340,6 +537,15 @@
 			buildConfigurations = (
 				304F7A452E8BD17100F6EEB0 /* Debug */,
 				304F7A462E8BD17100F6EEB0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		308B19B92ED7311000E7674D /* Build configuration list for PBXNativeTarget "SpendWiseWidgetsExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				308B19BA2ED7311000E7674D /* Debug */,
+				308B19BB2ED7311000E7674D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

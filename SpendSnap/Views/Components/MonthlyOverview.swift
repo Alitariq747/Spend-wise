@@ -26,7 +26,7 @@ struct MonthlyOverview: View {
     let weekSpent: Decimal
     let currentMonth: Bool
     let daysRemaining: Int
-    let idealPerDay: Decimal
+  
     
     private func money(_ x: Decimal) -> String {
            let f = NumberFormatter(); f.numberStyle = .currency
@@ -136,5 +136,5 @@ struct MonthlyOverview: View {
 }
 
 #Preview {
-    MonthlyOverview(onTapped: {print("tapped")}, budget: Budget(monthKey: "2025-10", amount: 1000.00), spent: 1200.00, todaySpent: 26.00, weekSpent: 72.00, currentMonth: true, daysRemaining: 20, idealPerDay: 25)
+    MonthlyOverview(onTapped: {print("tapped")}, budget: Budget(monthKey: "2025-10", amount: 1000.00), spent: 1200.00, todaySpent: 26.00, weekSpent: 72.00, currentMonth: true, daysRemaining: 20)
 }

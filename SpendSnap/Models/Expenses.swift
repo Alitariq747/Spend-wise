@@ -12,15 +12,17 @@ import SwiftData
 
 @Model
 final class Expense {
-    @Attribute(.unique) var id: UUID
-        var amount: Decimal
-        var date: Date
-        var merchant: String
+        var id: UUID = UUID()
+        var amount: Decimal = 0
+        var date: Date = Date()
+        var merchant: String = ""
      
-        var method: PaymentMethod
-        var monthKey: String
+        var method: PaymentMethod = PaymentMethod.cash
+        var monthKey: String = ""
 
-    @Relationship var category: CategoryEntity?
+        var category: CategoryEntity?
+        var card: CreditCard?
+   
     
         init(amount: Decimal,
              date: Date = .now,
@@ -41,5 +43,5 @@ final class Expense {
             self.monthKey = f.string(from: date)
         }
     
-    @Relationship var card: CreditCard?
+ 
 }

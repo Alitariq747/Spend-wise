@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SwiftData
+import WidgetKit
 
 struct AddBudgetSheet: View {
     
@@ -167,6 +168,8 @@ struct AddBudgetSheet: View {
                 }
             }
             try? modelContext.save()
+        WidgetCenter.shared.reloadTimelines(ofKind: "MonthOverviewWidget")
+
             onSave?()
             dismiss()
                 

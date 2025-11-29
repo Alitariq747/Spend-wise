@@ -45,38 +45,51 @@ struct CategorySpendingCard: View {
                             VStack(alignment: .leading, spacing: 2) {
                                 Text(category.name)
                                     .font(.system(size:16, weight: .semibold))
-                                Text("\(symbol)\(spent)") // adapt currency
+                                Text("\(symbol) \(spent) / \(budget > 0 ? budget : 0)") // adapt currency
                                     .font(.system(size:14, weight:.medium))
                                     .foregroundStyle(.primary)
                             }
                             Spacer()
-                            Image(systemName: "ellipsis")
-                                .foregroundStyle(.secondary)
-                                .font(.system(size:14, weight:.medium))
-                        }
-
-                        // row 2
-                        HStack {
-                            Text("Budget")
-                                .font(.caption)
-                                .foregroundStyle(.secondary)
-                            Spacer()
-                            if budget > 0 {
-                                HStack(spacing:8) {
-                                    Text("\(symbol)\(budget)")
-                                        .font(.system(size:14, weight:.semibold))
+                            
+                            VStack(spacing: 8) {
+                                Image(systemName: "ellipsis")
+                                    .foregroundStyle(.secondary)
+                                    .font(.system(size:14, weight:.medium))
+                                if budget > 0 {
                                     Text("\(Int(percent * 100))%")
                                         .font(.caption2)
                                         .padding(.vertical,4).padding(.horizontal,6)
                                         .background(percent >= 1 ? Color.red.opacity(0.15) : Color.green.opacity(0.2))
                                         .foregroundStyle(percent >= 1 ? .red : .green)
                                         .clipShape(Capsule())
+                                } else {
+                                    EmptyView()
                                 }
-                            } else {
-                                Text("—")
-                                    .foregroundStyle(.secondary)
                             }
                         }
+
+                        // row 2
+//                        HStack {
+//                            Text("Budget")
+//                                .font(.caption)
+//                                .foregroundStyle(.secondary)
+//                            Spacer()
+//                            if budget > 0 {
+//                                HStack(spacing:8) {
+//                                    Text("\(symbol)\(budget)")
+//                                        .font(.system(size:14, weight:.semibold))
+//                                    Text("\(Int(percent * 100))%")
+//                                        .font(.caption2)
+//                                        .padding(.vertical,4).padding(.horizontal,6)
+//                                        .background(percent >= 1 ? Color.red.opacity(0.15) : Color.green.opacity(0.2))
+//                                        .foregroundStyle(percent >= 1 ? .red : .green)
+//                                        .clipShape(Capsule())
+//                                }
+//                            } else {
+//                                Text("—")
+//                                    .foregroundStyle(.secondary)
+//                            }
+//                        }
                     }
                     .padding()
                     .background(

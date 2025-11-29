@@ -11,12 +11,12 @@ import SwiftData
 
 @Model
 final class CategoryMonthlyBudget {
-    // e.g. "2025-11" (YYYY-MM)
-    var monthKey: String
-    var amount: Decimal
+   
+    var monthKey: String = ""
+    var amount: Decimal = 0
 
-    @Relationship(inverse: \CategoryEntity.monthlyBudgets)
-    var category: CategoryEntity
+
+    var category: CategoryEntity?
 
     init(category: CategoryEntity, monthKey: String, amount: Decimal) {
         self.category = category

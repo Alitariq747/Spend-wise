@@ -50,22 +50,22 @@ final class NotificationManager {
         }
     }
     
-    func scheduleDebugIn(seconds: TimeInterval = 5) {
-        let content = UNMutableNotificationContent()
-        content.title = "Debug"
-        content.body = "Simulator test fired ✅"
-        content.sound = .default
-
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: seconds, repeats: false)
-
-        let req = UNNotificationRequest(
-            identifier: "debug-\(UUID().uuidString)",
-            content: content,
-            trigger: trigger
-        )
-
-        UNUserNotificationCenter.current().add(req)
-    }
+//    func scheduleDebugIn(seconds: TimeInterval = 5) {
+//        let content = UNMutableNotificationContent()
+//        content.title = "Debug"
+//        content.body = "Simulator test fired ✅"
+//        content.sound = .default
+//
+//        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: seconds, repeats: false)
+//
+//        let req = UNNotificationRequest(
+//            identifier: "debug-\(UUID().uuidString)",
+//            content: content,
+//            trigger: trigger
+//        )
+//
+//        UNUserNotificationCenter.current().add(req)
+//    }
     
 
 }

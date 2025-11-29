@@ -13,22 +13,21 @@ struct Reminders: View {
     
     var body: some View {
         HStack {
-            Image(systemName: "bell.fill")
-                .foregroundStyle(Color.blue.opacity(0.9))
-                .font(.system(size: 18, weight: .semibold))
+            
             Text("Gentle Reminders")
-                .font(.system(size: 18, weight: .semibold))
+                .font(.system(size: 16, weight: .semibold))
             Spacer()
             Text(level.emoji)
                 .font(.system(size: 14))
-            Image(systemName: "chevron.right")
-                .font(.system(size: 16, weight: .semibold))
+           
         }
-        .padding(.top, 10)
+        .padding(.horizontal)
+        .padding(.vertical, 18)
         .contentShape(Rectangle())
         .onTapGesture {
             onTap()
         }
+        .background(Color(.systemGray6), in: RoundedRectangle(cornerRadius: 12))
     }
 }
 

@@ -10,15 +10,15 @@ import SwiftData
 
 @Model
 final class Budget {
-  @Attribute(.unique) var id: UUID
-  var monthKey: String      
-  var amount: Decimal       
-  var note: String?
+  var id: UUID = UUID()
+  var monthKey: String = ""
+  var amount: Decimal = 0
 
-  init(monthKey: String, amount: Decimal, note: String? = nil) {
+
+  init(monthKey: String, amount: Decimal) {
     self.id = UUID()
     self.monthKey = monthKey
     self.amount = amount
-    self.note = note
+   
   }
 }

@@ -32,7 +32,7 @@ struct CategoryDetailSheet: View {
     @State private var showCategoryEditSheet: Bool = false
     
     private var budget: Decimal {
-        if let override = category.monthlyBudgets.first(where: { $0.monthKey == activeMonthKey}) {
+        if let override = category.monthlyBudgets?.first(where: { $0.monthKey == activeMonthKey}) {
             return override.amount
         } else {
             return category.monthlyBudget

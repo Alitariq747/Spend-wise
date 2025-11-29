@@ -63,7 +63,7 @@ struct HomeView: View {
     }
     
     private func resolveBudget(for category: CategoryEntity) -> Decimal {
-        if let override = category.monthlyBudgets.first(where: {$0.monthKey == monthKey}) {
+        if let override = category.monthlyBudgets?.first(where: {$0.monthKey == monthKey}) {
             return override.amount
         } else {
             return category.monthlyBudget
@@ -99,7 +99,7 @@ struct HomeView: View {
                 
                 MonthlyOverview(onTapped: {
                     showAddBudget = true
-                }, budget: budgetForMonth, spent: spentThisMonth, todaySpent: todayTotal, weekSpent: weekToDateTotal, currentMonth: isViewingCurrentMonth, daysRemaining: daysRemaining(in: selectedMonth), idealPerDay: idealPerDay(budget: budgetForMonth?.amount ?? 0, month: selectedMonth))
+                }, budget: budgetForMonth, spent: spentThisMonth, todaySpent: todayTotal, weekSpent: weekToDateTotal, currentMonth: isViewingCurrentMonth, daysRemaining: daysRemaining(in: selectedMonth))
                 
                 
                 LazyVStack(spacing: 12) {

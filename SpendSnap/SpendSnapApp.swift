@@ -10,21 +10,37 @@ import SwiftData
 
 @main
 struct SpendSnapApp: App {
-    var sharedModelContainer: ModelContainer = {
-        let schema = Schema([Expense.self, Budget.self, Settings.self, CategoryEntity.self, CategoryMonthlyBudget.self, CreditCard.self])
-        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
+    private static let sharedModelContainer: ModelContainer = {
+            let schema = Schema([
+                Expense.self,
+                CategoryEntity.self,
+                CategoryMonthlyBudget.self,
+                Budget.self,
+                CreditCard.self,
+                Settings.self
+            ])
 
-        do {
-            return try ModelContainer(for: schema, configurations: [modelConfiguration])
-        } catch {
-            fatalError("Could not create ModelContainer: \(error)")
-        }
-    }()
+            let configuration = ModelConfiguration(
+                schema: schema,
+                isStoredInMemoryOnly: false,
+                groupContainer: .identifier("group.ahmad.SpendWise"),
+                cloudKitDatabase: .automatic
+            )
+
+            do {
+                return try ModelContainer(
+                    for: schema,
+                    configurations: [configuration]
+                )
+            } catch {
+                fatalError("Failed to create ModelContainer: \(error)")
+            }
+        }()
 
     var body: some Scene {
         WindowGroup {
             RootTabView()
         }
-        .modelContainer(sharedModelContainer)
+        .modelContainer(Self.sharedModelContainer)
     }
 }

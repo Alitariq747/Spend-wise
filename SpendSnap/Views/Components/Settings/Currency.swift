@@ -13,21 +13,21 @@ struct Currency: View {
     
     var body: some View {
         HStack {
-            Image(systemName: "cylinder.split.1x2.fill")
-                .foregroundStyle(Color.yellow.opacity(0.7))
-                .font(.system(size: 18, weight: .semibold))
+           
             Text("Currency")
-                .font(.system(size: 18, weight: .semibold))
+                .font(.system(size: 16, weight: .semibold))
             Spacer()
             Text("\(symbol)")
                 .font(.system(size: 14, weight: .light))
-            Image(systemName: "chevron.right")
-                .font(.system(size: 16, weight: .semibold))
+         
         }
+        .padding(.horizontal)
+        .padding(.vertical, 18)
         .contentShape(Rectangle())
         .onTapGesture {
             onTap()
         }
+        .background(Color(.systemGray6), in: RoundedRectangle(cornerRadius: 12))
     }
 }
 

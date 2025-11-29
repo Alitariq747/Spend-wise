@@ -15,14 +15,21 @@ struct RootTabView: View {
     
     @State private var isKeyboardVisible = false
     
+    private var settings: Settings? {
+        settingsRows.first
+    }
+    
+    @State private var deepLinkMonthForHistory: Date? = nil
     
     var body: some View {
+        let appearance = settings?.appearance ?? .system
+        
         ZStack(alignment: .bottom) {
                   TabView(selection: $selection) {
                       NavigationStack { HomeView() }
                           .tag(MainTab.home)
 
-                      NavigationStack { HistoryView() }
+                      NavigationStack { HistoryView(deepLinkMonth: $deepLinkMonthForHistory) }
                           .tag(MainTab.history)
 
                       NavigationStack { CreditCardView() }
@@ -42,7 +49,16 @@ struct RootTabView: View {
                            CustomTabBar(selection: $selection)
                        }
               }
-            
+        .preferredColorScheme({
+            switch appearance {
+            case .system:
+                return nil
+            case .light:
+                return .light
+            case .dark:
+                return .dark
+            }
+        }())
         .ignoresSafeArea(edges:.bottom)
         .onReceive(NotificationCenter.default.publisher(
                     for: UIResponder.keyboardWillShowNotification
@@ -59,13 +75,33 @@ struct RootTabView: View {
                     }
                 }
         .task {
-            if settingsRows.isEmpty { modelContext.insert(Settings()); try? modelContext.save()}
+            if settingsRows.isEmpty { modelContext.insert(Settings()); try? modelContext.save() }
         }
-        .onAppear {
-            CategoryEntity.seedDefaultsIfNeeded(in: modelContext)
+        .onOpenURL { url in
+            guard url.scheme == "SpendWise",
+                  url.host == "addExpense" else { return }
+
+            // If you passed a date from the widget as a query item, parse it here.
+            // For now, just use today's date – AddExpenseSheet will derive the month.
+            let monthFromWidget = Date()
+
+            deepLinkMonthForHistory = monthFromWidget
+            selection = .history
         }
     }
     
+    
+    private func applyReminderLevelIfAvailable() {
+        guard let level = settings?.reminderLevel else { return }
+
+        if level == .quiet {
+            NotificationManager.shared.clearAll()
+        } else {
+            NotificationManager.shared.requestPermission()
+            NotificationManager.shared.schedule(times: level.times)
+        }
+    }
+
 }
 
 #Preview {

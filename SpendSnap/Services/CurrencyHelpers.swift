@@ -18,20 +18,7 @@ struct CurrencyOption: Identifiable {
 enum CurrencyUtil {
     private static var cache: [String:String] = [:]
 
-    /// Returns a currency symbol (e.g., "$", "€", "₨") for a given ISO code ("USD","EUR","PKR"...).
-   
-//    static func symbol(for code: String) -> String {
-//           // pick a locale that actually uses this currency
-//           let localeID = Locale.availableIdentifiers.first {
-//               Locale(identifier: $0).currency?.identifier == code
-//           } ?? Locale.current.identifier
-//
-//           let f = NumberFormatter()
-//           f.numberStyle = .currency
-//           f.currencyCode = code
-//           f.locale = Locale(identifier: localeID)
-//           return f.currencySymbol ?? code
-//       }
+ 
     static func symbol(for code: String) -> String {
         // 1) Check cache first
         if let cached = cache[code.uppercased()] {

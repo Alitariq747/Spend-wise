@@ -127,10 +127,10 @@ extension CardColor {
 
 @Model
 final class CreditCard {
-    var name: String
-    var cycleLimit: Decimal
-    var statementDay: Int
-    var dueDay: Int
+    var name: String = ""
+    var cycleLimit: Decimal = 0
+    var statementDay: Int = 1
+    var dueDay: Int = 20
     
     var colorRaw: String = CardColor.royalBlue.rawValue
         var color: CardColor {
@@ -145,4 +145,7 @@ final class CreditCard {
         self.dueDay = dueDay
         self.colorRaw = color.rawValue
     }
+    
+    @Relationship(deleteRule: .cascade , inverse: \Expense.card)
+    var expenses: [Expense]? = []
 }
