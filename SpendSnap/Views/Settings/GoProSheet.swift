@@ -35,7 +35,7 @@ enum PremiumFeature: String, CaseIterable, Identifiable {
     case iCloudBackup
     case widgets
     case reminders
-    case exports
+   case display
     case support
     
     var id: String { rawValue }
@@ -45,7 +45,7 @@ enum PremiumFeature: String, CaseIterable, Identifiable {
         case .iCloudBackup: return "checkmark.seal.fill"
         case .widgets: return "checkmark.seal.fill"
         case .reminders: return "checkmark.seal.fill"
-        case .exports: return "checkmark.seal.fill"
+        case .display: return "checkmark.seal.fill"
         case .support: return "heart.fill"
         
         }
@@ -56,7 +56,7 @@ enum PremiumFeature: String, CaseIterable, Identifiable {
             case .iCloudBackup: return "iCloud Backup"
         case .widgets: return "Premium Widgets"
         case .reminders: return "Gentle Reminders"
-        case .exports: return "Export Data"
+        case .display: return "Dark mode support"
         case .support: return "Support Indie Developer"
         }
     }

@@ -24,6 +24,9 @@ struct SettingsView: View {
     @State private var showDeleteConfirmation: Bool = false
     @State private var showWidgetInfoSheet: Bool = false
     
+    @StateObject private var iCloudVM = ICloudStatusViewModel()
+    @State private var showICloudToast = false
+    
     private func requirePro(_ action: () -> Void) {
         if settings?.proUnlocked == true {
             action()
@@ -31,29 +34,44 @@ struct SettingsView: View {
             showGoProSheet = true
         }
     }
+    
+    private func labelForStatus(_ status: ICloudStatus) -> String {
+           switch status {
+           case .unknown, .couldNotDetermine:
+               return "Checking…"
+           case .available:
+               return "Enabled"
+           case .noAccount:
+               return "Sign in"
+           case .restricted:
+               return "Restricted"
+           case .temporarilyUnavailable:
+               return "Unavailable temporarily"
+           }
+       }
 
     
     var body: some View {
         
-        let isPro = settings?.proUnlocked ?? false
+        
         let symbol = CurrencyUtil.symbol(for: settings?.currencyCode ?? "USD")
         
        
             
             ScrollView {
-                // Big Pro / Basic section
-                if isPro {
-                    UpgradeToPro()
-                } else {
-                    UnlockPro() {
-                        showGoProSheet = true
-                    }
-                }
+               
+                Text("💸")
+                    .font(.system(size: 24, weight: .bold))
+                    .padding()
+                    .background(Color(.systemGray6), in: Circle())
+                
              
                 // Parent settings VStack
                 VStack(alignment: .leading) {
                     // Currency Hstack
-                   
+                   Text("App Settings")
+                        .font(.system(size: 16, weight: .medium))
+                        .foregroundStyle(.primary)
                     Currency(symbol: symbol) {
                         showCurrencySheet = true
                     }
@@ -73,115 +91,51 @@ struct SettingsView: View {
                         showWidgetInfoSheet = true
                     })
                     
-                    Text("DATA")
-                        .font(.system(size: 14, weight: .light))
-                        .padding(.top, 14)
-                        .padding(.bottom, -6)
-                    Rectangle()
-                            .fill(Color.gray.opacity(0.15))
-                            .frame(height: 1)
-                    
+                  
+                    Text("iCloud")
+                         .font(.system(size: 16, weight: .medium))
+                         .foregroundStyle(.primary)
+                         .padding(.top, 12)
                     // ICloud HStack
-                    HStack {
-                        Image(systemName: "cloud.fill")
-                            .foregroundStyle(Color.cyan.opacity(0.7))
-                            .font(.system(size: 18, weight: .semibold))
-                        Text("ICloud Sync")
-                            .font(.system(size: 18, weight: .semibold))
-                        Spacer()
-                        Image(systemName: "chevron.right")
-                            .font(.system(size: 16, weight: .semibold))
-                    }
-                    .padding(.top, 10)
-                    Rectangle()
-                            .fill(Color.gray.opacity(0.15))
-                            .frame(height: 1)
+                    Button {
+                               if iCloudVM.status != .available {
+                                   withAnimation {
+                                       showICloudToast = true
+                                   }
+                               }
+                           } label: {
+                               HStack {
+                                   Text("iCloud Sync")
+                                       .font(.system(size: 16, weight: .semibold))
+
+                                   Spacer()
+
+                                   Text(labelForStatus(iCloudVM.status))
+                                       .font(.system(size: 14, weight: .light))
+                                       .foregroundStyle(iCloudVM.status == .available ? .green : .secondary)
+                               }
+                               .padding(.horizontal)
+                               .padding(.vertical, 18)
+                               .contentShape(Rectangle())
+                               .background(Color(.systemGray6), in: RoundedRectangle(cornerRadius: 12))
+                           }
+                           .buttonStyle(.plain)
                     
-                    // HStack for pdf data export
-                    HStack {
-                        Image(systemName: "arrow.down.square.fill")
-                            .foregroundStyle(Color.green.opacity(0.7))
-                            .font(.system(size: 18, weight: .semibold))
-                        Text("Data Export")
-                            .font(.system(size: 18, weight: .semibold))
-                        Spacer()
-                        Image(systemName: "chevron.right")
-                            .font(.system(size: 16, weight: .semibold))
-                    }
-                    .padding(.top, 10)
+                   
                    
                     
-                    Text("SUPPORT")
-                        .font(.system(size: 14, weight: .light))
-                        .padding(.top, 14)
-                        .padding(.bottom, -6)
-                    Rectangle()
-                            .fill(Color.gray.opacity(0.15))
-                            .frame(height: 1)
                     
-                    // HStack privacy policy
-                    HStack {
-                        Image(systemName: "document")
-                            .foregroundStyle(Color.darker.opacity(0.7))
-                            .font(.system(size: 18, weight: .semibold))
-                        Text("Privacy Policy")
-                            .font(.system(size: 18, weight: .semibold))
-                        Spacer()
-                        Image(systemName: "chevron.right")
-                            .font(.system(size: 16, weight: .semibold))
-                    }
-                    .padding(.top, 10)
-                    Rectangle()
-                            .fill(Color.gray.opacity(0.15))
-                            .frame(height: 1)
+                    Text("General")
+                         .font(.system(size: 16, weight: .medium))
+                         .foregroundStyle(.primary)
+                         .padding(.top, 12)
+                    PrivacyPolicyRow(onTap: { print("Tapped privacy policy")})
                     
-                    // HStack for terms of service
-                    HStack {
-                        Image(systemName: "scroll")
-                            .foregroundStyle(Color.pink.opacity(0.7))
-                            .font(.system(size: 16, weight: .semibold))
-                        Text("Terms Of Service")
-                            .font(.system(size: 18, weight: .semibold))
-                        Spacer()
-                        Image(systemName: "chevron.right")
-                            .font(.system(size: 16, weight: .semibold))
-                    }
-                    .padding(.top, 10)
-                    Rectangle()
-                            .fill(Color.gray.opacity(0.15))
-                            .frame(height: 1)
+                    TermsOfServiceRow(onTap: {print("Tapped terms of service")})
                     
-                    // HStack for contact us
-                    HStack {
-                        Image(systemName: "bubble.left.and.bubble.right")
-                            .foregroundStyle(Color.teal.opacity(0.7))
-                            .font(.system(size: 15, weight: .semibold))
-                        Text("Contact Us")
-                            .font(.system(size: 18, weight: .semibold))
-                        Spacer()
-                        Image(systemName: "chevron.right")
-                            .font(.system(size: 16, weight: .semibold))
-                    }
-                    .padding(.top, 10)
-                    Rectangle()
-                            .fill(Color.gray.opacity(0.15))
-                            .frame(height: 1)
+                    ContactUsRow(onTap: { print("Tapped contact us")})
                     
-                    // hStack for rate us
-                    HStack {
-                        Image(systemName: "hand.thumbsup.fill")
-                            .foregroundStyle(Color.purple.opacity(0.7))
-                            .font(.system(size: 19, weight: .semibold))
-                        Text(" Rate Us")
-                            .font(.system(size: 18, weight: .semibold))
-                        Spacer()
-                        Image(systemName: "chevron.right")
-                            .font(.system(size: 16, weight: .semibold))
-                    }
-                    .padding(.top, 10)
-                    Rectangle()
-                            .fill(Color.gray.opacity(0.15))
-                            .frame(height: 1)
+                   RateUsRow(onTap: {print("Tapped rate us")})
                     
                 }
                 .padding()
@@ -205,7 +159,30 @@ struct SettingsView: View {
             }
             .padding(.vertical)
            
-     
+            .task {
+                        await iCloudVM.refresh()
+                    }
+            .overlay(alignment: .bottom) {
+                        if showICloudToast {
+                            Text("Sign in to iCloud in Settings to sync your SpendWise data across devices.")
+                                .font(.system(size: 13))
+                                .foregroundColor(.white)
+                                .padding(.horizontal, 16)
+                                .padding(.vertical, 10)
+                                .background(
+                                    Capsule().fill(Color.black.opacity(0.85))
+                                )
+                                .padding(.bottom, 20)
+                                .transition(.move(edge: .bottom).combined(with: .opacity))
+                                .onAppear {
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                                        withAnimation {
+                                            showICloudToast = false
+                                        }
+                                    }
+                                }
+                        }
+                    }
         .sheet(isPresented: $showCurrencySheet) {
             CurrencyPickerSheet(allCurrencies: CurrencyOption.allCurrencies, selectedCode: settings?.currencyCode ?? "USD") {
                 newCode in
