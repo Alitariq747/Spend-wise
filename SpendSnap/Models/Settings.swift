@@ -33,6 +33,7 @@ final class Settings {
     var reminderLevelRaw: String = ReminderLevel.quiet.rawValue
     var appearanceRaw: String = AppAppearance.system.rawValue
     var hasSeededDefaultCategories: Bool = false
+    var onboardingComplete: Bool = false
 
     init(onboardingComplete: Bool = false,
          proUnlocked: Bool = false,
@@ -46,6 +47,7 @@ final class Settings {
         self.iCloudSyncOn = iCloudSyncOn
         self.currencyCode = currencyCode
         self.appearanceRaw = appearance.rawValue
+        self.onboardingComplete = onboardingComplete
     }
     
     var reminderLevel: ReminderLevel {

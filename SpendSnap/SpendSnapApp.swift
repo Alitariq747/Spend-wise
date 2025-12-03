@@ -35,11 +35,11 @@ struct SpendSnapApp: App {
             } catch {
                 fatalError("Failed to create ModelContainer: \(error)")
             }
-        }()
+    }()
 
     var body: some Scene {
         WindowGroup {
-            RootTabView()
+            AppEntryView()
         }
         .modelContainer(Self.sharedModelContainer)
     }
