@@ -10,19 +10,17 @@ import SwiftData
 
 struct RootTabView: View {
     @Environment(\.modelContext) private var modelContext
-    @Query private var settingsRows: [Settings]
+    @Bindable var settings: Settings
     @State private var selection: MainTab = .home
     
     @State private var isKeyboardVisible = false
     
-    private var settings: Settings? {
-        settingsRows.first
-    }
+  
     
     @State private var deepLinkMonthForHistory: Date? = nil
     
     var body: some View {
-        let appearance = settings?.appearance ?? .system
+        let appearance = settings.appearance
         
         ZStack(alignment: .bottom) {
                   TabView(selection: $selection) {
@@ -74,9 +72,7 @@ struct RootTabView: View {
                         isKeyboardVisible = false
                     }
                 }
-        .task {
-            if settingsRows.isEmpty { modelContext.insert(Settings()); try? modelContext.save() }
-        }
+      
         .onOpenURL { url in
             guard url.scheme == "SpendWise",
                   url.host == "addExpense" else { return }
@@ -92,7 +88,7 @@ struct RootTabView: View {
     
     
     private func applyReminderLevelIfAvailable() {
-        guard let level = settings?.reminderLevel else { return }
+        let level = settings.reminderLevel 
 
         if level == .quiet {
             NotificationManager.shared.clearAll()
@@ -104,6 +100,6 @@ struct RootTabView: View {
 
 }
 
-#Preview {
-    RootTabView()
-}
+//#Preview {
+//    RootTabView(settings: Settings())
+//}

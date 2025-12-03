@@ -87,9 +87,9 @@ struct SettingsView: View {
                     
                     // Notifications HStack
                     Reminders(level: settings?.reminderLevel ?? .quiet) {
-                        requirePro {
+                     
                             showRemindersSheet = true
-                        }
+                   
                     }                  
                     
                     // HStack for widgets

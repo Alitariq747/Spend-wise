@@ -16,7 +16,7 @@ struct AppEntryView: View {
         Group {
             if let settings = settingsRow.first {
                 if settings.onboardingComplete {
-                    RootTabView()
+                    RootTabView(settings: settings)
                 } else {
                     OnboardingView(settings: settings)
                 }

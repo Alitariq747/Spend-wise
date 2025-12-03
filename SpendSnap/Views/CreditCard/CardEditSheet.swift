@@ -161,7 +161,7 @@ struct CardEditSheet: View {
             }
         }
         .padding()
-
+        .scrollDismissesKeyboard(.automatic)
     }
     
   

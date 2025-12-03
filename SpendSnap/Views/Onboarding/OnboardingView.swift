@@ -143,21 +143,27 @@ struct OnboardingView: View {
         showCTA = false
     }
     
+    @State private var animationTask: Task<Void, Never>?
+
     private func startPageAnimation() {
+        animationTask?.cancel()
         resetStages()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.10) {
+
+        animationTask = Task { @MainActor in
+            try? await Task.sleep(for: .milliseconds(100))
             withAnimation(.easeOut(duration: 0.55)) { showTitle = true }
-        }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.26) {
+
+            try? await Task.sleep(for: .milliseconds(160))
             withAnimation(.easeOut(duration: 0.55)) { showSubtitle = true }
-        }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.44) {
+
+            try? await Task.sleep(for: .milliseconds(180))
             withAnimation(.easeOut(duration: 0.55)) { showImage = true }
-        }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.62) {
+
+            try? await Task.sleep(for: .milliseconds(180))
             withAnimation(.easeOut(duration: 0.55)) { showCTA = true }
         }
     }
+
 }
 
 #Preview {

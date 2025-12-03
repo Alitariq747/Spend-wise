@@ -113,6 +113,7 @@ struct AddCardSheet: View {
                                 }
                                 .shadow(radius: 2, y: 1)
                                 .onTapGesture { selectedColor = c }
+                                .padding(2)
                                 .accessibilityLabel(Text(c.rawValue.capitalized))
                         }
                     }
@@ -124,6 +125,7 @@ struct AddCardSheet: View {
 
         }
         .padding()
+        .scrollDismissesKeyboard(.automatic)
     }
     
     private func isFormValid() -> Bool {

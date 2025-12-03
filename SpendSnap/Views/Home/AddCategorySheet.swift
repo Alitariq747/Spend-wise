@@ -183,6 +183,7 @@ struct AddCategorySheet: View {
             EmojiPickerSheet(selection: $emoji)
         }
         .presentationDetents([.large])
+        .scrollDismissesKeyboard(.automatic)
     }
     
     private var canSave: Bool {

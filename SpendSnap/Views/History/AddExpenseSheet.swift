@@ -232,7 +232,7 @@ struct AddExpenseSheet: View {
                         .padding(.horizontal, 8)
                     }
                 }
-                .scrollDismissesKeyboard(.interactively)
+                .scrollDismissesKeyboard(.automatic)
                 .navigationTitle("\(amountText)")
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar(.visible, for: .navigationBar)

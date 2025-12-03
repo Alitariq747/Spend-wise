@@ -305,6 +305,7 @@ struct ExpenseDetailSheet: View {
                    CategorySelector(categories: categories, selected: $selectedCategory)
                 }
             }
+            .scrollDismissesKeyboard(.automatic)
         }
         .padding(.horizontal, 8)
         .padding(.top, 8)

@@ -272,6 +272,7 @@ struct CategoryEditSheet: View {
             .presentationDetents([.height(200)])
             .presentationDragIndicator(.hidden)
         }
+        .scrollDismissesKeyboard(.automatic)
     }
     
     private var canSave: Bool {
