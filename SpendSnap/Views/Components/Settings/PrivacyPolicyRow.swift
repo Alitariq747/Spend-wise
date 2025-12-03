@@ -8,13 +8,14 @@
 import SwiftUI
 
 struct PrivacyPolicyRow: View {
-    
-    let onTap: () -> Void
+
+
     var body: some View {
         HStack {
            
             Text("Privacy policy")
                 .font(.system(size: 16, weight: .semibold))
+                .foregroundStyle(.primary)
             Spacer()
             Image(systemName: "chevron.right")
                 .font(.system(size: 14, weight: .light))
@@ -23,14 +24,10 @@ struct PrivacyPolicyRow: View {
         .padding(.horizontal)
         .padding(.vertical, 18)
         .contentShape(Rectangle())
-        .onTapGesture {
-            onTap()
-        }
+        
         .background(Color(.systemGray6), in: RoundedRectangle(cornerRadius: 12))
 
     }
 }
 
-#Preview {
-    PrivacyPolicyRow(onTap: {print("Privacy policy")})
-}
+

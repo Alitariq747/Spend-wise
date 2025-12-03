@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct TermsOfServiceRow: View {
-    let onTap: () -> Void
+ 
     
     var body: some View {
         HStack {
@@ -23,14 +23,12 @@ struct TermsOfServiceRow: View {
         .padding(.horizontal)
         .padding(.vertical, 18)
         .contentShape(Rectangle())
-        .onTapGesture {
-            onTap()
-        }
+       
         .background(Color(.systemGray6), in: RoundedRectangle(cornerRadius: 12))
 
     }
 }
 
 #Preview {
-    TermsOfServiceRow(onTap: { print("tapped") })
+    TermsOfServiceRow()
 }

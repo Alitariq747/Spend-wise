@@ -19,5 +19,13 @@
 	<array>
 		<string>remote-notification</string>
 	</array>
+	<key>UILaunchScreen</key>
+	<dict>
+		<key>UILaunchScreen</key>
+		<dict>
+			<key>Image Name</key>
+			<string>LaunchIcon</string>
+		</dict>
+	</dict>
 </dict>
 </plist>

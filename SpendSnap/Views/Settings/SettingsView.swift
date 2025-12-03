@@ -8,8 +8,14 @@
 import SwiftUI
 import SwiftData
 
+enum LegalLinks {
+    static let privacy = URL(string: "https://Alitariq747.github.io/spendwise-legal/privacy.html")!
+    static let terms   = URL(string: "https://Alitariq747.github.io/spendwise-legal/terms.html")!
+    static let contact = URL(string: "mailto:spendwise-app@outlook.com")!
+}
+
 struct SettingsView: View {
-    
+    @Environment(\.openURL) private var openUrl
     @Environment(\.modelContext) private var modelContext
     @Query private var settingsRow: [Settings]
     
@@ -129,18 +135,33 @@ struct SettingsView: View {
                          .font(.system(size: 16, weight: .medium))
                          .foregroundStyle(.primary)
                          .padding(.top, 12)
-                    PrivacyPolicyRow(onTap: { print("Tapped privacy policy")})
                     
-                    TermsOfServiceRow(onTap: {print("Tapped terms of service")})
+                  
+                    Button {
+                        openUrl(LegalLinks.privacy)
+                    } label: {
+                        PrivacyPolicyRow()
+                    }
+                    .buttonStyle(.plain)
                     
-                    ContactUsRow(onTap: { print("Tapped contact us")})
+                    Button {
+                        openUrl(LegalLinks.terms)
+                    } label: {
+                        TermsOfServiceRow()
+                    }
+                    .buttonStyle(.plain)
+                    Button {
+                        openUrl(LegalLinks.contact)
+                    } label: {
+                        ContactUsRow()
+                    }
+                    .buttonStyle(.plain)
                     
                    RateUsRow(onTap: {print("Tapped rate us")})
                     
                 }
                 .padding()
-                .background(Color.white, in: RoundedRectangle(cornerRadius: 12))
-                .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color.white, lineWidth: 1))
+              
                 
              // Delete Button
                 Button {

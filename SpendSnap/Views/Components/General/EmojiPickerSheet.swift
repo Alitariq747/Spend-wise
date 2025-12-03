@@ -12,66 +12,78 @@ struct EmojiPickerSheet: View {
     @Binding var selection: String
     @Environment(\.dismiss) private var dismiss
 
-    // curate for your app; add/remove freely
-    // inside EmojiPickerSheet
-    private let emojis: [String] = [
-        // Money & shopping
-        "💳","💵","💶","💷","💴","🪙","💰","🏧","🧾","📈","📉","📊","🛒","🛍️","📦",
-        // Food & drink
-        "🍞","🥐","🧀","🍳","🍕","🍔","🌭","🌮","🌯","🥪","🍝","🍜","🍣","🍱","🍤","🥟","🍙","🍛","🥗","🥘","🍲",
-        "🍩","🍪","🍫","🍬","🍭","🍦","🍨","🍧","🍰","🧁","🍮","🍯",
-        "🍎","🍊","🍋","🍌","🍉","🍇","🍓","🫐","🍒","🍑","🥭","🍍","🥥","🥝","🥑","🥦","🥕","🌽","🥔","🍅","🫑","🍆","🍄",
-        "☕️","🫖","🍵","🥤","🧃","🧋","🍺","🍻","🍷","🍸","🍹","🍾",
-        // Transport & travel
-        "🚗","🚕","🚙","🚌","🚎","🏎️","🚓","🚑","🚒","🚚","🚛","🚜","🚲","🛴","🏍️","🛵",
-        "🚆","🚇","🚈","🚄","✈️","🛫","🛬","🛩️","🚁",
-        "⛴️","🛳️","⛵","🛶","🚤","⚓","⛽️","🧳","🗺️","🧭","🏨","🏝️","🏖️","🏕️",
-        // Home & utilities
-        "🏠","🏡","🏢","🔑","🗝️","🛋️","🛏️","🛁","🚿","🚽","🧻","🧹","🧺","🧼","🧽","🪥","🧯","🔌","🔋","🪫","💡","🔥","💧",
-        // Subscriptions & media
-        "📺","📻","🎧","🎮","🕹️","🎲","♟️","🎟️","🎫","🎬","🎤","🎵","🎶","📱","💻","🖥️","⌚️",
-        // Health & wellness
-        "🏥","💊","🩺","🩹","🦷","🩻","🧪","🧬","🧘‍♂️","🏃‍♂️","🏋️‍♀️","🚴‍♂️","🏊‍♂️",
-        // Clothing & personal care
-        "👕","👖","🧥","👗","🩳","🧦","👟","👞","👠","🧢","🎒","👜","💄","💅","🧴","🪒","👓","🕶️","💍",
-        // Kids & pets
-        "👶","🍼","🧸","🚼","🐾","🐶","🐱","🐕‍🦺","🐈‍⬛","🐟",
-        // Education & work
-        "📚","📖","📝","✏️","🖊️","🗂️","🗃️","📬","📮","✉️","📧","📅","🗓️",
-        // Gifts & events
-        "🎁","🎀","🎈","🎉","🥳","💐","🕯️",
-        // Services & repairs
-        "🧰","🛠️","🔧","🔨","🪛","🪚","🛎️",
-        // Outdoor
-        "🌳","🌲","🌧️","⛱️"
+    private struct EmojiGroup: Identifiable {
+        let id = UUID()
+        let title: String
+        let emojis: [String]
+    }
+
+    private let groups: [EmojiGroup] = [
+        .init(title: "Groceries & Food", emojis: ["🍎","🥑","🥦","🍞","🍕","🍔","🌮","🥗","🍜","🍣","☕️","🍺"]),
+        .init(title: "Bills & Utilities", emojis: ["💡","💧","🔥","📶","🧾","🏠","🔌","🛏️","🛁"]),
+        .init(title: "Transport & Fuel", emojis: ["🚗","⛽️","🚌","🚕","🚆","✈️","🚲","🛵"]),
+        .init(title: "Shopping & Retail", emojis: ["🛍️","🛒","👕","👗","👟","👜","🎒"]),
+        .init(title: "Health & Fitness", emojis: ["💊","🏥","🏃‍♂️","🧘‍♀️","🚴‍♂️","🩺"]),
+        .init(title: "Subscriptions & Media", emojis: ["📺","🎧","📱","💻","🎮","🎬"]),
+        .init(title: "Income & Savings", emojis: ["💰","💵","💳","🏦","📈","🪙"]),
+        .init(title: "Travel & Leisure", emojis: ["🧳","🏖️","🏨","🗺️","🏔️","🎡"]),
+        .init(title: "Gifts & Events", emojis: ["🎁","🎂","🎉","🥳","💐"]),
+        .init(title: "Kids & Pets", emojis: ["👶","🍼","🧸","🐾","🐶","🐱"]),
+        .init(title: "Education & Work", emojis: ["📚","📝","💼","🗂️"]),
+        .init(title: "Charity & Giving", emojis: ["🤝","❤️"]),
+        .init(title: "General & Other", emojis: ["✨","📌","🔖","🧠"])
     ]
 
     private let columns = [GridItem(.adaptive(minimum: 44), spacing: 12)]
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        VStack(alignment: .leading, spacing: 16) {
             HStack {
-                Text("Pick an emoji").font(.headline)
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Pick a category emoji")
+                        .font(.headline)
+                    Text("Choose one that best matches this category.")
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                }
                 Spacer()
                 Button("Done") { dismiss() }
+                    .font(.subheadline.weight(.semibold))
             }
 
             ScrollView {
-                LazyVGrid(columns: columns, spacing: 12) {
-                    ForEach(emojis, id: \.self) { e in
-                        Button {
-                            selection = e
-                            dismiss()
-                        } label: {
-                            Text(e)
-                                .font(.system(size: 28))
-                                .frame(width: 44, height: 44)
-                                .background(e == selection ? Color(.systemGray6) : Color(.systemBackground), in: Circle())
+                VStack(alignment: .leading, spacing: 18) {
+                    ForEach(groups) { group in
+                        VStack(alignment: .leading, spacing: 10) {
+                            Text(group.title)
+                                .font(.subheadline.weight(.semibold))
+                                .foregroundStyle(.secondary)
+
+                            LazyVGrid(columns: columns, spacing: 12) {
+                                ForEach(group.emojis, id: \.self) { e in
+                                    Button {
+                                        selection = e
+                                        dismiss()
+                                    } label: {
+                                        Text(e)
+                                            .font(.system(size: 26))
+                                            .frame(width: 52, height: 52)
+                                            .background(
+                                                Circle()
+                                                    .fill(e == selection ? Color.accentColor.opacity(0.15) : Color(.secondarySystemBackground))
+                                            )
+                                            .overlay(
+                                                Circle()
+                                                    .stroke(e == selection ? Color.accentColor : Color.clear, lineWidth: 2)
+                                            )
+                                    }
+                                    .buttonStyle(.plain)
+                                }
+                            }
                         }
-                        .buttonStyle(.plain)
                     }
                 }
-                .padding(.top, 4)
+                .padding(.vertical, 4)
             }
         }
         .padding()

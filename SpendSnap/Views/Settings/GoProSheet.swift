@@ -36,7 +36,9 @@ enum PremiumFeature: String, CaseIterable, Identifiable {
     case widgets
     case reminders
    case display
+    case card
     case support
+    
     
     var id: String { rawValue }
     
@@ -46,8 +48,11 @@ enum PremiumFeature: String, CaseIterable, Identifiable {
         case .widgets: return "checkmark.seal.fill"
         case .reminders: return "checkmark.seal.fill"
         case .display: return "checkmark.seal.fill"
+        case .card:
+            return "checkmark.seal.fill"
         case .support: return "heart.fill"
         
+      
         }
     }
     
@@ -57,7 +62,10 @@ enum PremiumFeature: String, CaseIterable, Identifiable {
         case .widgets: return "Premium Widgets"
         case .reminders: return "Gentle Reminders"
         case .display: return "Dark mode support"
+        case .card:
+            return "Credit Card Tracking "
         case .support: return "Support Indie Developer"
+       
         }
     }
 }

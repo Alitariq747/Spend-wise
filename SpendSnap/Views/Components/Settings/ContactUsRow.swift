@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ContactUsRow: View {
     
-    let onTap: () -> Void
+ 
     
     var body: some View {
         HStack {
@@ -24,14 +24,12 @@ struct ContactUsRow: View {
         .padding(.horizontal)
         .padding(.vertical, 18)
         .contentShape(Rectangle())
-        .onTapGesture {
-            onTap()
-        }
+       
         .background(Color(.systemGray6), in: RoundedRectangle(cornerRadius: 12))
 
     }
 }
 
 #Preview {
-    ContactUsRow(onTap: { print("Tapped")})
+    ContactUsRow()
 }
