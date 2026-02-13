@@ -11,6 +11,7 @@ import PhotosUI
 
 struct HomeView: View {
     @Environment(\.modelContext) private var ctx
+    @EnvironmentObject private var storeKit: StoreKitManager
     @Query(sort: \CategoryEntity.name) private var categories: [CategoryEntity]
     @Environment(\.colorScheme) private var colorScheme
     
@@ -18,6 +19,9 @@ struct HomeView: View {
     @State private var showAddBudget: Bool = false
     @State private var showAddCategorySheet: Bool = false
     @State private var showAddExpenseSheet = false
+    @State private var showAddCategoryPrompt = false
+    @State private var pendingCategoryFromPrompt = false
+    @State private var showGoProSheet = false
 
   
     @State private var budgetForMonth: Budget? = nil
@@ -71,6 +75,28 @@ struct HomeView: View {
     }
     
     @State private var showCategoryDetailSheet: Bool = false
+    
+    private func presentAddExpense() {
+        if categories.isEmpty {
+            showAddCategoryPrompt = true
+        } else {
+            showAddExpenseSheet = true
+        }
+    }
+
+    @MainActor
+    private func handleAddExpenseTap() async {
+        if !storeKit.isEntitlementsLoaded {
+            await storeKit.refreshEntitlements()
+        }
+
+        guard storeKit.hasActiveSubscription else {
+            showGoProSheet = true
+            return
+        }
+
+        presentAddExpense()
+    }
 
 
     var body: some View {
@@ -135,7 +161,9 @@ struct HomeView: View {
                 HStack {
                     Spacer()
                     Button {
-                        showAddExpenseSheet = true
+                        Task {
+                            await handleAddExpenseTap()
+                        }
                     } label: {
                         Image(systemName: "plus")
                             .font(.system(size: 20, weight: .bold))
@@ -171,6 +199,24 @@ struct HomeView: View {
         .sheet(isPresented: $showAddCategorySheet, content: {
             AddCategorySheet(activeMonth: selectedMonth)
         })
+        .sheet(isPresented: $showGoProSheet) {
+            GoProSheet()
+                .presentationDetents([.large])
+        }
+        .sheet(isPresented: $showAddCategoryPrompt, onDismiss: {
+            if pendingCategoryFromPrompt {
+                pendingCategoryFromPrompt = false
+                showAddCategorySheet = true
+            }
+        }) {
+            AddCategoryPromptSheet(
+                onAddCategory: {
+                    pendingCategoryFromPrompt = true
+                    showAddCategoryPrompt = false
+                },
+                onDismiss: { showAddCategoryPrompt = false }
+            )
+        }
         .presentationDetents([.large])
         .navigationTitle("")
         .navigationDestination(isPresented: $showAddExpenseSheet, destination: {
@@ -202,5 +248,5 @@ struct HomeView: View {
 
 #Preview {
     HomeView()
+        .environmentObject(StoreKitManager())
 }
-

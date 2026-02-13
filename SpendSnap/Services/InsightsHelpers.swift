@@ -8,7 +8,7 @@
 import Foundation
 
 func daysInMonth(_ month: Date) -> Int {
-    Calendar.current.range(of: .day, in: .month, for: month)!.count
+    Calendar.current.range(of: .day, in: .month, for: month)?.count ?? 0
 }
 
 

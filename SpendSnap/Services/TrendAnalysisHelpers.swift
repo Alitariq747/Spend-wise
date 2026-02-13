@@ -37,7 +37,9 @@ func makeBands(from points: [PacePoint]) -> [PaceBand] {
 
 func dailyTotals(expenses: [Expense], month: Date) -> [Decimal] {
     let cal = Calendar.current
-    let lastDay = cal.range(of: .day, in: .month, for: month)!.count
+    guard let lastDay = cal.range(of: .day, in: .month, for: month)?.count, lastDay > 0 else {
+        return []
+    }
     var perDay = Array(repeating: Decimal(0), count: lastDay)
     for e in expenses {
         let d = cal.component(.day, from: e.date)   // 1…lastDay

@@ -18,11 +18,13 @@ struct CardSnapShot: Identifiable {
 
 struct CreditCardView: View {
     @Environment(\.modelContext) private var modelContext
+    @EnvironmentObject private var storeKit: StoreKitManager
     
     @Query(sort: \CreditCard.name) private var cards: [CreditCard]
     @Query(sort: \Expense.date, order: .reverse) private var allExpenses: [Expense]
     
     @State private var showAddCardSheet = false
+    @State private var showGoProSheet = false
     @State private var selectedCard: CreditCard? = nil
     @State private var selected: CardSnapShot? = nil
     
@@ -35,6 +37,20 @@ struct CreditCardView: View {
         }
         let spent = expensesThisCycle.reduce(.zero) { $0 + $1.amount}
         return CardSnapShot(card: card, cycle: cycle, expensesThisCycle: expensesThisCycle, spentThisCycle: spent)
+    }
+
+    @MainActor
+    private func handleAddCardTap() async {
+        if !storeKit.isEntitlementsLoaded {
+            await storeKit.refreshEntitlements()
+        }
+
+        guard storeKit.hasActiveSubscription else {
+            showGoProSheet = true
+            return
+        }
+
+        showAddCardSheet = true
     }
     
     var body: some View {
@@ -49,7 +65,9 @@ struct CreditCardView: View {
                     Spacer()
                     // Button to open add card sheet
                     Button {
-                        showAddCardSheet = true
+                        Task {
+                            await handleAddCardTap()
+                        }
                     } label: {
                         Image(systemName: "plus")
                             .symbolRenderingMode(.monochrome)
@@ -77,6 +95,10 @@ struct CreditCardView: View {
             AddCardSheet()
         }
         .presentationDetents([.large])
+        .sheet(isPresented: $showGoProSheet) {
+            GoProSheet()
+        }
+        .presentationDetents([.large])
         .sheet(item: $selected) { snap in
             CardDetailSheet(snapshot: snap, onClose: { selected = nil })
         }
@@ -86,4 +108,5 @@ struct CreditCardView: View {
 
 #Preview {
     CreditCardView()
+        .environmentObject(StoreKitManager())
 }

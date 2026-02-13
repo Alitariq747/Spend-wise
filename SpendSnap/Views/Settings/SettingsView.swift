@@ -31,14 +31,15 @@ struct SettingsView: View {
     @State private var showWidgetInfoSheet: Bool = false
     
     @StateObject private var iCloudVM = ICloudStatusViewModel()
+    @EnvironmentObject private var storeKit: StoreKitManager
     @State private var showICloudToast = false
     
-    private func requirePro(_ action: () -> Void) {
-        if settings?.proUnlocked == true {
-            action()
-        } else {
-            showGoProSheet = true
-        }
+    private var hasActiveSubscription: Bool {
+        storeKit.hasActiveSubscription
+    }
+    
+    private var subscriptionStatusText: String {
+        hasActiveSubscription ? "Subscription Active" : "No Subscription Active"
     }
     
     private func labelForStatus(_ status: ICloudStatus) -> String {
@@ -74,10 +75,57 @@ struct SettingsView: View {
              
                 // Parent settings VStack
                 VStack(alignment: .leading) {
+                    Text("Subscription")
+                        .font(.system(size: 16, weight: .medium))
+                        .foregroundStyle(.primary)
+                    
+                    HStack(spacing: 12) {
+                        Image(systemName: hasActiveSubscription ? "checkmark.seal.fill" : "crown.fill")
+                            .font(.system(size: 18, weight: .semibold))
+                            .foregroundStyle(hasActiveSubscription ? Color.green.opacity(0.8) : Color.orange.opacity(0.9))
+                        
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text("Pro Plan")
+                                .font(.system(size: 15, weight: .semibold))
+                            Text(subscriptionStatusText)
+                                .font(.system(size: 12, weight: .regular))
+                                .foregroundStyle(.secondary)
+                        }
+                        
+                        Spacer()
+                        
+                        if !hasActiveSubscription {
+                            Button {
+                                showGoProSheet = true
+                            } label: {
+                                Text("Upgrade")
+                                    .font(.system(size: 12, weight: .semibold))
+                                    .foregroundStyle(.white)
+                                    .padding(.horizontal, 10)
+                                    .padding(.vertical, 6)
+                                    .background(Color.black, in: Capsule())
+                            }
+                            .buttonStyle(.plain)
+                        }
+                        
+                        Image(systemName: "chevron.right")
+                            .font(.system(size: 11, weight: .semibold))
+                            .foregroundStyle(.secondary)
+                    }
+                    .padding(.horizontal)
+                    .padding(.vertical, 16)
+                    .background(Color(.systemGray6), in: RoundedRectangle(cornerRadius: 12))
+                    .contentShape(Rectangle())
+                    .onTapGesture {
+                        showGoProSheet = true
+                    }
+                    
                     // Currency Hstack
                    Text("App Settings")
                         .font(.system(size: 16, weight: .medium))
                         .foregroundStyle(.primary)
+                        .padding(.top, 12)
+
                     Currency(symbol: symbol) {
                         showCurrencySheet = true
                     }
@@ -182,6 +230,12 @@ struct SettingsView: View {
            
             .task {
                         await iCloudVM.refresh()
+                        if !storeKit.isEntitlementsLoaded {
+                            await storeKit.refreshEntitlements()
+                        }
+                        if storeKit.products.isEmpty {
+                            await storeKit.loadProducts()
+                        }
                     }
             .overlay(alignment: .bottom) {
                         if showICloudToast {
@@ -226,10 +280,7 @@ struct SettingsView: View {
             .presentationDetents([.medium])
         }
         .sheet(isPresented: $showGoProSheet) {
-            GoProSheet() {
-                settings?.proUnlocked = true
-                try? modelContext.save()
-            }
+            GoProSheet()
         }
         .presentationDetents([.large])
         .sheet(isPresented: $showDeleteConfirmation) {
@@ -303,4 +354,5 @@ struct SettingsView: View {
 
 #Preview {
     SettingsView()
+        .environmentObject(StoreKitManager())
 }

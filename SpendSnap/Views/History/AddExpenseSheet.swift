@@ -36,12 +36,20 @@ struct AddExpenseSheet: View {
     @Binding var month: Date
     private let cal = Calendar.current
     
-    private var monthStart: Date { cal.dateInterval(of: .month, for: month)!.start }
-    private var monthEnd: Date {
-        let excl = cal.dateInterval(of: .month, for: month)!.end
-        return cal.date(byAdding: .second, value: -1, to: excl)!
+    private var monthInterval: DateInterval {
+        if let interval = cal.dateInterval(of: .month, for: month) {
+            return interval
+        }
+        let start = cal.startOfDay(for: month)
+        let end = cal.date(byAdding: .day, value: 1, to: start) ?? start
+        return DateInterval(start: start, end: end)
     }
-    private var upperBound: Date { min(Date(), monthEnd) }
+    private var monthStart: Date { monthInterval.start }
+    private var monthEnd: Date {
+        let excl = monthInterval.end
+        return cal.date(byAdding: .second, value: -1, to: excl) ?? excl
+    }
+    private var upperBound: Date { max(monthStart, min(Date(), monthEnd)) }
     private var allowedRange: ClosedRange<Date> { monthStart...upperBound }
     
     // Validations

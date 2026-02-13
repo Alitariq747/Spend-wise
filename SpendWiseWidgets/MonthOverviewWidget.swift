@@ -27,6 +27,7 @@ struct MonthOverviewEntry: TimelineEntry {
 
 struct MonthOverviewWidgetView: View {
     let entry: MonthOverviewEntry
+    private let addExpenseURL = URL(string: "SpendWise://addExpense")
 
     func safeProgress(spent: Decimal, budget: Decimal) -> Double {
         guard budget > 0 else {
@@ -49,13 +50,10 @@ struct MonthOverviewWidgetView: View {
                     .foregroundStyle(.white)
                 Spacer()
                 
-                
-                Link(destination: URL(string: "SpendWise://addExpense")!) {
-                    Image(systemName: "plus")
-                        .font(.system(size: 18, weight: .semibold))
-                        .foregroundStyle(.white)
-                        .padding(6)
-                        .background(Color.green.opacity(0.6), in: Circle())
+                if let url = addExpenseURL {
+                    Link(destination: url) { addButton }
+                } else {
+                    addButton
                 }
             
 
@@ -84,7 +82,15 @@ struct MonthOverviewWidgetView: View {
                     .clipped()
                 
         }
-        .widgetURL(URL(string: "SpendWise://addExpense")!)
+        .widgetURL(addExpenseURL)
+    }
+
+    private var addButton: some View {
+        Image(systemName: "plus")
+            .font(.system(size: 18, weight: .semibold))
+            .foregroundStyle(.white)
+            .padding(6)
+            .background(Color.green.opacity(0.6), in: Circle())
     }
 }
 

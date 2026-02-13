@@ -11,6 +11,19 @@ import UserNotifications
 final class NotificationManager {
     static let shared = NotificationManager()
     private init() {}
+    
+    private struct ReminderMessage {
+        let title: String
+        let body: String
+    }
+    
+    private static let reminderMessages: [ReminderMessage] = [
+        .init(title: "Quick money check‑in", body: "Log today’s expenses in 20 seconds. Keep your budget honest."),
+        .init(title: "Spending snapshot", body: "Capture today’s spend before it fades. Your insights stay sharp."),
+        .init(title: "Tiny habit, big clarity", body: "Add what you spent today and stay on top of your goals."),
+        .init(title: "Keep the streak alive", body: "Log today’s expenses so your trends stay accurate."),
+        .init(title: "Daily money moment", body: "Open SpendSnap and drop today’s expenses. Future you will thank you.")
+    ]
 
     // 1) ask for permission
     func requestPermission() {
@@ -30,11 +43,15 @@ final class NotificationManager {
     func schedule(times: [DateComponents]) {
   
         clearAll()
+        let messages = Self.reminderMessages.isEmpty
+            ? [ReminderMessage(title: "Log today’s expenses", body: "Takes 20 seconds. Keep your budget fresh 💸")]
+            : Self.reminderMessages.shuffled()
 
         for (index, time) in times.enumerated() {
             let content = UNMutableNotificationContent()
-            content.title = "Log today’s expenses"
-            content.body = "Takes 20 seconds. Keep your budget fresh 💸"
+            let message = messages[index % messages.count]
+            content.title = message.title
+            content.body = message.body
             content.sound = .default
 
             let trigger = UNCalendarNotificationTrigger(dateMatching: time,
@@ -49,24 +66,5 @@ final class NotificationManager {
             UNUserNotificationCenter.current().add(request)
         }
     }
-    
-//    func scheduleDebugIn(seconds: TimeInterval = 5) {
-//        let content = UNMutableNotificationContent()
-//        content.title = "Debug"
-//        content.body = "Simulator test fired ✅"
-//        content.sound = .default
-//
-//        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: seconds, repeats: false)
-//
-//        let req = UNNotificationRequest(
-//            identifier: "debug-\(UUID().uuidString)",
-//            content: content,
-//            trigger: trigger
-//        )
-//
-//        UNUserNotificationCenter.current().add(req)
-//    }
-    
-
+        
 }
-

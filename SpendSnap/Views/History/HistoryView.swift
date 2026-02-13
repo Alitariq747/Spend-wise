@@ -10,8 +10,10 @@ import SwiftData
 
 struct HistoryView: View {
     @Environment(\.modelContext) private var ctx
+    @EnvironmentObject private var storeKit: StoreKitManager
     @Environment(\.colorScheme) private var colorScheme
     @Query private var settingsRow: [Settings]
+    @Query(sort: \CategoryEntity.name) private var categories: [CategoryEntity]
     
     private var currencyCode: String {
         settingsRow.first?.currencyCode ?? "USD"
@@ -19,6 +21,10 @@ struct HistoryView: View {
     
     @State private var selectedMonth = Date()
     @State private var showAddExpenseView: Bool = false
+    @State private var showAddCategorySheet: Bool = false
+    @State private var showAddCategoryPrompt = false
+    @State private var pendingCategoryFromPrompt = false
+    @State private var showGoProSheet = false
     
     @State private var monthExpenses: [Expense] = []
     @State private var selectedExpense: Expense? = nil
@@ -32,6 +38,28 @@ struct HistoryView: View {
        
            _selectedMonth = State(initialValue: deepLinkMonth.wrappedValue ?? Date())
        }
+
+    private func presentAddExpense() {
+        if categories.isEmpty {
+            showAddCategoryPrompt = true
+        } else {
+            showAddExpenseView = true
+        }
+    }
+
+    @MainActor
+    private func handleAddExpenseTap() async {
+        if !storeKit.isEntitlementsLoaded {
+            await storeKit.refreshEntitlements()
+        }
+
+        guard storeKit.hasActiveSubscription else {
+            showGoProSheet = true
+            return
+        }
+
+        presentAddExpense()
+    }
     
     var body: some View {
         let symbol = CurrencyUtil.symbol(for: currencyCode)
@@ -88,7 +116,9 @@ struct HistoryView: View {
                 HStack {
                     Spacer()
                     Button {
-                        showAddExpenseView = true
+                        Task {
+                            await handleAddExpenseTap()
+                        }
                     } label: {
                         Image(systemName: "plus")
                             .font(.system(size: 20, weight: .bold))
@@ -125,6 +155,27 @@ struct HistoryView: View {
         .navigationDestination(isPresented: $showAddExpenseView) {
             AddExpenseSheet(month: $selectedMonth)
         }
+        .sheet(isPresented: $showAddCategorySheet) {
+            AddCategorySheet(activeMonth: selectedMonth)
+        }
+        .sheet(isPresented: $showGoProSheet) {
+            GoProSheet()
+                .presentationDetents([.large])
+        }
+        .sheet(isPresented: $showAddCategoryPrompt, onDismiss: {
+            if pendingCategoryFromPrompt {
+                pendingCategoryFromPrompt = false
+                showAddCategorySheet = true
+            }
+        }) {
+            AddCategoryPromptSheet(
+                onAddCategory: {
+                    pendingCategoryFromPrompt = true
+                    showAddCategoryPrompt = false
+                },
+                onDismiss: { showAddCategoryPrompt = false }
+            )
+        }
         .toolbar(.hidden, for: .navigationBar)
     }
     private func fetchExpenses() {
@@ -137,11 +188,14 @@ struct HistoryView: View {
     private func handleDeepLinkIfNeeded() {
         guard let month = deepLinkMonth else { return }
         selectedMonth = month
-        showAddExpenseView = true
+        Task {
+            await handleAddExpenseTap()
+        }
         deepLinkMonth = nil    // consume the trigger so it doesn’t re-open
     }
 }
 
 #Preview {
     HistoryView()
+        .environmentObject(StoreKitManager())
 }

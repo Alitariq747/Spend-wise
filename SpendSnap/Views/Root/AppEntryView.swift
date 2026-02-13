@@ -10,7 +10,9 @@ import SwiftData
 
 struct AppEntryView: View {
     @Environment(\.modelContext) private var modelContext
+    @EnvironmentObject private var storeKit: StoreKitManager
     @Query private var settingsRow: [Settings]
+    @State private var showPostOnboardingPaywall = false
     
     var body: some View {
         Group {
@@ -27,8 +29,27 @@ struct AppEntryView: View {
                             modelContext.insert(Settings())
                             try? modelContext.save()
                         }
-                    }
+                }
             }
+        }
+        .onChange(of: settingsRow.first?.onboardingComplete ?? false) { oldValue, newValue in
+            guard oldValue == false, newValue == true else { return }
+            Task {
+                await presentPostOnboardingPaywallIfNeeded()
+            }
+        }
+        .sheet(isPresented: $showPostOnboardingPaywall) {
+            GoProSheet()
+        }
+    }
+
+    @MainActor
+    private func presentPostOnboardingPaywallIfNeeded() async {
+        if !storeKit.isEntitlementsLoaded {
+            await storeKit.refreshEntitlements()
+        }
+        if !storeKit.hasActiveSubscription {
+            showPostOnboardingPaywall = true
         }
     }
 }
@@ -43,4 +64,5 @@ struct AppEntryView: View {
             CreditCard.self,
             Settings.self
         ], inMemory: true)
+        .environmentObject(StoreKitManager())
 }

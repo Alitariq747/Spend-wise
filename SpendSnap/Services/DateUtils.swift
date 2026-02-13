@@ -11,7 +11,7 @@ import SwiftUI
 enum MonthUtil {
   static let cal = Calendar.current
   static let fmt: DateFormatter = { let f = DateFormatter(); f.dateFormat = "LLLL yyyy"; return f }()
-  static func addMonths(_ date: Date, _ n: Int) -> Date { cal.date(byAdding: .month, value: n, to: date)! }
+  static func addMonths(_ date: Date, _ n: Int) -> Date { cal.date(byAdding: .month, value: n, to: date) ?? date }
   static func monthKey(_ d: Date) -> String { let f = DateFormatter(); f.dateFormat = "yyyy-MM"; return f.string(from: d) }
 }
 
@@ -44,14 +44,16 @@ extension Calendar {
     /// Build a Date from given year+month components and a day, clamped to that month’s max day.
     func clampedDate(fromYearMonth ym: DateComponents, day: Int) -> Date {
         // base date for that year+month
-        let base = self.date(from: ym)!                       // ym must contain .year & .month
-        let maxDay = self.range(of: .day, in: .month, for: base)!.count
+        guard let base = self.date(from: ym) else {
+            return Date()
+        }
+        let maxDay = self.range(of: .day, in: .month, for: base)?.count ?? 1
 
         var comps = ym
         comps.day = min(max(1, day), maxDay)                  // clamp 1…maxDay
         comps.hour = 0; comps.minute = 0; comps.second = 0    // normalize to midnight (optional)
 
-        return self.date(from: comps)!                        // safe to force if inputs are valid
+        return self.date(from: comps) ?? base
     }
 }
 
@@ -77,11 +79,11 @@ func cardCycleAndDue(
     let cycleEnd: Date
     if today >= thisStatement {
         cycleStart = thisStatement
-        let nextMonth = cal.date(byAdding: .month, value: 1, to: today)!
+        let nextMonth = cal.date(byAdding: .month, value: 1, to: today) ?? today
         let nextYM = cal.dateComponents([.year, .month], from: nextMonth)
         cycleEnd = cal.clampedDate(fromYearMonth: nextYM, day: statementDay)
     } else {
-        let prevMonth = cal.date(byAdding: .month, value: -1, to: today)!
+        let prevMonth = cal.date(byAdding: .month, value: -1, to: today) ?? today
         let prevYM = cal.dateComponents([.year, .month], from: prevMonth)
         cycleStart = cal.clampedDate(fromYearMonth: prevYM, day: statementDay)
         cycleEnd   = thisStatement
@@ -95,7 +97,7 @@ func cardCycleAndDue(
     if dueDay > statementDay {
         due = dueInEndMonth
     } else {
-        let nextAfterEnd = cal.date(byAdding: .month, value: 1, to: cycleEnd)!
+        let nextAfterEnd = cal.date(byAdding: .month, value: 1, to: cycleEnd) ?? cycleEnd
         let nextYM = cal.dateComponents([.year, .month], from: nextAfterEnd)
         due = cal.clampedDate(fromYearMonth: nextYM, day: dueDay)
     }

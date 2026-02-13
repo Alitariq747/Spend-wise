@@ -24,7 +24,9 @@ struct DailyBurn: View {
     
     private var dailyTotalsForAllDays: [(day: Int, amount: Decimal)] {
            let cal = Calendar.current
-           let lastDay = cal.range(of: .day, in: .month, for: month)!.count
+           guard let lastDay = cal.range(of: .day, in: .month, for: month)?.count, lastDay > 0 else {
+               return []
+           }
            let grouped = Dictionary(grouping: expenses, by: { cal.component(.day, from: $0.date) })
            return (1...lastDay).map { day in
                let total = grouped[day]?.reduce(0 as Decimal) { $0 + $1.amount } ?? 0
@@ -49,7 +51,7 @@ struct DailyBurn: View {
     }
     
     private var dailyTarget: Decimal {
-        let days = Calendar.current.range(of: .day, in: .month, for: month)!.count
+        let days = Calendar.current.range(of: .day, in: .month, for: month)?.count ?? 0
         guard let b = budgetAmount, b > 0, days > 0 else { return 0 }
         return b / Decimal(days)
     }
