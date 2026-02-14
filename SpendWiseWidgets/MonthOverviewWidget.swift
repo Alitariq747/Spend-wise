@@ -33,8 +33,11 @@ struct MonthOverviewWidgetView: View {
         guard budget > 0 else {
             return 0
         }
-        let ratio = (spent as NSDecimalNumber).doubleValue / (budget as NSDecimalNumber).doubleValue
-        
+        let spentValue = (spent as NSDecimalNumber).doubleValue
+        let budgetValue = (budget as NSDecimalNumber).doubleValue
+        guard spentValue.isFinite, budgetValue.isFinite, budgetValue > 0 else { return 0 }
+        let ratio = spentValue / budgetValue
+        guard ratio.isFinite else { return 0 }
         return min(max(ratio, 0), 1)
     }
     

@@ -60,8 +60,12 @@ struct DailyBurn: View {
         // no budget ⇒ keep existing look
         guard dailyTarget > 0 else { return .darker }
 
-        let r = Double(truncating: amount as NSDecimalNumber) /
-                Double(truncating: dailyTarget as NSDecimalNumber)
+        let amountValue = Double(truncating: amount as NSDecimalNumber)
+        let targetValue = Double(truncating: dailyTarget as NSDecimalNumber)
+        guard amountValue.isFinite, targetValue.isFinite, targetValue > 0 else { return .darker }
+
+        let r = amountValue / targetValue
+        guard r.isFinite else { return .darker }
 
         let epsilon = 0.05   // ±5% counts as “at target”
         if r < 1 - epsilon { return .green }     // under target
@@ -74,14 +78,24 @@ struct DailyBurn: View {
     var body: some View {
                 let data = dailyTotalsForAllDays
                 let maxAmt = data.map(\.amount).max() ?? 0
-                let maxD = max(1.0, toDouble(maxAmt))
+                let maxAmountValue = toDouble(maxAmt)
+                let maxD = (maxAmountValue.isFinite && maxAmountValue > 0) ? maxAmountValue : 1.0
                 let trackH: CGFloat = 84
 
         HStack(alignment: .bottom, spacing: 3) {
             ForEach(data, id: \.day) { d in
-                let ratioToTarget = (dailyTarget > 0)
-                    ? min(1, toDouble(d.amount) / toDouble(dailyTarget))  // 0…1 of target
-                    : (maxD > 0 ? toDouble(d.amount) / maxD : 0)
+                let amountValue = toDouble(d.amount)
+                let ratioToTarget: Double = {
+                    guard amountValue.isFinite else { return 0 }
+                    if dailyTarget > 0 {
+                        let targetValue = toDouble(dailyTarget)
+                        guard targetValue.isFinite, targetValue > 0 else { return 0 }
+                        let raw = amountValue / targetValue
+                        return raw.isFinite ? min(max(raw, 0), 1) : 0
+                    }
+                    let raw = amountValue / maxD
+                    return raw.isFinite ? min(max(raw, 0), 1) : 0
+                }()
                 
                 VStack(spacing: 4) {
                     ZStack(alignment: .bottom) {

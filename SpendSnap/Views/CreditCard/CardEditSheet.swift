@@ -105,7 +105,7 @@ struct CardEditSheet: View {
                         .font(.system(size: 16, weight: .regular))
                     TextField("Enter your card name", text: $name)
                         .font(.subheadline)
-                        .keyboardType(.alphabet)
+                        .keyboardType(.default)
                         .padding(.horizontal)
                         .padding(.vertical, 14)
                         .background(Color(.secondarySystemBackground), in: RoundedRectangle(cornerRadius: 12))
@@ -161,7 +161,7 @@ struct CardEditSheet: View {
             }
         }
         .padding()
-        .scrollDismissesKeyboard(.automatic)
+        .scrollDismissesKeyboard(.interactively)
     }
     
   

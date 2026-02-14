@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>colors</key>
+	<array>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/ahmadalitariq/Desktop/SpendSnap/SpendWiseWidgets/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACColorNameWidgetBackground</string>
+			<key>relativePath</key>
+			<string>./WidgetBackground.colorset</string>
+			<key>swiftSymbol</key>
+			<string>widgetBackground</string>
+		</dict>
+	</array>
+	<key>images</key>
+	<array>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/ahmadalitariq/Desktop/SpendSnap/SpendWiseWidgets/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameWidgetBackgroundimage</string>
+			<key>relativePath</key>
+			<string>./WidgetBackgroundimage.imageset</string>
+			<key>swiftSymbol</key>
+			<string>widgetBackgroundimage</string>
+		</dict>
+	</array>
+	<key>symbols</key>
+	<array/>
+</dict>
+</plist>

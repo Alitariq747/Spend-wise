@@ -1,0 +1,18 @@
+"/Users/ahmadalitariq/Desktop/SpendSnap/SpendWiseWidgets/SpendWiseWidgetsBundle.swift":
+  swift-dependencies: "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendWiseWidgetsExtension.build/Objects-normal/arm64/SpendWiseWidgetsBundle.swiftdeps"
+  diagnostics: "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendWiseWidgetsExtension.build/Objects-normal/arm64/SpendWiseWidgetsBundle.dia"
+  const-values: "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendWiseWidgetsExtension.build/Objects-normal/arm64/SpendWiseWidgetsBundle.swiftconstvalues"
+  dependencies: "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendWiseWidgetsExtension.build/Objects-normal/arm64/SpendWiseWidgetsBundle.d"
+  object: "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendWiseWidgetsExtension.build/Objects-normal/arm64/SpendWiseWidgetsBundle.o"
+"/Users/ahmadalitariq/Desktop/SpendSnap/SpendWiseWidgets/CreditCardsWidget.swift":
+  diagnostics: "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendWiseWidgetsExtension.build/Objects-normal/arm64/CreditCardsWidget.dia"
+  object: "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendWiseWidgetsExtension.build/Objects-normal/arm64/CreditCardsWidget.o"
+  const-values: "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendWiseWidgetsExtension.build/Objects-normal/arm64/CreditCardsWidget.swiftconstvalues"
+  swift-dependencies: "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendWiseWidgetsExtension.build/Objects-normal/arm64/CreditCardsWidget.swiftdeps"
+  dependencies: "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendWiseWidgetsExtension.build/Objects-normal/arm64/CreditCardsWidget.d"
+"/Users/ahmadalitariq/Desktop/SpendSnap/SpendWiseWidgets/SpendWiseWidgets.swift":
+  swift-dependencies: "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendWiseWidgetsExtension.build/Objects-normal/arm64/SpendWiseWidgets.swiftdeps"
+  diagnostics: "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendWiseWidgetsExtension.build/Objects-normal/arm64/SpendWiseWidgets.dia"
+  object: "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendWiseWidgetsExtension.build/Objects-normal/arm64/SpendWiseWidgets.o"
+  dependencies: "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendWiseWidgetsExtension.build/Objects-normal/arm64/SpendWiseWidgets.d"
+  const-values: "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendWiseWidgetsExtension.build/Objects-normal/arm64/SpendWiseWidgets.swiftconstvalues"

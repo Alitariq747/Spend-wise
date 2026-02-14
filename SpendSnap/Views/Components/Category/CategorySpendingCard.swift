@@ -25,7 +25,10 @@ struct CategorySpendingCard: View {
           guard budget > 0 else { return 0 }
           let s = NSDecimalNumber(decimal: spent).doubleValue
           let b = NSDecimalNumber(decimal: budget).doubleValue
-          return min(max(s / b, 0), 1)
+          guard s.isFinite, b.isFinite, b > 0 else { return 0 }
+          let ratio = s / b
+          guard ratio.isFinite else { return 0 }
+          return min(max(ratio, 0), 1)
       }
     
     var body: some View {

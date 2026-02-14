@@ -12,6 +12,7 @@ enum SpendWiseProductIDs {
     static let monthly = "sw1"
     static let yearly = "sw2"
     static let all = [monthly, yearly]
+    static let subscriptionGroupID = "21928894"
 }
 
 enum StoreKitPurchaseOutcome {
@@ -32,6 +33,11 @@ final class StoreKitManager: ObservableObject {
 
     var hasActiveSubscription: Bool {
         !activeProductIDs.isEmpty
+    }
+    
+    /// Prefer the live group ID from loaded products, with ASC value as safe fallback.
+    var resolvedSubscriptionGroupID: String {
+        products.compactMap { $0.subscription?.subscriptionGroupID }.first ?? SpendWiseProductIDs.subscriptionGroupID
     }
 
     private var updatesTask: Task<Void, Never>?
@@ -118,6 +124,7 @@ final class StoreKitManager: ObservableObject {
 
     func restorePurchases() async -> Bool {
         do {
+            lastErrorMessage = nil
             try await AppStore.sync()
             await refreshEntitlements()
             return hasActiveSubscription

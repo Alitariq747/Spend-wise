@@ -51,10 +51,11 @@ struct WeekBarRow: View {
 
             GeometryReader { geo in
                 // proportional width (0…1) * available width
-                let ratio = min(1,
-                    Double(truncating: amount as NSDecimalNumber) /
-                    max(1, Double(truncating: maxAmount as NSDecimalNumber))
-                )
+                let amountValue = Double(truncating: amount as NSDecimalNumber)
+                let maxValue = Double(truncating: maxAmount as NSDecimalNumber)
+                let denominator = max(1, maxValue)
+                let rawRatio = amountValue / denominator
+                let ratio = rawRatio.isFinite ? min(max(rawRatio, 0), 1) : 0
 
                 ZStack(alignment: .leading) {
                     Capsule().fill(.gray.opacity(0.15))

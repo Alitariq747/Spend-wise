@@ -92,7 +92,7 @@ struct AddExpenseSheet: View {
                                 .font(.system(size: 16, weight: .medium))
                                 .frame(width: labelW, alignment: .leading)
                             TextField("Walmart", text: $merchant)
-                                .keyboardType(.alphabet)
+                                .keyboardType(.default)
                                 .padding(.vertical, 8)
                                 .frame(maxWidth: .infinity, alignment: .leading)
                         }
@@ -240,7 +240,7 @@ struct AddExpenseSheet: View {
                         .padding(.horizontal, 8)
                     }
                 }
-                .scrollDismissesKeyboard(.automatic)
+                .scrollDismissesKeyboard(.interactively)
                 .navigationTitle("\(amountText)")
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar(.visible, for: .navigationBar)

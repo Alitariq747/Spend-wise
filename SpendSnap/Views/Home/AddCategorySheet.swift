@@ -91,7 +91,7 @@ struct AddCategorySheet: View {
                         .font(.system(size: 16, weight: .regular))
                     TextField("Category name", text: $categoryName)
                         .font(.subheadline)
-                        .keyboardType(.alphabet)
+                        .keyboardType(.default)
                         .padding(.horizontal)
                         .padding(.vertical, 14)
                         .background(Color(.secondarySystemBackground), in: RoundedRectangle(cornerRadius: 12))
@@ -183,7 +183,7 @@ struct AddCategorySheet: View {
             EmojiPickerSheet(selection: $emoji)
         }
         .presentationDetents([.large])
-        .scrollDismissesKeyboard(.automatic)
+        .scrollDismissesKeyboard(.interactively)
     }
     
     private var canSave: Bool {

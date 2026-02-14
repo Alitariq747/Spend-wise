@@ -7,6 +7,8 @@
 
 import SwiftUI
 import SwiftData
+import StoreKit
+import UIKit
 
 enum LegalLinks {
     static let privacy = URL(string: "https://Alitariq747.github.io/spendwise-legal/privacy.html")!
@@ -29,17 +31,28 @@ struct SettingsView: View {
     @State private var showGoProSheet: Bool = false
     @State private var showDeleteConfirmation: Bool = false
     @State private var showWidgetInfoSheet: Bool = false
+    @State private var isRestoringPurchases: Bool = false
+    @State private var showRestoreAlert: Bool = false
+    @State private var restoreAlertMessage: String = ""
     
     @StateObject private var iCloudVM = ICloudStatusViewModel()
     @EnvironmentObject private var storeKit: StoreKitManager
     @State private var showICloudToast = false
+    
+    private static let manageSubscriptionsURL = URL(string: "https://apps.apple.com/account/subscriptions")!
     
     private var hasActiveSubscription: Bool {
         storeKit.hasActiveSubscription
     }
     
     private var subscriptionStatusText: String {
-        hasActiveSubscription ? "Subscription Active" : "No Subscription Active"
+        guard storeKit.isEntitlementsLoaded else { return "Checking..." }
+        return hasActiveSubscription ? "Subscription Active" : "No Subscription Active"
+    }
+    
+    private var subscriptionBadgeText: String? {
+        guard storeKit.isEntitlementsLoaded else { return nil }
+        return hasActiveSubscription ? "Manage" : "Upgrade"
     }
     
     private func labelForStatus(_ status: ICloudStatus) -> String {
@@ -80,9 +93,9 @@ struct SettingsView: View {
                         .foregroundStyle(.primary)
                     
                     HStack(spacing: 12) {
-                        Image(systemName: hasActiveSubscription ? "checkmark.seal.fill" : "crown.fill")
+                        Image(systemName: storeKit.isEntitlementsLoaded ? (hasActiveSubscription ? "checkmark.seal.fill" : "crown.fill") : "clock")
                             .font(.system(size: 18, weight: .semibold))
-                            .foregroundStyle(hasActiveSubscription ? Color.green.opacity(0.8) : Color.orange.opacity(0.9))
+                            .foregroundStyle(storeKit.isEntitlementsLoaded ? (hasActiveSubscription ? Color.green.opacity(0.8) : Color.orange.opacity(0.9)) : Color.secondary)
                         
                         VStack(alignment: .leading, spacing: 2) {
                             Text("Pro Plan")
@@ -94,18 +107,13 @@ struct SettingsView: View {
                         
                         Spacer()
                         
-                        if !hasActiveSubscription {
-                            Button {
-                                showGoProSheet = true
-                            } label: {
-                                Text("Upgrade")
-                                    .font(.system(size: 12, weight: .semibold))
-                                    .foregroundStyle(.white)
-                                    .padding(.horizontal, 10)
-                                    .padding(.vertical, 6)
-                                    .background(Color.black, in: Capsule())
-                            }
-                            .buttonStyle(.plain)
+                        if let badgeText = subscriptionBadgeText {
+                            Text(badgeText)
+                                .font(.system(size: 12, weight: .semibold))
+                                .foregroundStyle(hasActiveSubscription ? .primary : Color.white)
+                                .padding(.horizontal, 10)
+                                .padding(.vertical, 6)
+                                .background(hasActiveSubscription ? Color(.systemGray5) : Color.black, in: Capsule())
                         }
                         
                         Image(systemName: "chevron.right")
@@ -117,7 +125,49 @@ struct SettingsView: View {
                     .background(Color(.systemGray6), in: RoundedRectangle(cornerRadius: 12))
                     .contentShape(Rectangle())
                     .onTapGesture {
-                        showGoProSheet = true
+                        handleSubscriptionTap()
+                    }
+                    .allowsHitTesting(storeKit.isEntitlementsLoaded)
+                    
+                    if storeKit.isEntitlementsLoaded && !hasActiveSubscription {
+                        Button {
+                            Task {
+                                await restorePurchasesFromSettings()
+                            }
+                        } label: {
+                            HStack(spacing: 12) {
+                                Image(systemName: "arrow.clockwise.circle.fill")
+                                    .font(.system(size: 18, weight: .semibold))
+                                    .foregroundStyle(.primary)
+
+                                Text("Restore Purchases")
+                                    .font(.system(size: 15, weight: .semibold))
+                                
+                                Spacer()
+                                
+                                if isRestoringPurchases {
+                                    ProgressView()
+                                        .tint(.primary)
+                                } else {
+                                    Text("Restore")
+                                        .font(.system(size: 12, weight: .semibold))
+                                        .foregroundStyle(.white)
+                                        .padding(.horizontal, 10)
+                                        .padding(.vertical, 6)
+                                        .background(Color.black, in: Capsule())
+                                }
+
+                                Image(systemName: "chevron.right")
+                                    .font(.system(size: 11, weight: .semibold))
+                                    .foregroundStyle(.secondary)
+                            }
+                            .padding(.horizontal)
+                            .padding(.vertical, 16)
+                            .contentShape(Rectangle())
+                            .background(Color(.systemGray6), in: RoundedRectangle(cornerRadius: 12))
+                        }
+                        .buttonStyle(.plain)
+                        .disabled(isRestoringPurchases)
                     }
                     
                     // Currency Hstack
@@ -324,6 +374,68 @@ struct SettingsView: View {
         .sheet(isPresented: $showWidgetInfoSheet) {
             WidgetInfoSheet()
         }
+        .alert("Restore Purchases", isPresented: $showRestoreAlert) {
+            Button("OK", role: .cancel) { }
+        } message: {
+            Text(restoreAlertMessage)
+        }
+    }
+    
+    private func handleSubscriptionTap() {
+        guard storeKit.isEntitlementsLoaded else { return }
+        if hasActiveSubscription {
+            Task {
+                await openManageSubscriptions()
+            }
+        } else {
+            showGoProSheet = true
+        }
+    }
+    
+    @MainActor
+    private func openManageSubscriptions() async {
+        if let windowScene = activeWindowScene() {
+            do {
+                if #available(iOS 17.0, *) {
+                    try await AppStore.showManageSubscriptions(
+                        in: windowScene,
+                        subscriptionGroupID: storeKit.resolvedSubscriptionGroupID
+                    )
+                } else {
+                    try await AppStore.showManageSubscriptions(in: windowScene)
+                }
+                return
+            } catch {
+                openUrl(Self.manageSubscriptionsURL)
+                return
+            }
+        }
+        openUrl(Self.manageSubscriptionsURL)
+    }
+    
+    private func activeWindowScene() -> UIWindowScene? {
+        let connectedScenes = UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }
+        return connectedScenes.first(where: { $0.activationState == .foregroundActive }) ?? connectedScenes.first
+    }
+    
+    @MainActor
+    private func restorePurchasesFromSettings() async {
+        guard !isRestoringPurchases else { return }
+        
+        isRestoringPurchases = true
+        defer { isRestoringPurchases = false }
+        
+        let restored = await storeKit.restorePurchases()
+        
+        if restored {
+            restoreAlertMessage = "Your subscription was restored successfully."
+        } else if let errorMessage = storeKit.lastErrorMessage {
+            restoreAlertMessage = errorMessage
+        } else {
+            restoreAlertMessage = "No active purchases were found to restore."
+        }
+        
+        showRestoreAlert = true
     }
 
     private func deleteAllData() {

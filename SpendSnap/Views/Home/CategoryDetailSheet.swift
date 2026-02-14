@@ -42,7 +42,10 @@ struct CategoryDetailSheet: View {
         guard budget > 0 else { return 0 }
         let spentD  = NSDecimalNumber(decimal: spent).doubleValue
         let budgetD = NSDecimalNumber(decimal: budget).doubleValue
-        return min(max(spentD / budgetD, 0), 1)
+        guard spentD.isFinite, budgetD.isFinite, budgetD > 0 else { return 0 }
+        let ratio = spentD / budgetD
+        guard ratio.isFinite else { return 0 }
+        return min(max(ratio, 0), 1)
     }
     
     private var tintColor: Color {

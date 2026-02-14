@@ -143,7 +143,7 @@ struct CategoryEditSheet: View {
                         .font(.system(size: 16, weight: .regular))
                     TextField("Category name", text: $categoryName)
                         .font(.subheadline)
-                        .keyboardType(.alphabet)
+                        .keyboardType(.default)
                         .padding(.horizontal)
                         .padding(.vertical, 14)
                         .background(Color(.secondarySystemBackground), in: RoundedRectangle(cornerRadius: 12))
@@ -272,7 +272,7 @@ struct CategoryEditSheet: View {
             .presentationDetents([.height(200)])
             .presentationDragIndicator(.hidden)
         }
-        .scrollDismissesKeyboard(.automatic)
+        .scrollDismissesKeyboard(.interactively)
     }
     
     private var canSave: Bool {

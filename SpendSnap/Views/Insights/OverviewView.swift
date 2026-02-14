@@ -63,7 +63,10 @@ struct OverviewView: View {
             guard den > 0 else { return 0 }
             let n = Double(truncating: num as NSDecimalNumber)
             let d = Double(truncating: den as NSDecimalNumber)
-            return max(0, min(1, n / d))
+            guard n.isFinite, d.isFinite, d > 0 else { return 0 }
+            let raw = n / d
+            guard raw.isFinite else { return 0 }
+            return max(0, min(1, raw))
         }
 
         return categories.compactMap { cat in

@@ -52,6 +52,7 @@ struct PieChart: View {
         var out: [Slice] = []
         var cursor = 0.0
         for s in segs {
+            guard s.fraction.isFinite else { continue }
             let f = max(0, min(1, s.fraction))
             let start = cursor * 360
             let end   = (cursor + f) * 360

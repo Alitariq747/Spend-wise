@@ -25,7 +25,10 @@ struct CategoryMacroCard: View {
         guard total > 0 else { return 0 }
         let v = Double(truncating: spent as NSDecimalNumber)
         let t = Double(truncating: total as NSDecimalNumber)
-        return min(1, v / t)
+        guard v.isFinite, t.isFinite, t > 0 else { return 0 }
+        let raw = v / t
+        guard raw.isFinite else { return 0 }
+        return min(1, max(0, raw))
     }
     
   

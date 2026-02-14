@@ -33,8 +33,10 @@ private struct CreditCardsWidgetView: View {
     private func progress(for summary: CardSummary) -> Double {
         let spentD = (summary.spent as NSDecimalNumber).doubleValue
         let limitD = (summary.limit as NSDecimalNumber).doubleValue
-        guard limitD > 0 else { return 0 }
-        return min(max(spentD / limitD, 0), 1)
+        guard spentD.isFinite, limitD.isFinite, limitD > 0 else { return 0 }
+        let ratio = spentD / limitD
+        guard ratio.isFinite else { return 0 }
+        return min(max(ratio, 0), 1)
     }
     
     private func availableText(for summary: CardSummary) -> String {

@@ -1,0 +1,18 @@
+"/Users/ahmadalitariq/Desktop/SpendSnap/SpendSnap/Services/CurrencyHelpers.swift":
+  const-values: "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendWiseWidgetsExtension.build/Objects-normal/arm64/CurrencyHelpers.swiftconstvalues"
+  object: "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendWiseWidgetsExtension.build/Objects-normal/arm64/CurrencyHelpers.o"
+  dependencies: "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendWiseWidgetsExtension.build/Objects-normal/arm64/CurrencyHelpers.d"
+  diagnostics: "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendWiseWidgetsExtension.build/Objects-normal/arm64/CurrencyHelpers.dia"
+  swift-dependencies: "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendWiseWidgetsExtension.build/Objects-normal/arm64/CurrencyHelpers.swiftdeps"
+"/Users/ahmadalitariq/Desktop/SpendSnap/SpendWiseWidgets/MonthOverviewWidget.swift":
+  object: "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendWiseWidgetsExtension.build/Objects-normal/arm64/MonthOverviewWidget.o"
+  const-values: "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendWiseWidgetsExtension.build/Objects-normal/arm64/MonthOverviewWidget.swiftconstvalues"
+  swift-dependencies: "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendWiseWidgetsExtension.build/Objects-normal/arm64/MonthOverviewWidget.swiftdeps"
+  dependencies: "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendWiseWidgetsExtension.build/Objects-normal/arm64/MonthOverviewWidget.d"
+  diagnostics: "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendWiseWidgetsExtension.build/Objects-normal/arm64/MonthOverviewWidget.dia"
+"/Users/ahmadalitariq/Desktop/SpendSnap/SpendWiseWidgets/WeeklySpentWidget.swift":
+  dependencies: "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendWiseWidgetsExtension.build/Objects-normal/arm64/WeeklySpentWidget.d"
+  object: "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendWiseWidgetsExtension.build/Objects-normal/arm64/WeeklySpentWidget.o"
+  diagnostics: "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendWiseWidgetsExtension.build/Objects-normal/arm64/WeeklySpentWidget.dia"
+  swift-dependencies: "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendWiseWidgetsExtension.build/Objects-normal/arm64/WeeklySpentWidget.swiftdeps"
+  const-values: "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendWiseWidgetsExtension.build/Objects-normal/arm64/WeeklySpentWidget.swiftconstvalues"

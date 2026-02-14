@@ -85,12 +85,20 @@ enum PremiumFeature: String, CaseIterable, Identifiable {
 }
 
 struct GoProSheet: View {
+    private enum TrialEligibilityState {
+        case checking
+        case eligible
+        case ineligible
+        case noOffer
+    }
+
     @Environment(\.dismiss) private var dismiss
     @Environment(\.openURL) private var openURL
     @Environment(\.colorScheme) private var colorScheme
     @EnvironmentObject private var storeKit: StoreKitManager
     @State private var selectedTier: SubscriptionTier = .monthly
     @State private var paywallMessage: String?
+    @State private var trialEligibilityState: TrialEligibilityState = .checking
     
     private enum PaywallLinks {
         static let privacy = URL(string: "https://Alitariq747.github.io/spendwise-legal/privacy.html")!
@@ -105,19 +113,58 @@ struct GoProSheet: View {
         product(for: tier)?.displayPrice ?? tier.fallbackPrice
     }
     
+    private var chargeDisclosureTitle: String {
+        switch trialEligibilityState {
+        case .checking:
+            return "Checking trial eligibility"
+        case .eligible:
+            return "2-week free trial"
+        case .ineligible:
+            return "No free trial available"
+        case .noOffer:
+            return "Trial unavailable for this plan"
+        }
+    }
+    
+    private var chargeDisclosureDetail: String {
+        let price = "\(displayPrice(for: selectedTier))/\(selectedTier.period)"
+        
+        switch trialEligibilityState {
+        case .checking:
+            return "Checking your App Store eligibility for the 2-week trial."
+        case .eligible:
+            return "Nothing due today. After 2 weeks, you'll be charged \(price), auto-renewing unless canceled."
+        case .ineligible:
+            return "You've already used a trial on this subscription group. You'll be charged \(price) when you continue."
+        case .noOffer:
+            return "This plan currently has no introductory trial. You'll be charged \(price) when you continue."
+        }
+    }
+    
+    private var chargeDisclosureAccent: Color {
+        switch trialEligibilityState {
+        case .checking:
+            return .gray
+        case .eligible:
+            return .green
+        case .ineligible, .noOffer:
+            return .orange
+        }
+    }
+    
     private var chargeDisclosureBanner: some View {
-        let detail = "Nothing due today. After 2 weeks, you'll be charged \(displayPrice(for: selectedTier))/\(selectedTier.period), auto-renewing unless canceled."
+        let accent = chargeDisclosureAccent
 
         return HStack(spacing: 10) {
             Image(systemName: "sparkles")
                 .font(.system(size: 14, weight: .semibold))
-                .foregroundStyle(.green.opacity(0.85))
+                .foregroundStyle(accent.opacity(0.9))
             
             VStack(alignment: .leading, spacing: 2) {
-                Text("2-week free trial")
+                Text(chargeDisclosureTitle)
                     .font(.system(size: 13, weight: .semibold))
                     .foregroundStyle(.primary)
-                Text(detail)
+                Text(chargeDisclosureDetail)
                     .font(.system(size: 12, weight: .regular))
                     .foregroundStyle(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
@@ -127,11 +174,36 @@ struct GoProSheet: View {
         }
         .padding(.horizontal, 12)
         .padding(.vertical, 10)
-        .background(Color.green.opacity(0.08), in: RoundedRectangle(cornerRadius: 12))
+        .background(accent.opacity(0.08), in: RoundedRectangle(cornerRadius: 12))
         .overlay(
             RoundedRectangle(cornerRadius: 12)
-                .stroke(Color.green.opacity(0.22), lineWidth: 1)
+                .stroke(accent.opacity(0.22), lineWidth: 1)
         )
+    }
+    
+    private func refreshTrialEligibilityState() async {
+        await MainActor.run {
+            trialEligibilityState = .checking
+        }
+
+        guard let subscription = product(for: selectedTier)?.subscription else {
+            return
+        }
+        
+        guard subscription.introductoryOffer != nil else {
+            await MainActor.run {
+                trialEligibilityState = .noOffer
+            }
+            return
+        }
+        
+        let isEligible = await Product.SubscriptionInfo.isEligibleForIntroOffer(
+            for: subscription.subscriptionGroupID
+        )
+        
+        await MainActor.run {
+            trialEligibilityState = isEligible ? .eligible : .ineligible
+        }
     }
     
     private func handleSubscribeTap() {
@@ -174,12 +246,13 @@ struct GoProSheet: View {
                 } label: {
                     Image(systemName: "x.circle")
                         .font(.system(size: 24, weight: .semibold))
-                        .foregroundStyle(.black)
+                        .foregroundStyle(.primary)
                 }
+                .buttonStyle(.plain)
             }
             Image(systemName: "crown.fill")
                 .font(.system(size: 24, weight: .semibold))
-                .foregroundStyle(.black.opacity(1))
+                .foregroundStyle(.primary)
                 .padding(.vertical, 12)
                 .padding(.horizontal, 12)
                 .background(Color.black.opacity(0.05), in: Circle())
@@ -311,6 +384,17 @@ struct GoProSheet: View {
             }
             if !storeKit.isEntitlementsLoaded {
                 await storeKit.refreshEntitlements()
+            }
+            await refreshTrialEligibilityState()
+        }
+        .onChange(of: selectedTier) {
+            Task {
+                await refreshTrialEligibilityState()
+            }
+        }
+        .onChange(of: storeKit.products.map(\.id)) {
+            Task {
+                await refreshTrialEligibilityState()
             }
         }
         }

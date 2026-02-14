@@ -66,7 +66,7 @@ struct AddCardSheet: View {
                         .font(.system(size: 16, weight: .regular))
                     TextField("Enter your card name", text: $cardName)
                         .font(.subheadline)
-                        .keyboardType(.alphabet)
+                        .keyboardType(.default)
                         .padding(.horizontal)
                         .padding(.vertical, 14)
                         .background(Color(.secondarySystemBackground), in: RoundedRectangle(cornerRadius: 12))
@@ -125,7 +125,7 @@ struct AddCardSheet: View {
 
         }
         .padding()
-        .scrollDismissesKeyboard(.automatic)
+        .scrollDismissesKeyboard(.interactively)
     }
     
     private func isFormValid() -> Bool {

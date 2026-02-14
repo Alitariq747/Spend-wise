@@ -1,0 +1,758 @@
+{
+  "" : {
+    "diagnostics" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/SpendSnap-master.dia",
+    "emit-module-dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/SpendSnap-master-emit-module.d",
+    "emit-module-diagnostics" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/SpendSnap-master-emit-module.dia",
+    "swift-dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/SpendSnap-master.swiftdeps"
+  },
+  "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/DerivedSources/GeneratedAssetSymbols.swift" : {
+    "const-values" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/GeneratedAssetSymbols.swiftconstvalues",
+    "dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/GeneratedAssetSymbols.d",
+    "diagnostics" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/GeneratedAssetSymbols.dia",
+    "index-unit-output-path" : "/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/GeneratedAssetSymbols.o",
+    "llvm-bc" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/GeneratedAssetSymbols.bc",
+    "object" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/GeneratedAssetSymbols.o",
+    "swift-dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/GeneratedAssetSymbols.swiftdeps",
+    "swiftmodule" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/GeneratedAssetSymbols~partial.swiftmodule"
+  },
+  "/Users/ahmadalitariq/Desktop/SpendSnap/SpendSnap/Models/Budget.swift" : {
+    "const-values" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/Budget.swiftconstvalues",
+    "dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/Budget.d",
+    "diagnostics" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/Budget.dia",
+    "index-unit-output-path" : "/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/Budget.o",
+    "llvm-bc" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/Budget.bc",
+    "object" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/Budget.o",
+    "swift-dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/Budget.swiftdeps",
+    "swiftmodule" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/Budget~partial.swiftmodule"
+  },
+  "/Users/ahmadalitariq/Desktop/SpendSnap/SpendSnap/Models/Category.swift" : {
+    "const-values" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/Category.swiftconstvalues",
+    "dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/Category.d",
+    "diagnostics" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/Category.dia",
+    "index-unit-output-path" : "/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/Category.o",
+    "llvm-bc" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/Category.bc",
+    "object" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/Category.o",
+    "swift-dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/Category.swiftdeps",
+    "swiftmodule" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/Category~partial.swiftmodule"
+  },
+  "/Users/ahmadalitariq/Desktop/SpendSnap/SpendSnap/Models/CategoryEntity.swift" : {
+    "const-values" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CategoryEntity.swiftconstvalues",
+    "dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CategoryEntity.d",
+    "diagnostics" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CategoryEntity.dia",
+    "index-unit-output-path" : "/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CategoryEntity.o",
+    "llvm-bc" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CategoryEntity.bc",
+    "object" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CategoryEntity.o",
+    "swift-dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CategoryEntity.swiftdeps",
+    "swiftmodule" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CategoryEntity~partial.swiftmodule"
+  },
+  "/Users/ahmadalitariq/Desktop/SpendSnap/SpendSnap/Models/CategoryMonthlyBudget.swift" : {
+    "const-values" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CategoryMonthlyBudget.swiftconstvalues",
+    "dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CategoryMonthlyBudget.d",
+    "diagnostics" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CategoryMonthlyBudget.dia",
+    "index-unit-output-path" : "/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CategoryMonthlyBudget.o",
+    "llvm-bc" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CategoryMonthlyBudget.bc",
+    "object" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CategoryMonthlyBudget.o",
+    "swift-dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CategoryMonthlyBudget.swiftdeps",
+    "swiftmodule" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CategoryMonthlyBudget~partial.swiftmodule"
+  },
+  "/Users/ahmadalitariq/Desktop/SpendSnap/SpendSnap/Models/CreditCard.swift" : {
+    "const-values" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CreditCard.swiftconstvalues",
+    "dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CreditCard.d",
+    "diagnostics" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CreditCard.dia",
+    "index-unit-output-path" : "/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CreditCard.o",
+    "llvm-bc" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CreditCard.bc",
+    "object" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CreditCard.o",
+    "swift-dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CreditCard.swiftdeps",
+    "swiftmodule" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CreditCard~partial.swiftmodule"
+  },
+  "/Users/ahmadalitariq/Desktop/SpendSnap/SpendSnap/Models/Expenses.swift" : {
+    "const-values" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/Expenses.swiftconstvalues",
+    "dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/Expenses.d",
+    "diagnostics" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/Expenses.dia",
+    "index-unit-output-path" : "/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/Expenses.o",
+    "llvm-bc" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/Expenses.bc",
+    "object" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/Expenses.o",
+    "swift-dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/Expenses.swiftdeps",
+    "swiftmodule" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/Expenses~partial.swiftmodule"
+  },
+  "/Users/ahmadalitariq/Desktop/SpendSnap/SpendSnap/Models/PaymentMethod.swift" : {
+    "const-values" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/PaymentMethod.swiftconstvalues",
+    "dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/PaymentMethod.d",
+    "diagnostics" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/PaymentMethod.dia",
+    "index-unit-output-path" : "/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/PaymentMethod.o",
+    "llvm-bc" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/PaymentMethod.bc",
+    "object" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/PaymentMethod.o",
+    "swift-dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/PaymentMethod.swiftdeps",
+    "swiftmodule" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/PaymentMethod~partial.swiftmodule"
+  },
+  "/Users/ahmadalitariq/Desktop/SpendSnap/SpendSnap/Models/ReminderLevel.swift" : {
+    "const-values" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/ReminderLevel.swiftconstvalues",
+    "dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/ReminderLevel.d",
+    "diagnostics" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/ReminderLevel.dia",
+    "index-unit-output-path" : "/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/ReminderLevel.o",
+    "llvm-bc" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/ReminderLevel.bc",
+    "object" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/ReminderLevel.o",
+    "swift-dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/ReminderLevel.swiftdeps",
+    "swiftmodule" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/ReminderLevel~partial.swiftmodule"
+  },
+  "/Users/ahmadalitariq/Desktop/SpendSnap/SpendSnap/Models/Settings.swift" : {
+    "const-values" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/Settings.swiftconstvalues",
+    "dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/Settings.d",
+    "diagnostics" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/Settings.dia",
+    "index-unit-output-path" : "/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/Settings.o",
+    "llvm-bc" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/Settings.bc",
+    "object" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/Settings.o",
+    "swift-dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/Settings.swiftdeps",
+    "swiftmodule" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/Settings~partial.swiftmodule"
+  },
+  "/Users/ahmadalitariq/Desktop/SpendSnap/SpendSnap/Services/CurrencyHelpers.swift" : {
+    "const-values" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CurrencyHelpers.swiftconstvalues",
+    "dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CurrencyHelpers.d",
+    "diagnostics" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CurrencyHelpers.dia",
+    "index-unit-output-path" : "/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CurrencyHelpers.o",
+    "llvm-bc" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CurrencyHelpers.bc",
+    "object" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CurrencyHelpers.o",
+    "swift-dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CurrencyHelpers.swiftdeps",
+    "swiftmodule" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CurrencyHelpers~partial.swiftmodule"
+  },
+  "/Users/ahmadalitariq/Desktop/SpendSnap/SpendSnap/Services/DateUtils.swift" : {
+    "const-values" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/DateUtils.swiftconstvalues",
+    "dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/DateUtils.d",
+    "diagnostics" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/DateUtils.dia",
+    "index-unit-output-path" : "/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/DateUtils.o",
+    "llvm-bc" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/DateUtils.bc",
+    "object" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/DateUtils.o",
+    "swift-dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/DateUtils.swiftdeps",
+    "swiftmodule" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/DateUtils~partial.swiftmodule"
+  },
+  "/Users/ahmadalitariq/Desktop/SpendSnap/SpendSnap/Services/ExpenseHelpers.swift" : {
+    "const-values" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/ExpenseHelpers.swiftconstvalues",
+    "dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/ExpenseHelpers.d",
+    "diagnostics" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/ExpenseHelpers.dia",
+    "index-unit-output-path" : "/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/ExpenseHelpers.o",
+    "llvm-bc" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/ExpenseHelpers.bc",
+    "object" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/ExpenseHelpers.o",
+    "swift-dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/ExpenseHelpers.swiftdeps",
+    "swiftmodule" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/ExpenseHelpers~partial.swiftmodule"
+  },
+  "/Users/ahmadalitariq/Desktop/SpendSnap/SpendSnap/Services/InsightsHelpers.swift" : {
+    "const-values" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/InsightsHelpers.swiftconstvalues",
+    "dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/InsightsHelpers.d",
+    "diagnostics" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/InsightsHelpers.dia",
+    "index-unit-output-path" : "/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/InsightsHelpers.o",
+    "llvm-bc" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/InsightsHelpers.bc",
+    "object" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/InsightsHelpers.o",
+    "swift-dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/InsightsHelpers.swiftdeps",
+    "swiftmodule" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/InsightsHelpers~partial.swiftmodule"
+  },
+  "/Users/ahmadalitariq/Desktop/SpendSnap/SpendSnap/Services/NotificationsManager.swift" : {
+    "const-values" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/NotificationsManager.swiftconstvalues",
+    "dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/NotificationsManager.d",
+    "diagnostics" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/NotificationsManager.dia",
+    "index-unit-output-path" : "/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/NotificationsManager.o",
+    "llvm-bc" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/NotificationsManager.bc",
+    "object" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/NotificationsManager.o",
+    "swift-dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/NotificationsManager.swiftdeps",
+    "swiftmodule" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/NotificationsManager~partial.swiftmodule"
+  },
+  "/Users/ahmadalitariq/Desktop/SpendSnap/SpendSnap/Services/StoreKitManager.swift" : {
+    "const-values" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/StoreKitManager.swiftconstvalues",
+    "dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/StoreKitManager.d",
+    "diagnostics" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/StoreKitManager.dia",
+    "index-unit-output-path" : "/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/StoreKitManager.o",
+    "llvm-bc" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/StoreKitManager.bc",
+    "object" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/StoreKitManager.o",
+    "swift-dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/StoreKitManager.swiftdeps",
+    "swiftmodule" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/StoreKitManager~partial.swiftmodule"
+  },
+  "/Users/ahmadalitariq/Desktop/SpendSnap/SpendSnap/Services/TrendAnalysisHelpers.swift" : {
+    "const-values" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/TrendAnalysisHelpers.swiftconstvalues",
+    "dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/TrendAnalysisHelpers.d",
+    "diagnostics" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/TrendAnalysisHelpers.dia",
+    "index-unit-output-path" : "/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/TrendAnalysisHelpers.o",
+    "llvm-bc" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/TrendAnalysisHelpers.bc",
+    "object" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/TrendAnalysisHelpers.o",
+    "swift-dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/TrendAnalysisHelpers.swiftdeps",
+    "swiftmodule" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/TrendAnalysisHelpers~partial.swiftmodule"
+  },
+  "/Users/ahmadalitariq/Desktop/SpendSnap/SpendSnap/Services/iCloudStatusManager.swift" : {
+    "const-values" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/iCloudStatusManager.swiftconstvalues",
+    "dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/iCloudStatusManager.d",
+    "diagnostics" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/iCloudStatusManager.dia",
+    "index-unit-output-path" : "/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/iCloudStatusManager.o",
+    "llvm-bc" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/iCloudStatusManager.bc",
+    "object" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/iCloudStatusManager.o",
+    "swift-dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/iCloudStatusManager.swiftdeps",
+    "swiftmodule" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/iCloudStatusManager~partial.swiftmodule"
+  },
+  "/Users/ahmadalitariq/Desktop/SpendSnap/SpendSnap/Services/previewCategories.swift" : {
+    "const-values" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/previewCategories.swiftconstvalues",
+    "dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/previewCategories.d",
+    "diagnostics" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/previewCategories.dia",
+    "index-unit-output-path" : "/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/previewCategories.o",
+    "llvm-bc" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/previewCategories.bc",
+    "object" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/previewCategories.o",
+    "swift-dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/previewCategories.swiftdeps",
+    "swiftmodule" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/previewCategories~partial.swiftmodule"
+  },
+  "/Users/ahmadalitariq/Desktop/SpendSnap/SpendSnap/Services/previewExpenses.swift" : {
+    "const-values" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/previewExpenses.swiftconstvalues",
+    "dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/previewExpenses.d",
+    "diagnostics" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/previewExpenses.dia",
+    "index-unit-output-path" : "/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/previewExpenses.o",
+    "llvm-bc" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/previewExpenses.bc",
+    "object" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/previewExpenses.o",
+    "swift-dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/previewExpenses.swiftdeps",
+    "swiftmodule" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/previewExpenses~partial.swiftmodule"
+  },
+  "/Users/ahmadalitariq/Desktop/SpendSnap/SpendSnap/SpendSnapApp.swift" : {
+    "const-values" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/SpendSnapApp.swiftconstvalues",
+    "dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/SpendSnapApp.d",
+    "diagnostics" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/SpendSnapApp.dia",
+    "index-unit-output-path" : "/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/SpendSnapApp.o",
+    "llvm-bc" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/SpendSnapApp.bc",
+    "object" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/SpendSnapApp.o",
+    "swift-dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/SpendSnapApp.swiftdeps",
+    "swiftmodule" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/SpendSnapApp~partial.swiftmodule"
+  },
+  "/Users/ahmadalitariq/Desktop/SpendSnap/SpendSnap/Views/Components/Category/CategoryMacroCard.swift" : {
+    "const-values" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CategoryMacroCard.swiftconstvalues",
+    "dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CategoryMacroCard.d",
+    "diagnostics" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CategoryMacroCard.dia",
+    "index-unit-output-path" : "/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CategoryMacroCard.o",
+    "llvm-bc" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CategoryMacroCard.bc",
+    "object" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CategoryMacroCard.o",
+    "swift-dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CategoryMacroCard.swiftdeps",
+    "swiftmodule" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CategoryMacroCard~partial.swiftmodule"
+  },
+  "/Users/ahmadalitariq/Desktop/SpendSnap/SpendSnap/Views/Components/Category/CategoryPill.swift" : {
+    "const-values" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CategoryPill.swiftconstvalues",
+    "dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CategoryPill.d",
+    "diagnostics" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CategoryPill.dia",
+    "index-unit-output-path" : "/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CategoryPill.o",
+    "llvm-bc" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CategoryPill.bc",
+    "object" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CategoryPill.o",
+    "swift-dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CategoryPill.swiftdeps",
+    "swiftmodule" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CategoryPill~partial.swiftmodule"
+  },
+  "/Users/ahmadalitariq/Desktop/SpendSnap/SpendSnap/Views/Components/Category/CategorySelector.swift" : {
+    "const-values" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CategorySelector.swiftconstvalues",
+    "dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CategorySelector.d",
+    "diagnostics" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CategorySelector.dia",
+    "index-unit-output-path" : "/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CategorySelector.o",
+    "llvm-bc" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CategorySelector.bc",
+    "object" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CategorySelector.o",
+    "swift-dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CategorySelector.swiftdeps",
+    "swiftmodule" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CategorySelector~partial.swiftmodule"
+  },
+  "/Users/ahmadalitariq/Desktop/SpendSnap/SpendSnap/Views/Components/Category/CategorySpendingCard.swift" : {
+    "const-values" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CategorySpendingCard.swiftconstvalues",
+    "dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CategorySpendingCard.d",
+    "diagnostics" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CategorySpendingCard.dia",
+    "index-unit-output-path" : "/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CategorySpendingCard.o",
+    "llvm-bc" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CategorySpendingCard.bc",
+    "object" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CategorySpendingCard.o",
+    "swift-dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CategorySpendingCard.swiftdeps",
+    "swiftmodule" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CategorySpendingCard~partial.swiftmodule"
+  },
+  "/Users/ahmadalitariq/Desktop/SpendSnap/SpendSnap/Views/Components/CreditCard/CCView.swift" : {
+    "const-values" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CCView.swiftconstvalues",
+    "dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CCView.d",
+    "diagnostics" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CCView.dia",
+    "index-unit-output-path" : "/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CCView.o",
+    "llvm-bc" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CCView.bc",
+    "object" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CCView.o",
+    "swift-dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CCView.swiftdeps",
+    "swiftmodule" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CCView~partial.swiftmodule"
+  },
+  "/Users/ahmadalitariq/Desktop/SpendSnap/SpendSnap/Views/Components/CreditCard/CreditCardList.swift" : {
+    "const-values" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CreditCardList.swiftconstvalues",
+    "dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CreditCardList.d",
+    "diagnostics" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CreditCardList.dia",
+    "index-unit-output-path" : "/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CreditCardList.o",
+    "llvm-bc" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CreditCardList.bc",
+    "object" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CreditCardList.o",
+    "swift-dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CreditCardList.swiftdeps",
+    "swiftmodule" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CreditCardList~partial.swiftmodule"
+  },
+  "/Users/ahmadalitariq/Desktop/SpendSnap/SpendSnap/Views/Components/CreditCard/DayPickerRow.swift" : {
+    "const-values" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/DayPickerRow.swiftconstvalues",
+    "dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/DayPickerRow.d",
+    "diagnostics" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/DayPickerRow.dia",
+    "index-unit-output-path" : "/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/DayPickerRow.o",
+    "llvm-bc" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/DayPickerRow.bc",
+    "object" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/DayPickerRow.o",
+    "swift-dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/DayPickerRow.swiftdeps",
+    "swiftmodule" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/DayPickerRow~partial.swiftmodule"
+  },
+  "/Users/ahmadalitariq/Desktop/SpendSnap/SpendSnap/Views/Components/CreditCard/NoCardView.swift" : {
+    "const-values" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/NoCardView.swiftconstvalues",
+    "dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/NoCardView.d",
+    "diagnostics" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/NoCardView.dia",
+    "index-unit-output-path" : "/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/NoCardView.o",
+    "llvm-bc" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/NoCardView.bc",
+    "object" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/NoCardView.o",
+    "swift-dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/NoCardView.swiftdeps",
+    "swiftmodule" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/NoCardView~partial.swiftmodule"
+  },
+  "/Users/ahmadalitariq/Desktop/SpendSnap/SpendSnap/Views/Components/General/AddCategoryPromptSheet.swift" : {
+    "const-values" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/AddCategoryPromptSheet.swiftconstvalues",
+    "dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/AddCategoryPromptSheet.d",
+    "diagnostics" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/AddCategoryPromptSheet.dia",
+    "index-unit-output-path" : "/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/AddCategoryPromptSheet.o",
+    "llvm-bc" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/AddCategoryPromptSheet.bc",
+    "object" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/AddCategoryPromptSheet.o",
+    "swift-dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/AddCategoryPromptSheet.swiftdeps",
+    "swiftmodule" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/AddCategoryPromptSheet~partial.swiftmodule"
+  },
+  "/Users/ahmadalitariq/Desktop/SpendSnap/SpendSnap/Views/Components/General/CompactHeader.swift" : {
+    "const-values" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CompactHeader.swiftconstvalues",
+    "dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CompactHeader.d",
+    "diagnostics" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CompactHeader.dia",
+    "index-unit-output-path" : "/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CompactHeader.o",
+    "llvm-bc" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CompactHeader.bc",
+    "object" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CompactHeader.o",
+    "swift-dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CompactHeader.swiftdeps",
+    "swiftmodule" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CompactHeader~partial.swiftmodule"
+  },
+  "/Users/ahmadalitariq/Desktop/SpendSnap/SpendSnap/Views/Components/General/EmojiPickerSheet.swift" : {
+    "const-values" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/EmojiPickerSheet.swiftconstvalues",
+    "dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/EmojiPickerSheet.d",
+    "diagnostics" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/EmojiPickerSheet.dia",
+    "index-unit-output-path" : "/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/EmojiPickerSheet.o",
+    "llvm-bc" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/EmojiPickerSheet.bc",
+    "object" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/EmojiPickerSheet.o",
+    "swift-dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/EmojiPickerSheet.swiftdeps",
+    "swiftmodule" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/EmojiPickerSheet~partial.swiftmodule"
+  },
+  "/Users/ahmadalitariq/Desktop/SpendSnap/SpendSnap/Views/Components/General/ExpenseCard.swift" : {
+    "const-values" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/ExpenseCard.swiftconstvalues",
+    "dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/ExpenseCard.d",
+    "diagnostics" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/ExpenseCard.dia",
+    "index-unit-output-path" : "/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/ExpenseCard.o",
+    "llvm-bc" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/ExpenseCard.bc",
+    "object" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/ExpenseCard.o",
+    "swift-dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/ExpenseCard.swiftdeps",
+    "swiftmodule" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/ExpenseCard~partial.swiftmodule"
+  },
+  "/Users/ahmadalitariq/Desktop/SpendSnap/SpendSnap/Views/Components/General/MonthPicker.swift" : {
+    "const-values" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/MonthPicker.swiftconstvalues",
+    "dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/MonthPicker.d",
+    "diagnostics" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/MonthPicker.dia",
+    "index-unit-output-path" : "/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/MonthPicker.o",
+    "llvm-bc" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/MonthPicker.bc",
+    "object" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/MonthPicker.o",
+    "swift-dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/MonthPicker.swiftdeps",
+    "swiftmodule" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/MonthPicker~partial.swiftmodule"
+  },
+  "/Users/ahmadalitariq/Desktop/SpendSnap/SpendSnap/Views/Components/General/MonthlyOverview.swift" : {
+    "const-values" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/MonthlyOverview.swiftconstvalues",
+    "dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/MonthlyOverview.d",
+    "diagnostics" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/MonthlyOverview.dia",
+    "index-unit-output-path" : "/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/MonthlyOverview.o",
+    "llvm-bc" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/MonthlyOverview.bc",
+    "object" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/MonthlyOverview.o",
+    "swift-dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/MonthlyOverview.swiftdeps",
+    "swiftmodule" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/MonthlyOverview~partial.swiftmodule"
+  },
+  "/Users/ahmadalitariq/Desktop/SpendSnap/SpendSnap/Views/Components/General/TabPill.swift" : {
+    "const-values" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/TabPill.swiftconstvalues",
+    "dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/TabPill.d",
+    "diagnostics" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/TabPill.dia",
+    "index-unit-output-path" : "/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/TabPill.o",
+    "llvm-bc" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/TabPill.bc",
+    "object" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/TabPill.o",
+    "swift-dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/TabPill.swiftdeps",
+    "swiftmodule" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/TabPill~partial.swiftmodule"
+  },
+  "/Users/ahmadalitariq/Desktop/SpendSnap/SpendSnap/Views/Components/Insights/DailyBurn.swift" : {
+    "const-values" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/DailyBurn.swiftconstvalues",
+    "dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/DailyBurn.d",
+    "diagnostics" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/DailyBurn.dia",
+    "index-unit-output-path" : "/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/DailyBurn.o",
+    "llvm-bc" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/DailyBurn.bc",
+    "object" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/DailyBurn.o",
+    "swift-dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/DailyBurn.swiftdeps",
+    "swiftmodule" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/DailyBurn~partial.swiftmodule"
+  },
+  "/Users/ahmadalitariq/Desktop/SpendSnap/SpendSnap/Views/Components/Insights/PaceBandChart.swift" : {
+    "const-values" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/PaceBandChart.swiftconstvalues",
+    "dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/PaceBandChart.d",
+    "diagnostics" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/PaceBandChart.dia",
+    "index-unit-output-path" : "/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/PaceBandChart.o",
+    "llvm-bc" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/PaceBandChart.bc",
+    "object" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/PaceBandChart.o",
+    "swift-dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/PaceBandChart.swiftdeps",
+    "swiftmodule" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/PaceBandChart~partial.swiftmodule"
+  },
+  "/Users/ahmadalitariq/Desktop/SpendSnap/SpendSnap/Views/Components/Insights/PieChart.swift" : {
+    "const-values" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/PieChart.swiftconstvalues",
+    "dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/PieChart.d",
+    "diagnostics" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/PieChart.dia",
+    "index-unit-output-path" : "/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/PieChart.o",
+    "llvm-bc" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/PieChart.bc",
+    "object" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/PieChart.o",
+    "swift-dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/PieChart.swiftdeps",
+    "swiftmodule" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/PieChart~partial.swiftmodule"
+  },
+  "/Users/ahmadalitariq/Desktop/SpendSnap/SpendSnap/Views/Components/Insights/WeeklyBarRow.swift" : {
+    "const-values" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/WeeklyBarRow.swiftconstvalues",
+    "dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/WeeklyBarRow.d",
+    "diagnostics" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/WeeklyBarRow.dia",
+    "index-unit-output-path" : "/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/WeeklyBarRow.o",
+    "llvm-bc" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/WeeklyBarRow.bc",
+    "object" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/WeeklyBarRow.o",
+    "swift-dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/WeeklyBarRow.swiftdeps",
+    "swiftmodule" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/WeeklyBarRow~partial.swiftmodule"
+  },
+  "/Users/ahmadalitariq/Desktop/SpendSnap/SpendSnap/Views/Components/Settings/AppearanceRow.swift" : {
+    "const-values" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/AppearanceRow.swiftconstvalues",
+    "dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/AppearanceRow.d",
+    "diagnostics" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/AppearanceRow.dia",
+    "index-unit-output-path" : "/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/AppearanceRow.o",
+    "llvm-bc" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/AppearanceRow.bc",
+    "object" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/AppearanceRow.o",
+    "swift-dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/AppearanceRow.swiftdeps",
+    "swiftmodule" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/AppearanceRow~partial.swiftmodule"
+  },
+  "/Users/ahmadalitariq/Desktop/SpendSnap/SpendSnap/Views/Components/Settings/ContactUsRow.swift" : {
+    "const-values" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/ContactUsRow.swiftconstvalues",
+    "dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/ContactUsRow.d",
+    "diagnostics" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/ContactUsRow.dia",
+    "index-unit-output-path" : "/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/ContactUsRow.o",
+    "llvm-bc" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/ContactUsRow.bc",
+    "object" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/ContactUsRow.o",
+    "swift-dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/ContactUsRow.swiftdeps",
+    "swiftmodule" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/ContactUsRow~partial.swiftmodule"
+  },
+  "/Users/ahmadalitariq/Desktop/SpendSnap/SpendSnap/Views/Components/Settings/Currency.swift" : {
+    "const-values" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/Currency.swiftconstvalues",
+    "dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/Currency.d",
+    "diagnostics" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/Currency.dia",
+    "index-unit-output-path" : "/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/Currency.o",
+    "llvm-bc" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/Currency.bc",
+    "object" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/Currency.o",
+    "swift-dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/Currency.swiftdeps",
+    "swiftmodule" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/Currency~partial.swiftmodule"
+  },
+  "/Users/ahmadalitariq/Desktop/SpendSnap/SpendSnap/Views/Components/Settings/PrivacyPolicyRow.swift" : {
+    "const-values" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/PrivacyPolicyRow.swiftconstvalues",
+    "dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/PrivacyPolicyRow.d",
+    "diagnostics" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/PrivacyPolicyRow.dia",
+    "index-unit-output-path" : "/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/PrivacyPolicyRow.o",
+    "llvm-bc" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/PrivacyPolicyRow.bc",
+    "object" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/PrivacyPolicyRow.o",
+    "swift-dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/PrivacyPolicyRow.swiftdeps",
+    "swiftmodule" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/PrivacyPolicyRow~partial.swiftmodule"
+  },
+  "/Users/ahmadalitariq/Desktop/SpendSnap/SpendSnap/Views/Components/Settings/RateUsRow.swift" : {
+    "const-values" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/RateUsRow.swiftconstvalues",
+    "dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/RateUsRow.d",
+    "diagnostics" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/RateUsRow.dia",
+    "index-unit-output-path" : "/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/RateUsRow.o",
+    "llvm-bc" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/RateUsRow.bc",
+    "object" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/RateUsRow.o",
+    "swift-dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/RateUsRow.swiftdeps",
+    "swiftmodule" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/RateUsRow~partial.swiftmodule"
+  },
+  "/Users/ahmadalitariq/Desktop/SpendSnap/SpendSnap/Views/Components/Settings/Reminders.swift" : {
+    "const-values" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/Reminders.swiftconstvalues",
+    "dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/Reminders.d",
+    "diagnostics" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/Reminders.dia",
+    "index-unit-output-path" : "/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/Reminders.o",
+    "llvm-bc" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/Reminders.bc",
+    "object" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/Reminders.o",
+    "swift-dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/Reminders.swiftdeps",
+    "swiftmodule" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/Reminders~partial.swiftmodule"
+  },
+  "/Users/ahmadalitariq/Desktop/SpendSnap/SpendSnap/Views/Components/Settings/TermsOfServiceRow.swift" : {
+    "const-values" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/TermsOfServiceRow.swiftconstvalues",
+    "dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/TermsOfServiceRow.d",
+    "diagnostics" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/TermsOfServiceRow.dia",
+    "index-unit-output-path" : "/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/TermsOfServiceRow.o",
+    "llvm-bc" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/TermsOfServiceRow.bc",
+    "object" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/TermsOfServiceRow.o",
+    "swift-dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/TermsOfServiceRow.swiftdeps",
+    "swiftmodule" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/TermsOfServiceRow~partial.swiftmodule"
+  },
+  "/Users/ahmadalitariq/Desktop/SpendSnap/SpendSnap/Views/Components/Settings/UnlockPro.swift" : {
+    "const-values" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/UnlockPro.swiftconstvalues",
+    "dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/UnlockPro.d",
+    "diagnostics" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/UnlockPro.dia",
+    "index-unit-output-path" : "/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/UnlockPro.o",
+    "llvm-bc" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/UnlockPro.bc",
+    "object" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/UnlockPro.o",
+    "swift-dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/UnlockPro.swiftdeps",
+    "swiftmodule" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/UnlockPro~partial.swiftmodule"
+  },
+  "/Users/ahmadalitariq/Desktop/SpendSnap/SpendSnap/Views/Components/Settings/UpgradeToPro.swift" : {
+    "const-values" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/UpgradeToPro.swiftconstvalues",
+    "dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/UpgradeToPro.d",
+    "diagnostics" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/UpgradeToPro.dia",
+    "index-unit-output-path" : "/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/UpgradeToPro.o",
+    "llvm-bc" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/UpgradeToPro.bc",
+    "object" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/UpgradeToPro.o",
+    "swift-dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/UpgradeToPro.swiftdeps",
+    "swiftmodule" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/UpgradeToPro~partial.swiftmodule"
+  },
+  "/Users/ahmadalitariq/Desktop/SpendSnap/SpendSnap/Views/Components/Settings/WidgetRow.swift" : {
+    "const-values" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/WidgetRow.swiftconstvalues",
+    "dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/WidgetRow.d",
+    "diagnostics" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/WidgetRow.dia",
+    "index-unit-output-path" : "/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/WidgetRow.o",
+    "llvm-bc" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/WidgetRow.bc",
+    "object" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/WidgetRow.o",
+    "swift-dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/WidgetRow.swiftdeps",
+    "swiftmodule" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/WidgetRow~partial.swiftmodule"
+  },
+  "/Users/ahmadalitariq/Desktop/SpendSnap/SpendSnap/Views/Components/Settings/iCloudRow.swift" : {
+    "const-values" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/iCloudRow.swiftconstvalues",
+    "dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/iCloudRow.d",
+    "diagnostics" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/iCloudRow.dia",
+    "index-unit-output-path" : "/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/iCloudRow.o",
+    "llvm-bc" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/iCloudRow.bc",
+    "object" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/iCloudRow.o",
+    "swift-dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/iCloudRow.swiftdeps",
+    "swiftmodule" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/iCloudRow~partial.swiftmodule"
+  },
+  "/Users/ahmadalitariq/Desktop/SpendSnap/SpendSnap/Views/CreditCard/AddCardSheet.swift" : {
+    "const-values" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/AddCardSheet.swiftconstvalues",
+    "dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/AddCardSheet.d",
+    "diagnostics" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/AddCardSheet.dia",
+    "index-unit-output-path" : "/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/AddCardSheet.o",
+    "llvm-bc" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/AddCardSheet.bc",
+    "object" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/AddCardSheet.o",
+    "swift-dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/AddCardSheet.swiftdeps",
+    "swiftmodule" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/AddCardSheet~partial.swiftmodule"
+  },
+  "/Users/ahmadalitariq/Desktop/SpendSnap/SpendSnap/Views/CreditCard/CardDetailSheet.swift" : {
+    "const-values" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CardDetailSheet.swiftconstvalues",
+    "dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CardDetailSheet.d",
+    "diagnostics" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CardDetailSheet.dia",
+    "index-unit-output-path" : "/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CardDetailSheet.o",
+    "llvm-bc" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CardDetailSheet.bc",
+    "object" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CardDetailSheet.o",
+    "swift-dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CardDetailSheet.swiftdeps",
+    "swiftmodule" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CardDetailSheet~partial.swiftmodule"
+  },
+  "/Users/ahmadalitariq/Desktop/SpendSnap/SpendSnap/Views/CreditCard/CardEditSheet.swift" : {
+    "const-values" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CardEditSheet.swiftconstvalues",
+    "dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CardEditSheet.d",
+    "diagnostics" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CardEditSheet.dia",
+    "index-unit-output-path" : "/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CardEditSheet.o",
+    "llvm-bc" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CardEditSheet.bc",
+    "object" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CardEditSheet.o",
+    "swift-dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CardEditSheet.swiftdeps",
+    "swiftmodule" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CardEditSheet~partial.swiftmodule"
+  },
+  "/Users/ahmadalitariq/Desktop/SpendSnap/SpendSnap/Views/CreditCard/CreditCardView.swift" : {
+    "const-values" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CreditCardView.swiftconstvalues",
+    "dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CreditCardView.d",
+    "diagnostics" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CreditCardView.dia",
+    "index-unit-output-path" : "/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CreditCardView.o",
+    "llvm-bc" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CreditCardView.bc",
+    "object" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CreditCardView.o",
+    "swift-dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CreditCardView.swiftdeps",
+    "swiftmodule" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CreditCardView~partial.swiftmodule"
+  },
+  "/Users/ahmadalitariq/Desktop/SpendSnap/SpendSnap/Views/History/AddExpenseSheet.swift" : {
+    "const-values" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/AddExpenseSheet.swiftconstvalues",
+    "dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/AddExpenseSheet.d",
+    "diagnostics" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/AddExpenseSheet.dia",
+    "index-unit-output-path" : "/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/AddExpenseSheet.o",
+    "llvm-bc" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/AddExpenseSheet.bc",
+    "object" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/AddExpenseSheet.o",
+    "swift-dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/AddExpenseSheet.swiftdeps",
+    "swiftmodule" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/AddExpenseSheet~partial.swiftmodule"
+  },
+  "/Users/ahmadalitariq/Desktop/SpendSnap/SpendSnap/Views/History/HistoryView.swift" : {
+    "const-values" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/HistoryView.swiftconstvalues",
+    "dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/HistoryView.d",
+    "diagnostics" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/HistoryView.dia",
+    "index-unit-output-path" : "/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/HistoryView.o",
+    "llvm-bc" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/HistoryView.bc",
+    "object" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/HistoryView.o",
+    "swift-dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/HistoryView.swiftdeps",
+    "swiftmodule" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/HistoryView~partial.swiftmodule"
+  },
+  "/Users/ahmadalitariq/Desktop/SpendSnap/SpendSnap/Views/Home/AddBudgetSheet.swift" : {
+    "const-values" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/AddBudgetSheet.swiftconstvalues",
+    "dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/AddBudgetSheet.d",
+    "diagnostics" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/AddBudgetSheet.dia",
+    "index-unit-output-path" : "/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/AddBudgetSheet.o",
+    "llvm-bc" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/AddBudgetSheet.bc",
+    "object" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/AddBudgetSheet.o",
+    "swift-dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/AddBudgetSheet.swiftdeps",
+    "swiftmodule" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/AddBudgetSheet~partial.swiftmodule"
+  },
+  "/Users/ahmadalitariq/Desktop/SpendSnap/SpendSnap/Views/Home/AddCategorySheet.swift" : {
+    "const-values" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/AddCategorySheet.swiftconstvalues",
+    "dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/AddCategorySheet.d",
+    "diagnostics" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/AddCategorySheet.dia",
+    "index-unit-output-path" : "/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/AddCategorySheet.o",
+    "llvm-bc" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/AddCategorySheet.bc",
+    "object" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/AddCategorySheet.o",
+    "swift-dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/AddCategorySheet.swiftdeps",
+    "swiftmodule" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/AddCategorySheet~partial.swiftmodule"
+  },
+  "/Users/ahmadalitariq/Desktop/SpendSnap/SpendSnap/Views/Home/CategoryDetailSheet.swift" : {
+    "const-values" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CategoryDetailSheet.swiftconstvalues",
+    "dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CategoryDetailSheet.d",
+    "diagnostics" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CategoryDetailSheet.dia",
+    "index-unit-output-path" : "/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CategoryDetailSheet.o",
+    "llvm-bc" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CategoryDetailSheet.bc",
+    "object" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CategoryDetailSheet.o",
+    "swift-dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CategoryDetailSheet.swiftdeps",
+    "swiftmodule" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CategoryDetailSheet~partial.swiftmodule"
+  },
+  "/Users/ahmadalitariq/Desktop/SpendSnap/SpendSnap/Views/Home/CategoryEditSheet.swift" : {
+    "const-values" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CategoryEditSheet.swiftconstvalues",
+    "dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CategoryEditSheet.d",
+    "diagnostics" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CategoryEditSheet.dia",
+    "index-unit-output-path" : "/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CategoryEditSheet.o",
+    "llvm-bc" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CategoryEditSheet.bc",
+    "object" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CategoryEditSheet.o",
+    "swift-dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CategoryEditSheet.swiftdeps",
+    "swiftmodule" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CategoryEditSheet~partial.swiftmodule"
+  },
+  "/Users/ahmadalitariq/Desktop/SpendSnap/SpendSnap/Views/Home/ExpenseDetailSheet.swift" : {
+    "const-values" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/ExpenseDetailSheet.swiftconstvalues",
+    "dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/ExpenseDetailSheet.d",
+    "diagnostics" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/ExpenseDetailSheet.dia",
+    "index-unit-output-path" : "/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/ExpenseDetailSheet.o",
+    "llvm-bc" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/ExpenseDetailSheet.bc",
+    "object" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/ExpenseDetailSheet.o",
+    "swift-dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/ExpenseDetailSheet.swiftdeps",
+    "swiftmodule" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/ExpenseDetailSheet~partial.swiftmodule"
+  },
+  "/Users/ahmadalitariq/Desktop/SpendSnap/SpendSnap/Views/Home/HomeView.swift" : {
+    "const-values" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/HomeView.swiftconstvalues",
+    "dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/HomeView.d",
+    "diagnostics" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/HomeView.dia",
+    "index-unit-output-path" : "/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/HomeView.o",
+    "llvm-bc" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/HomeView.bc",
+    "object" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/HomeView.o",
+    "swift-dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/HomeView.swiftdeps",
+    "swiftmodule" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/HomeView~partial.swiftmodule"
+  },
+  "/Users/ahmadalitariq/Desktop/SpendSnap/SpendSnap/Views/Insights/InsightsView.swift" : {
+    "const-values" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/InsightsView.swiftconstvalues",
+    "dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/InsightsView.d",
+    "diagnostics" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/InsightsView.dia",
+    "index-unit-output-path" : "/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/InsightsView.o",
+    "llvm-bc" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/InsightsView.bc",
+    "object" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/InsightsView.o",
+    "swift-dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/InsightsView.swiftdeps",
+    "swiftmodule" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/InsightsView~partial.swiftmodule"
+  },
+  "/Users/ahmadalitariq/Desktop/SpendSnap/SpendSnap/Views/Insights/OverviewView.swift" : {
+    "const-values" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/OverviewView.swiftconstvalues",
+    "dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/OverviewView.d",
+    "diagnostics" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/OverviewView.dia",
+    "index-unit-output-path" : "/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/OverviewView.o",
+    "llvm-bc" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/OverviewView.bc",
+    "object" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/OverviewView.o",
+    "swift-dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/OverviewView.swiftdeps",
+    "swiftmodule" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/OverviewView~partial.swiftmodule"
+  },
+  "/Users/ahmadalitariq/Desktop/SpendSnap/SpendSnap/Views/Insights/TrendsView.swift" : {
+    "const-values" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/TrendsView.swiftconstvalues",
+    "dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/TrendsView.d",
+    "diagnostics" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/TrendsView.dia",
+    "index-unit-output-path" : "/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/TrendsView.o",
+    "llvm-bc" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/TrendsView.bc",
+    "object" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/TrendsView.o",
+    "swift-dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/TrendsView.swiftdeps",
+    "swiftmodule" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/TrendsView~partial.swiftmodule"
+  },
+  "/Users/ahmadalitariq/Desktop/SpendSnap/SpendSnap/Views/Onboarding/OnboardingView.swift" : {
+    "const-values" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/OnboardingView.swiftconstvalues",
+    "dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/OnboardingView.d",
+    "diagnostics" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/OnboardingView.dia",
+    "index-unit-output-path" : "/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/OnboardingView.o",
+    "llvm-bc" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/OnboardingView.bc",
+    "object" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/OnboardingView.o",
+    "swift-dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/OnboardingView.swiftdeps",
+    "swiftmodule" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/OnboardingView~partial.swiftmodule"
+  },
+  "/Users/ahmadalitariq/Desktop/SpendSnap/SpendSnap/Views/Root/AppEntryView.swift" : {
+    "const-values" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/AppEntryView.swiftconstvalues",
+    "dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/AppEntryView.d",
+    "diagnostics" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/AppEntryView.dia",
+    "index-unit-output-path" : "/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/AppEntryView.o",
+    "llvm-bc" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/AppEntryView.bc",
+    "object" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/AppEntryView.o",
+    "swift-dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/AppEntryView.swiftdeps",
+    "swiftmodule" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/AppEntryView~partial.swiftmodule"
+  },
+  "/Users/ahmadalitariq/Desktop/SpendSnap/SpendSnap/Views/Root/CustomTabBar.swift" : {
+    "const-values" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CustomTabBar.swiftconstvalues",
+    "dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CustomTabBar.d",
+    "diagnostics" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CustomTabBar.dia",
+    "index-unit-output-path" : "/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CustomTabBar.o",
+    "llvm-bc" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CustomTabBar.bc",
+    "object" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CustomTabBar.o",
+    "swift-dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CustomTabBar.swiftdeps",
+    "swiftmodule" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CustomTabBar~partial.swiftmodule"
+  },
+  "/Users/ahmadalitariq/Desktop/SpendSnap/SpendSnap/Views/Root/RootTabView.swift" : {
+    "const-values" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/RootTabView.swiftconstvalues",
+    "dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/RootTabView.d",
+    "diagnostics" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/RootTabView.dia",
+    "index-unit-output-path" : "/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/RootTabView.o",
+    "llvm-bc" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/RootTabView.bc",
+    "object" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/RootTabView.o",
+    "swift-dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/RootTabView.swiftdeps",
+    "swiftmodule" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/RootTabView~partial.swiftmodule"
+  },
+  "/Users/ahmadalitariq/Desktop/SpendSnap/SpendSnap/Views/Settings/CurrencyPickerSheet.swift" : {
+    "const-values" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CurrencyPickerSheet.swiftconstvalues",
+    "dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CurrencyPickerSheet.d",
+    "diagnostics" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CurrencyPickerSheet.dia",
+    "index-unit-output-path" : "/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CurrencyPickerSheet.o",
+    "llvm-bc" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CurrencyPickerSheet.bc",
+    "object" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CurrencyPickerSheet.o",
+    "swift-dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CurrencyPickerSheet.swiftdeps",
+    "swiftmodule" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/CurrencyPickerSheet~partial.swiftmodule"
+  },
+  "/Users/ahmadalitariq/Desktop/SpendSnap/SpendSnap/Views/Settings/GoProSheet.swift" : {
+    "const-values" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/GoProSheet.swiftconstvalues",
+    "dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/GoProSheet.d",
+    "diagnostics" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/GoProSheet.dia",
+    "index-unit-output-path" : "/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/GoProSheet.o",
+    "llvm-bc" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/GoProSheet.bc",
+    "object" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/GoProSheet.o",
+    "swift-dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/GoProSheet.swiftdeps",
+    "swiftmodule" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/GoProSheet~partial.swiftmodule"
+  },
+  "/Users/ahmadalitariq/Desktop/SpendSnap/SpendSnap/Views/Settings/RemindersSelectionView.swift" : {
+    "const-values" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/RemindersSelectionView.swiftconstvalues",
+    "dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/RemindersSelectionView.d",
+    "diagnostics" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/RemindersSelectionView.dia",
+    "index-unit-output-path" : "/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/RemindersSelectionView.o",
+    "llvm-bc" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/RemindersSelectionView.bc",
+    "object" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/RemindersSelectionView.o",
+    "swift-dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/RemindersSelectionView.swiftdeps",
+    "swiftmodule" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/RemindersSelectionView~partial.swiftmodule"
+  },
+  "/Users/ahmadalitariq/Desktop/SpendSnap/SpendSnap/Views/Settings/SettingsView.swift" : {
+    "const-values" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/SettingsView.swiftconstvalues",
+    "dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/SettingsView.d",
+    "diagnostics" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/SettingsView.dia",
+    "index-unit-output-path" : "/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/SettingsView.o",
+    "llvm-bc" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/SettingsView.bc",
+    "object" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/SettingsView.o",
+    "swift-dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/SettingsView.swiftdeps",
+    "swiftmodule" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/SettingsView~partial.swiftmodule"
+  },
+  "/Users/ahmadalitariq/Desktop/SpendSnap/SpendSnap/Views/Settings/WidgetInfoSheet.swift" : {
+    "const-values" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/WidgetInfoSheet.swiftconstvalues",
+    "dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/WidgetInfoSheet.d",
+    "diagnostics" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/WidgetInfoSheet.dia",
+    "index-unit-output-path" : "/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/WidgetInfoSheet.o",
+    "llvm-bc" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/WidgetInfoSheet.bc",
+    "object" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/WidgetInfoSheet.o",
+    "swift-dependencies" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/WidgetInfoSheet.swiftdeps",
+    "swiftmodule" : "/Users/ahmadalitariq/Desktop/SpendSnap/.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphoneos/SpendSnap.build/Objects-normal/arm64/WidgetInfoSheet~partial.swiftmodule"
+  }
+}

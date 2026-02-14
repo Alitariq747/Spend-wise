@@ -158,7 +158,7 @@ struct ExpenseDetailSheet: View {
                                             .font(.system(size: 16, weight: .medium))
                                             .frame(width: labelW, alignment: .leading)
                                         TextField("Walmart", text: $merchant)
-                                            .keyboardType(.alphabet)
+                                            .keyboardType(.default)
                                             .padding(.vertical, 8)
                                             .frame(maxWidth: .infinity, alignment: .leading)
                                     }
@@ -305,7 +305,7 @@ struct ExpenseDetailSheet: View {
                    CategorySelector(categories: categories, selected: $selectedCategory)
                 }
             }
-            .scrollDismissesKeyboard(.automatic)
+            .scrollDismissesKeyboard(.interactively)
         }
         .padding(.horizontal, 8)
         .padding(.top, 8)

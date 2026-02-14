@@ -1,0 +1,4 @@
+Target dependency graph (2 targets)
+Target 'SpendSnap' in project 'SpendSnap'
+➜ Explicit dependency on target 'SpendWiseWidgetsExtension' in project 'SpendSnap'
+Target 'SpendWiseWidgetsExtension' in project 'SpendSnap' (no dependencies)
