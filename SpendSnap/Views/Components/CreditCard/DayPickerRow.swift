@@ -23,7 +23,7 @@ struct DayPickerRow: View {
                         selection = day
                     } label: {
                         HStack {
-                            Text("\(day)")
+                            Text(verbatim: "\(day)")
                             if day == selection { Image(systemName: "checkmark") }
                         }
                     }

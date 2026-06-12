@@ -62,16 +62,16 @@ struct TrendsView: View {
                 HStack {
                     Spacer()
                     VStack(spacing: 6) {
-                        Text("Highest: \(highest?.title ?? "-")")
+                        Text(verbatim: "Highest: \(highest?.title ?? "-")")
                             .font(.system(size: 10, weight: .light))
-                        Text("\(symbol) \(highest?.amount ?? 0)")
+                        Text(verbatim: "\(symbol) \(highest?.amount ?? 0)")
                             .font(.system(size: 12, weight: .semibold))
                     }
                     Spacer()
                     VStack(spacing: 6) {
-                        Text("Lowest: \(lowest?.title ?? "-")")
+                        Text(verbatim: "Lowest: \(lowest?.title ?? "-")")
                             .font(.system(size: 10, weight: .light))
-                        Text("\(symbol) \(lowest?.amount ?? 0)")
+                        Text(verbatim: "\(symbol) \(lowest?.amount ?? 0)")
                             .font(.system(size: 12, weight: .semibold))
                     }
                     Spacer()

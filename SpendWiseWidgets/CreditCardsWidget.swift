@@ -42,9 +42,9 @@ private struct CreditCardsWidgetView: View {
     private func availableText(for summary: CardSummary) -> String {
         let available = summary.limit - summary.spent
         if available < 0 {
-            return "Over by \(entry.currencySymbol)\((available * -1) as NSDecimalNumber)"
+            return "Over by \(entry.currencySymbol)\(available * -1)"
         }
-        return "Avail \(entry.currencySymbol)\(available as NSDecimalNumber)"
+        return "Avail \(entry.currencySymbol)\(available)"
     }
     
     var body: some View {
@@ -73,17 +73,17 @@ private struct CreditCardsWidgetView: View {
                                 .font(.system(size: 16, weight: .semibold))
                                 .foregroundStyle(fg)
                             
-                            Text("\(dueLabel(for: summary.cycleStart)) – \(dueLabel(for: summary.cycleEnd))")
+                            Text(verbatim: "\(dueLabel(for: summary.cycleStart)) - \(dueLabel(for: summary.cycleEnd))")
                                 .font(.system(size: 12, weight: .regular))
                                 .foregroundStyle(fg.opacity(0.9))
                         }
                         Spacer()
                         VStack(alignment: .trailing, spacing: 4) {
-                            Text("\(entry.currencySymbol)\(summary.spent)")
+                            Text(verbatim: "\(entry.currencySymbol)\(summary.spent)")
                                 .font(.system(size: 18, weight: .bold))
                                 .foregroundStyle(fg)
                             
-                            Text("of \(entry.currencySymbol)\(summary.limit)")
+                            Text(verbatim: "of \(entry.currencySymbol)\(summary.limit)")
                                 .font(.system(size: 12, weight: .regular))
                                 .foregroundStyle(fg.opacity(0.9))
                         }
@@ -99,7 +99,7 @@ private struct CreditCardsWidgetView: View {
                             .font(.system(size: 12, weight: .medium))
                             .foregroundStyle(fg.opacity(0.9))
                         Spacer()
-                        Text("Due \(dueLabel(for: summary.dueDate))")
+                        Text(verbatim: "Due \(dueLabel(for: summary.dueDate))")
                             .font(.system(size: 12, weight: .semibold))
                             .foregroundStyle(fg)
                             .padding(.horizontal, 10)

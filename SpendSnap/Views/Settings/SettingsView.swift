@@ -265,7 +265,7 @@ struct SettingsView: View {
                 Button {
                     showDeleteConfirmation = true
                 } label: {
-                    Text("Delete Account")
+                    Text("Delete All Data")
                         .font(.system(size: 16, weight: .medium))
                         .foregroundStyle(.white)
                         .padding(.vertical, 12)
@@ -340,10 +340,10 @@ struct SettingsView: View {
                     .foregroundColor(Color(.systemGray4))
                     .padding(.top, 8)
 
-                Text("Delete Everything!")
+                Text("Delete All Data")
                     .font(.headline)
 
-                Text("This will delete everything including expenses, categories,cards and your currency settings. This action cannot be undone.")
+                Text("This will delete your SpendWise data from this device and iCloud, including expenses, categories, cards, budgets, and settings. This action cannot be undone.")
                     .font(.subheadline)
                     .foregroundColor(.secondary)
                     .multilineTextAlignment(.center)
@@ -356,8 +356,8 @@ struct SettingsView: View {
                     .padding(.vertical, 10)
                     .background(Color(.secondarySystemBackground), in: RoundedRectangle(cornerRadius: 12))
 
-                    Button("Delete") {
-                        deleteAllData()
+                    Button("Delete Everything") {
+                        deleteAllSyncedData()
                         showDeleteConfirmation = false
                     }
                     .frame(maxWidth: .infinity)
@@ -438,7 +438,7 @@ struct SettingsView: View {
         showRestoreAlert = true
     }
 
-    private func deleteAllData() {
+    private func deleteAllSyncedData() {
         do {
             try deleteAll(of: Expense.self)
             try deleteAll(of: CategoryMonthlyBudget.self)

@@ -157,9 +157,9 @@ private struct BootErrorView: View {
 
             #if DEBUG
             VStack(alignment: .leading, spacing: 6) {
-                Text("Primary error: \(primary.localizedDescription)")
+                Text(verbatim: "Primary error: \(primary.localizedDescription)")
                 if let fallback {
-                    Text("Fallback error: \(fallback.localizedDescription)")
+                    Text(verbatim: "Fallback error: \(fallback.localizedDescription)")
                 }
             }
             .font(.caption2)

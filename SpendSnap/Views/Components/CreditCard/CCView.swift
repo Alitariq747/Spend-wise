@@ -106,7 +106,7 @@ struct CCView: View {
 
                
             }
-            Text("\(symbol) \(spentThisCycle)")
+            Text(verbatim: "\(symbol) \(spentThisCycle)")
                 .font(.system(size: 24, weight: .semibold))
                 .foregroundStyle(fg)
                 .shadow(color: .black.opacity(fg == .white ? 0.25 : 0), radius: 2, y: 1)
@@ -122,12 +122,12 @@ struct CCView: View {
                     .scaleEffect(y: 1.2, anchor: .center)
                 
                 HStack {
-                    Text("of \(symbol) \(card.cycleLimit)")
+                    Text(verbatim: "of \(symbol) \(card.cycleLimit)")
                         .font(.system(size: 14, weight: .regular))
                         .foregroundStyle(card.color.onCardText)
                         .shadow(color: .black.opacity(fg == .white ? 0.25 : 0), radius: 2, y: 1)
                     Spacer()
-                    remaining < 0 ? Text("💥 \(remaining * -1)")
+                    remaining < 0 ? Text(verbatim: "💥 \(remaining * -1)")
                         .font(.system(size: 10, weight: .regular))
                         .foregroundStyle(card.color.onCardText)
                         .shadow(color: .black.opacity(fg == .white ? 0.25 : 0), radius: 2, y: 1)
@@ -139,13 +139,13 @@ struct CCView: View {
             
             // HStack for edit button , percent, cycle
             HStack {
-                Text("\(dueLabel(for: cc.start)) - \(dueLabel(for: cc.end))")
+                Text(verbatim: "\(dueLabel(for: cc.start)) - \(dueLabel(for: cc.end))")
                     .font(.system(size: 14, weight: .regular))
                     .foregroundStyle(card.color.onCardText)
                     .shadow(color: .black.opacity(fg == .white ? 0.25 : 0), radius: 2, y: 1)
                 Spacer()
                 
-                Text("\(dueLabel(for: cc.due))")
+                Text(verbatim: dueLabel(for: cc.due))
                     .font(.system(size: 14, weight: .regular))
                     .foregroundColor(.white)
                     .padding(.vertical, 8)

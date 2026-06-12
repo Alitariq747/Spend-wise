@@ -48,7 +48,7 @@ struct MonthOverviewWidgetView: View {
         VStack(alignment: .leading, spacing: 8) {
        
             HStack {
-                Text("\(entry.currencyCode)\(entry.spent)")
+                Text(verbatim: "\(entry.currencyCode)\(entry.spent)")
                     .font(.system(size: 24, weight: .bold))
                     .foregroundStyle(.white)
                 Spacer()
@@ -63,7 +63,7 @@ struct MonthOverviewWidgetView: View {
             }
             
             VStack(alignment: .leading) {
-                Text("of \(entry.currencyCode)\(entry.budgetAmount)")
+                Text(verbatim: "of \(entry.currencyCode)\(entry.budgetAmount)")
                     .font(.system(size: 12, weight: .medium))
                     .foregroundStyle(.white)
                 Text("spent this month")

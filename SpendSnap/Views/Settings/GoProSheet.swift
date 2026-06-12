@@ -72,12 +72,12 @@ enum PremiumFeature: String, CaseIterable, Identifiable {
     
     var text: String {
         switch self {
-            case .iCloudBackup: return "iCloud Backup"
-        case .widgets: return "Premium Widgets"
-        case .reminders: return "Gentle Reminders"
-        case .display: return "Dark mode support"
+            case .iCloudBackup: return "iCloud Sync"
+        case .widgets: return "Home Screen Widgets"
+        case .reminders: return "Expense Reminders"
+        case .display: return "Dark Mode"
         case .card:
-            return "Credit Card Tracking "
+            return "Credit Card Tracking"
         case .support: return "Support Indie Developer"
        
         }
@@ -123,6 +123,17 @@ struct GoProSheet: View {
             return "No free trial available"
         case .noOffer:
             return "Trial unavailable for this plan"
+        }
+    }
+
+    private var paywallTitle: String {
+        switch trialEligibilityState {
+        case .eligible:
+            return "Start your 14-day free trial"
+        case .checking:
+            return "Continue with SpendWise Pro"
+        case .ineligible, .noOffer:
+            return "Subscribe to SpendWise Pro"
         }
     }
     
@@ -258,9 +269,9 @@ struct GoProSheet: View {
                 .background(Color.black.opacity(0.05), in: Circle())
                 .overlay(Circle().stroke(Color.black.opacity(0.05), lineWidth: 1))
             
-            Text("Ready to take Control?")
+            Text(paywallTitle)
                 .font(.system(size: 18, weight: .semibold))
-            Text("Unlock all features to never over-run your hard earned income. You won't regret it!")
+            Text("SpendWise Pro includes the tools below to track spending, stay on budget, and keep your data available across devices.")
                 .font(.system(size: 12, weight: .light))
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
@@ -290,11 +301,11 @@ struct GoProSheet: View {
             HStack(spacing: 8) {
                 ForEach(SubscriptionTier.allCases) { sub in
                     VStack(alignment: .leading, spacing: 4) {
-                        Text("\(sub.title) Subscription")
+                        Text(verbatim: "\(sub.title) Subscription")
                             .font(.system(size: 14, weight: .semibold))
                             .foregroundStyle(.secondary)
                         
-                        Text("\(displayPrice(for: sub)) / \(sub.period)")
+                        Text(verbatim: "\(displayPrice(for: sub)) / \(sub.period)")
                             .font(.system(size: 12, weight: .bold))
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)

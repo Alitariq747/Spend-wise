@@ -48,7 +48,7 @@ struct CategorySpendingCard: View {
                             VStack(alignment: .leading, spacing: 2) {
                                 Text(category.name)
                                     .font(.system(size:16, weight: .semibold))
-                                Text("\(symbol) \(spent) / \(budget > 0 ? budget : 0)") // adapt currency
+                                Text(verbatim: "\(symbol) \(spent) / \(budget > 0 ? budget : 0)") // adapt currency
                                     .font(.system(size:14, weight:.medium))
                                     .foregroundStyle(.primary)
                             }
@@ -59,7 +59,7 @@ struct CategorySpendingCard: View {
                                     .foregroundStyle(.secondary)
                                     .font(.system(size:14, weight:.medium))
                                 if budget > 0 {
-                                    Text("\(Int(percent * 100))%")
+                                    Text(verbatim: "\(Int(percent * 100))%")
                                         .font(.caption2)
                                         .padding(.vertical,4).padding(.horizontal,6)
                                         .background(percent >= 1 ? Color.red.opacity(0.15) : Color.green.opacity(0.2))

@@ -79,7 +79,7 @@ struct WeekSpentWigetView: View {
            
             
             HStack {
-                Text("\(entry.currencyCode)\(entry.weekSpent)")
+                Text(verbatim: "\(entry.currencyCode)\(entry.weekSpent)")
                     .font(.system(size: 20, weight: .bold))
                     .foregroundStyle(textColor)
                     .padding(.bottom, 8)
@@ -90,7 +90,7 @@ struct WeekSpentWigetView: View {
             }
             
             VStack(alignment: .leading) {
-                Text("of \(entry.currencyCode)\(weeklyBudget)")
+                Text(verbatim: "of \(entry.currencyCode)\(weeklyBudget)")
                     .font(.system(size: 12, weight: .light))
                     .foregroundStyle(secondary)
                 Text("spent this week")

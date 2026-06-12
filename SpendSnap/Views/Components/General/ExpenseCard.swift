@@ -45,7 +45,7 @@ struct ExpenseCard: View {
             
             VStack(spacing: 0) {
                 // expense amount
-                Text("\(symbol) \(NSDecimalNumber(decimal: expense.amount))")
+                Text(verbatim: "\(symbol) \(expense.amount)")
                     .font(.system(size: 14, weight: .semibold))
                 
                 // expense method

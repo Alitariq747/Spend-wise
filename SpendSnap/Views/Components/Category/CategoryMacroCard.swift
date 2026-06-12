@@ -55,13 +55,13 @@ struct CategoryMacroCard: View {
                     Text(category.name)
                         .font(.system(size: 16, weight: .semibold))
                         .foregroundStyle(Color.black)
-                    Text("Expenses - \(count)")
+                    Text(verbatim: "Expenses - \(count)")
                         .font(.system(size: 12, weight: .light))
                 }
                 .padding(.horizontal, 8)
                  Spacer()
                 //Amount
-                Text("\(symbol) \(spent)")
+                Text(verbatim: "\(symbol) \(spent)")
                     .font(.system(size: 16, weight: .semibold))
                 
             }
@@ -72,7 +72,7 @@ struct CategoryMacroCard: View {
                 .tint(category.color)
 
             // % of total Budget
-            Text("\(percent(spent: spent, total: total)) % of budget")
+            Text(verbatim: "\(percent(spent: spent, total: total)) % of budget")
                    .font(.system(size: 12, weight: .regular))
             
         }

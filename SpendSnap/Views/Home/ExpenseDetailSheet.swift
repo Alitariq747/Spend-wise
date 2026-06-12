@@ -144,7 +144,7 @@ struct ExpenseDetailSheet: View {
                     Text("Amount")
                         .font(.system(size: 16, weight: .medium))
                         .frame(width: labelW, alignment: .leading)
-                    TextField("\(symbol) 0.00", text: $amountText)
+                    TextField("", text: $amountText, prompt: Text(verbatim: "\(symbol) 0.00"))
                         .keyboardType(.decimalPad)
                         .padding(.vertical, 8)
                         .frame(maxWidth: .infinity, alignment: .leading)

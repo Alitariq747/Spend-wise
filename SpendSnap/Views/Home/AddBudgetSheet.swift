@@ -58,13 +58,13 @@ struct AddBudgetSheet: View {
                     Text(existingBudget == nil ? "Enter Budget" : "Update Budget")
                         .font(.system(size: 20, weight: .bold))
                         .foregroundColor(.primary)
-                    Text(existingBudget == nil ? "Enter a budget for \(MonthUtil.fmt.string(from: month)) to start tracking.": "Update your budget for \(MonthUtil.fmt.string(from: month))")
+                    Text(verbatim: existingBudget == nil ? "Enter a budget for \(MonthUtil.fmt.string(from: month)) to start tracking.": "Update your budget for \(MonthUtil.fmt.string(from: month))")
                         .font(.system(size: 14, weight: .light))
                         .foregroundColor(.primary)
                 }
                 
                 HStack(spacing: 8) {
-                    Text("\(symbol):")
+                    Text(verbatim: "\(symbol):")
                        .font(.system(size: 16, weight: .semibold))
                        .foregroundStyle(.dark)
                     
@@ -92,7 +92,7 @@ struct AddBudgetSheet: View {
                     .font(.system(size: 12, weight: .semibold))
                     .frame(maxWidth: .infinity, alignment: .center)
                     .foregroundStyle(.white)
-                Text("\(amountText)")
+                Text(verbatim: amountText)
                     .font(.system(size: 14, weight: .regular))
                     .foregroundStyle(.white)
                     .frame(maxWidth: .infinity, alignment: .center)

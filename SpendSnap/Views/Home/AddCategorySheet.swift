@@ -103,7 +103,7 @@ struct AddCategorySheet: View {
                     Text("Allocated Budget")
                         .font(.system(size: 16, weight: .regular))
                     HStack {
-                        Text("\(symbol)")
+                        Text(verbatim: symbol)
                             .font(.subheadline)
                         TextField("200", text: $categoryBudget)
                             .font(.subheadline)

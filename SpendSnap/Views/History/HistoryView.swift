@@ -95,7 +95,7 @@ struct HistoryView: View {
                                     Text(exp.merchant)
                                         .font(.system(size: 16, weight: .regular))
                                     Spacer()
-                                    Text("\(symbol)\(exp.amount)")
+                                    Text(verbatim: "\(symbol)\(exp.amount)")
                                 }
                             }
                             .frame(maxWidth: .infinity)

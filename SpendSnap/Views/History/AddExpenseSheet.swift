@@ -56,7 +56,7 @@ struct AddExpenseSheet: View {
     private var isDateOK: Bool { allowedRange.contains(date) }
 
     private var canSave: Bool {
-        let hasAmount = Decimal(string: amountText) != nil && !amountText.isEmpty
+        let hasAmount = parseAmount(amountText).map { $0 > 0 } ?? false
         let hasMerchant = !merchant.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
         let methodOK = (method == .cash) || (method == .card && selectedCard != nil)
         let hasCategory = selectedCategory != nil
@@ -78,7 +78,7 @@ struct AddExpenseSheet: View {
                             Text("Amount")
                                 .font(.system(size: 16, weight: .medium))
                                 .frame(width: labelW, alignment: .leading)
-                            TextField("\(symbol) 0.00", text: $amountText)
+                            TextField("", text: $amountText, prompt: Text(verbatim: "\(symbol) 0.00"))
                                 .keyboardType(.decimalPad)
                                 .padding(.vertical, 8)
                                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -241,7 +241,7 @@ struct AddExpenseSheet: View {
                     }
                 }
                 .scrollDismissesKeyboard(.interactively)
-                .navigationTitle("\(amountText)")
+                .navigationTitle(Text(verbatim: amountText))
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar(.visible, for: .navigationBar)
                 .toolbar {
@@ -276,7 +276,7 @@ struct AddExpenseSheet: View {
     private func saveExpense() {
         let trimmedMerchant = merchant.trimmingCharacters(in: .whitespacesAndNewlines)
         guard
-            let amt = Decimal(string: amountText),
+            let amt = parseAmount(amountText),
             amt > 0,
             !trimmedMerchant.isEmpty,
             trimmedMerchant.count <= 40,

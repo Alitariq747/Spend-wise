@@ -64,7 +64,7 @@ struct WeekBarRow: View {
             }
             .frame(height: 10) // bar thickness
 
-            Text("\(symbol) \(amount)")
+            Text(verbatim: "\(symbol) \(amount)")
                 .font(.caption).foregroundStyle(.secondary)
                 .frame(width: 90, alignment: .trailing)
         }

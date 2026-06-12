@@ -82,7 +82,7 @@ struct CardEditSheet: View {
                                 .padding(8)
                                 .background(Color(.secondarySystemBackground), in: Circle())
                         }
-                        .alert("Delete \(card.name)", isPresented: $showDeleteAlert) {
+                        .alert(Text(verbatim: "Delete \(card.name)"), isPresented: $showDeleteAlert) {
                             Button("Delete", role: .destructive) { deleteCard() }
                                 Button("Cancel", role: .cancel) { }
                         } message: {

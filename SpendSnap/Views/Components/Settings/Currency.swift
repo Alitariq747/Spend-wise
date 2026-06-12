@@ -17,7 +17,7 @@ struct Currency: View {
             Text("Currency")
                 .font(.system(size: 16, weight: .semibold))
             Spacer()
-            Text("\(symbol)")
+            Text(verbatim: symbol)
                 .font(.system(size: 14, weight: .light))
          
         }

@@ -100,7 +100,7 @@ struct CategoryDetailSheet: View {
                 Gauge(value: progress, in: 0...1) {
                     // label (optional)
                 } currentValueLabel: {
-                    Text("\(Int(progress * 100))%")
+                    Text(verbatim: "\(Int(progress * 100))%")
                         .font(.caption2)
                         .foregroundStyle(.secondary)
                 }
@@ -111,10 +111,10 @@ struct CategoryDetailSheet: View {
                 Spacer()
                 
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("Budgeted: \(symbol)\(budget)")
+                    Text(verbatim: "Budgeted: \(symbol)\(budget)")
                         .font(.system(size: 15, weight: .regular))
                         .foregroundStyle(.primary)
-                    Text("Spent: \(symbol)\(spent)")
+                    Text(verbatim: "Spent: \(symbol)\(spent)")
                         .font(.system(size: 15, weight: .regular))
                         .foregroundStyle(.primary)
                 }
@@ -146,7 +146,7 @@ struct CategoryDetailSheet: View {
                                 Text(exp.merchant)
                                     .font(.system(size: 16, weight: .regular))
                                 Spacer()
-                                Text("\(symbol)\(exp.amount)")
+                                Text(verbatim: "\(symbol)\(exp.amount)")
                             }         
                         }
                         .frame(maxWidth: .infinity)

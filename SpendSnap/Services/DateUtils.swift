@@ -105,6 +105,15 @@ func cardCycleAndDue(
     return CardCycle(start: cycleStart, end: cycleEnd, due: due)
 }
 
+func cardCycleReference(
+    from cycle: CardCycle,
+    offsetByMonths offset: Int,
+    calendar cal: Calendar = .current
+) -> Date {
+    let shiftedStart = cal.date(byAdding: .month, value: offset, to: cycle.start) ?? cycle.start
+    return cal.date(byAdding: .day, value: 1, to: shiftedStart) ?? shiftedStart
+}
+
 
 let monthDateFormatter: DateFormatter = {
     let df = DateFormatter()

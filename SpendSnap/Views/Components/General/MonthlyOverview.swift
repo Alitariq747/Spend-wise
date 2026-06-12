@@ -48,7 +48,7 @@ struct MonthlyOverview: View {
                     VStack(alignment: .leading, spacing: 2) {
                         Text("Monthly")
                             .font(.system(size: 12, weight: .light))
-                        Text("\(daysRemaining) days left")
+                        Text(verbatim: "\(daysRemaining) days left")
                             .font(.system(size: 14, weight: .regular))
                     }
                     Spacer()
@@ -56,7 +56,7 @@ struct MonthlyOverview: View {
                     VStack(alignment: .leading, spacing: 2) {
                         Text("Budgeted")
                             .font(.system(size: 12, weight: .light))
-                        Text("\(symbol)\(budget?.amount ?? 0)")
+                        Text(verbatim: "\(symbol)\(budget?.amount ?? 0)")
                             .font(.system(size: 14, weight: .regular))
                     }
                  
@@ -65,7 +65,7 @@ struct MonthlyOverview: View {
                             .font(.system(size: 12, weight: .light))
                         let remaining = (budget?.amount ?? 0) - spent
                        
-                        Text("\(symbol)\(remaining)")
+                        Text(verbatim: "\(symbol)\(remaining)")
                             .font(.system(size: 14, weight: .regular))
                             .foregroundColor(remaining >= 0 ? .primary : .red)
                     }
@@ -95,7 +95,7 @@ struct MonthlyOverview: View {
                     Text("Day")
                         .font(.system(size: 12, weight: .medium))
                         .foregroundStyle(.secondary)
-                    Text("\(symbol)\(todaySpent)")
+                    Text(verbatim: "\(symbol)\(todaySpent)")
                         .font(.system(size: 14, weight: .regular))
                         .foregroundStyle(.primary)
                 }
@@ -114,7 +114,7 @@ struct MonthlyOverview: View {
                     Text("This Week")
                         .font(.system(size: 12, weight: .medium))
                         .foregroundStyle(.secondary)
-                    Text("\(symbol)\(weekSpent)")
+                    Text(verbatim: "\(symbol)\(weekSpent)")
                         .font(.system(size: 14, weight: .regular))
                         .foregroundStyle(.primary)
 

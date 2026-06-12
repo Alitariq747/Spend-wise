@@ -126,7 +126,7 @@ struct WidgetInfoSheet: View {
             Text("How to add").font(.headline)
             ForEach(Array(["Touch & hold on Home/Lock Screen", "Tap +, search “SpendSnap”", "Pick a size, tap Add Widget"].enumerated()), id: \.offset) { idx, text in
                 HStack(alignment: .top, spacing: 8) {
-                    Text("\(idx + 1).").bold()
+                    Text(verbatim: "\(idx + 1).").bold()
                     Text(text)
                         .foregroundStyle(.secondary)
                         .font(.subheadline)
