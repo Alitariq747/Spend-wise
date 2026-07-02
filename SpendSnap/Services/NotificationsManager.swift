@@ -25,24 +25,39 @@ final class NotificationManager {
         .init(title: "Daily money moment", body: "Open SpendSnap and drop today’s expenses. Future you will thank you.")
     ]
 
-    // 1) ask for permission
-    func requestPermission() {
-        UNUserNotificationCenter.current()
-            .requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
-                
-            }
-    }
-
-   
     func clearAll() {
         UNUserNotificationCenter.current()
             .removeAllPendingNotificationRequests()
     }
 
    
-    func schedule(times: [DateComponents]) {
-  
-        clearAll()
+    func schedule(times: [DateComponents], onDenied: (() -> Void)? = nil) {
+        let center = UNUserNotificationCenter.current()
+        center.removeAllPendingNotificationRequests()
+        guard !times.isEmpty else { return }
+
+        center.getNotificationSettings { settings in
+            switch settings.authorizationStatus {
+            case .authorized, .provisional, .ephemeral:
+                self.addReminderRequests(times: times)
+            case .notDetermined:
+                center.requestAuthorization(options: [.alert, .sound, .badge]) { granted, _ in
+                    guard granted else {
+                        onDenied?()
+                        return
+                    }
+                    self.addReminderRequests(times: times)
+                }
+            case .denied:
+                onDenied?()
+                return
+            @unknown default:
+                return
+            }
+        }
+    }
+
+    private func addReminderRequests(times: [DateComponents]) {
         let messages = Self.reminderMessages.isEmpty
             ? [ReminderMessage(title: "Log today’s expenses", body: "Takes 20 seconds. Keep your budget fresh 💸")]
             : Self.reminderMessages.shuffled()

@@ -86,18 +86,6 @@ struct RootTabView: View {
         }
     }
     
-    
-    private func applyReminderLevelIfAvailable() {
-        let level = settings.reminderLevel 
-
-        if level == .quiet {
-            NotificationManager.shared.clearAll()
-        } else {
-            NotificationManager.shared.requestPermission()
-            NotificationManager.shared.schedule(times: level.times)
-        }
-    }
-
 }
 
 //#Preview {

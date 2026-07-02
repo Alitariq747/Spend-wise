@@ -9,6 +9,10 @@ import SwiftUI
 import SwiftData
 
 struct AddCategorySheet: View {
+    private enum FocusedField {
+        case name
+        case budget
+    }
     
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var modelContext
@@ -22,6 +26,7 @@ struct AddCategorySheet: View {
     @State private var showEmojiPicker = false
     @State private var categoryName: String = ""
     @State private var categoryBudget: String = ""
+    @FocusState private var focusedField: FocusedField?
     
    
     @State private var selectedColorHex: String = "#6366F1"
@@ -92,6 +97,7 @@ struct AddCategorySheet: View {
                     TextField("Category name", text: $categoryName)
                         .font(.subheadline)
                         .keyboardType(.default)
+                        .focused($focusedField, equals: .name)
                         .padding(.horizontal)
                         .padding(.vertical, 14)
                         .background(Color(.secondarySystemBackground), in: RoundedRectangle(cornerRadius: 12))
@@ -108,6 +114,7 @@ struct AddCategorySheet: View {
                         TextField("200", text: $categoryBudget)
                             .font(.subheadline)
                             .keyboardType(.decimalPad)
+                            .focused($focusedField, equals: .budget)
                            
                     }
                     .padding(.horizontal)
@@ -184,6 +191,15 @@ struct AddCategorySheet: View {
         }
         .presentationDetents([.large])
         .scrollDismissesKeyboard(.interactively)
+        .interactiveDismissDisabled(focusedField != nil)
+        .toolbar {
+            ToolbarItemGroup(placement: .keyboard) {
+                Spacer()
+                Button("Done") {
+                    focusedField = nil
+                }
+            }
+        }
     }
     
     private var canSave: Bool {

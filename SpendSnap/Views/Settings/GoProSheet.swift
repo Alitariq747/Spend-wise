@@ -116,13 +116,11 @@ struct GoProSheet: View {
     private var chargeDisclosureTitle: String {
         switch trialEligibilityState {
         case .checking:
-            return "Checking trial eligibility"
+            return "Final details shown by App Store"
         case .eligible:
             return "2-week free trial"
-        case .ineligible:
-            return "No free trial available"
-        case .noOffer:
-            return "Trial unavailable for this plan"
+        case .ineligible, .noOffer:
+            return "Subscribe anytime"
         }
     }
 
@@ -142,13 +140,11 @@ struct GoProSheet: View {
         
         switch trialEligibilityState {
         case .checking:
-            return "Checking your App Store eligibility for the 2-week trial."
+            return "Review the price and terms before confirming with the App Store."
         case .eligible:
             return "Nothing due today. After 2 weeks, you'll be charged \(price), auto-renewing unless canceled."
-        case .ineligible:
-            return "You've already used a trial on this subscription group. You'll be charged \(price) when you continue."
-        case .noOffer:
-            return "This plan currently has no introductory trial. You'll be charged \(price) when you continue."
+        case .ineligible, .noOffer:
+            return "\(price). Cancel anytime in App Store settings."
         }
     }
     
@@ -260,6 +256,8 @@ struct GoProSheet: View {
                         .foregroundStyle(.primary)
                 }
                 .buttonStyle(.plain)
+                .disabled(storeKit.isPurchasing)
+                .opacity(storeKit.isPurchasing ? 0.35 : 1)
             }
             Image(systemName: "crown.fill")
                 .font(.system(size: 24, weight: .semibold))
@@ -314,6 +312,7 @@ struct GoProSheet: View {
                     .background(Color(.systemGray6), in: RoundedRectangle(cornerRadius: 12))
                     .overlay(RoundedRectangle(cornerRadius: 12).stroke(selectedTier == sub ? Color.gray : Color.gray.opacity(0.05), lineWidth: selectedTier == sub ? 2 : 1))
                     .onTapGesture {
+                        guard !storeKit.isPurchasing else { return }
                         selectedTier = sub
                     }
                 }
@@ -326,9 +325,15 @@ struct GoProSheet: View {
             Button {
                 handleSubscribeTap()
             } label: {
-                Text(storeKit.isPurchasing ? "Processing..." : "Continue")
-                    .font(.system(size: 18, weight: .semibold))
-                    .foregroundStyle(Color.white)
+                HStack(spacing: 8) {
+                    if storeKit.isPurchasing {
+                        ProgressView()
+                            .tint(.white)
+                    }
+                    Text(storeKit.isPurchasing ? "Processing..." : "Continue")
+                        .font(.system(size: 18, weight: .semibold))
+                }
+                    .foregroundStyle(.white)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 14)
                     .background(colorScheme == .light ? Color.black : Color(.secondarySystemBackground), in: RoundedRectangle(cornerRadius: 14))
@@ -351,6 +356,7 @@ struct GoProSheet: View {
                     )
             }
             .buttonStyle(.plain)
+            .disabled(storeKit.isPurchasing)
             
             if storeKit.isLoadingProducts {
                 ProgressView("Loading plans...")
@@ -389,6 +395,7 @@ struct GoProSheet: View {
             
         }
         .padding()
+        .interactiveDismissDisabled(storeKit.isPurchasing)
         .task {
             if storeKit.products.isEmpty {
                 await storeKit.loadProducts()

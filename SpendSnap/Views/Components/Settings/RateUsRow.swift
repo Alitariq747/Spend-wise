@@ -11,22 +11,22 @@ struct RateUsRow: View {
     
     let onTap: () -> Void
     var body: some View {
-        HStack {
-           
-            Text("Rate us 🖤")
-                .font(.system(size: 16, weight: .semibold))
-            Spacer()
-            Image(systemName: "chevron.right")
-                .font(.system(size: 14, weight: .light))
-         
-        }
-        .padding(.horizontal)
-        .padding(.vertical, 18)
-        .contentShape(Rectangle())
-        .onTapGesture {
+        Button {
             onTap()
+        } label: {
+            HStack {
+                Text("Rate us 🖤")
+                    .font(.system(size: 16, weight: .semibold))
+                Spacer()
+                Image(systemName: "chevron.right")
+                    .font(.system(size: 14, weight: .light))
+            }
+            .padding(.horizontal)
+            .padding(.vertical, 18)
+            .contentShape(Rectangle())
+            .background(Color(.systemGray6), in: RoundedRectangle(cornerRadius: 12))
         }
-        .background(Color(.systemGray6), in: RoundedRectangle(cornerRadius: 12))
+        .buttonStyle(.plain)
     }
 }
 

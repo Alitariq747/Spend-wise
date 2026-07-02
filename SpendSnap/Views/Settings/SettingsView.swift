@@ -18,6 +18,7 @@ enum LegalLinks {
 
 struct SettingsView: View {
     @Environment(\.openURL) private var openUrl
+    @Environment(\.requestReview) private var requestReview
     @Environment(\.modelContext) private var modelContext
     @Query private var settingsRow: [Settings]
     
@@ -38,6 +39,7 @@ struct SettingsView: View {
     @StateObject private var iCloudVM = ICloudStatusViewModel()
     @EnvironmentObject private var storeKit: StoreKitManager
     @State private var showICloudToast = false
+    @State private var showNotificationToast = false
     
     private static let manageSubscriptionsURL = URL(string: "https://apps.apple.com/account/subscriptions")!
     
@@ -255,7 +257,9 @@ struct SettingsView: View {
                     }
                     .buttonStyle(.plain)
                     
-                   RateUsRow(onTap: {print("Tapped rate us")})
+                   RateUsRow {
+                       requestReview()
+                   }
                     
                 }
                 .padding()
@@ -288,8 +292,8 @@ struct SettingsView: View {
                         }
                     }
             .overlay(alignment: .bottom) {
-                        if showICloudToast {
-                            Text("Sign in to iCloud in Settings to sync your SpendWise data across devices.")
+                        if showICloudToast || showNotificationToast {
+                            Text(showNotificationToast ? "Notifications are off. Enable them in iPhone Settings to receive reminders." : "Sign in to iCloud in Settings to sync your SpendWise data across devices.")
                                 .font(.system(size: 13))
                                 .foregroundColor(.white)
                                 .padding(.horizontal, 16)
@@ -303,6 +307,7 @@ struct SettingsView: View {
                                     DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                                         withAnimation {
                                             showICloudToast = false
+                                            showNotificationToast = false
                                         }
                                     }
                                 }
@@ -323,8 +328,13 @@ struct SettingsView: View {
                 if newLevel == .quiet {
                            NotificationManager.shared.clearAll()
                        } else {
-                           NotificationManager.shared.requestPermission()
-                           NotificationManager.shared.schedule(times: newLevel.times)
+                           NotificationManager.shared.schedule(times: newLevel.times) {
+                               DispatchQueue.main.async {
+                                   withAnimation {
+                                       showNotificationToast = true
+                                   }
+                               }
+                           }
                        }
             }
             .presentationDetents([.medium])

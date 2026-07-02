@@ -52,7 +52,7 @@ struct ExpenseDetailSheet: View {
     }
     
     private var canSave: Bool {
-        let hasAmount = Decimal(string: amountText) != nil && !amountText.isEmpty
+        let hasAmount = (parseAmount(amountText) ?? 0) > 0
         let hasMerchant = !merchant.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
         let methodOK = (method == .cash) || (method == .card && selectedCard != nil)
         let hasCategory = selectedCategory != nil
@@ -71,13 +71,15 @@ struct ExpenseDetailSheet: View {
     private func confirmEdit() {
         let trimmedMerchant = merchant.trimmingCharacters(in: .whitespacesAndNewlines)
         guard
-            let amount = Decimal(string: amountText),
+            let amount = parseAmount(amountText),
             amount > 0,
             !trimmedMerchant.isEmpty,
             trimmedMerchant.count <= 40,
             (method == .cash) || (selectedCard != nil)
         else { return }
         expense.amount = amount
+        expense.date = date
+        expense.monthKey = MonthUtil.monthKey(date)
         expense.merchant = trimmedMerchant
         expense.category = selectedCategory
         expense.method = method
@@ -308,7 +310,7 @@ struct ExpenseDetailSheet: View {
             .scrollDismissesKeyboard(.interactively)
         }
         .padding(.horizontal, 8)
-        .padding(.top, 8)
+        .padding(.top, 18)
         .overlay(alignment: .bottom) {
             if showToast {
                 HStack(spacing: 8) {
