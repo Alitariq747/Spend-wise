@@ -11,9 +11,9 @@ import StoreKit
 import UIKit
 
 enum LegalLinks {
-    static let privacy = URL(string: "https://Alitariq747.github.io/spendwise-legal/privacy.html")!
-    static let terms   = URL(string: "https://Alitariq747.github.io/spendwise-legal/terms.html")!
-    static let contact = URL(string: "mailto:spendwise-app@outlook.com")!
+    static let privacy = URL(string: "https://ahmadtariq.co/apps/spendwise/privacy")!
+    static let terms   = URL(string: "https://ahmadtariq.co/apps/spendwise/terms")!
+    static let contact = URL(string: "mailto:support-spendwise@ahmadtariq.co")!
 }
 
 struct SettingsView: View {

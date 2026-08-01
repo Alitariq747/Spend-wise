@@ -101,8 +101,8 @@ struct GoProSheet: View {
     @State private var trialEligibilityState: TrialEligibilityState = .checking
     
     private enum PaywallLinks {
-        static let privacy = URL(string: "https://Alitariq747.github.io/spendwise-legal/privacy.html")!
-        static let terms = URL(string: "https://Alitariq747.github.io/spendwise-legal/terms.html")!
+        static let privacy = URL(string: "https://ahmadtariq.co/apps/spendwise/privacy")!
+        static let terms = URL(string: "https://ahmadtariq.co/apps/spendwise/terms")!
     }
     
     private func product(for tier: SubscriptionTier) -> Product? {
