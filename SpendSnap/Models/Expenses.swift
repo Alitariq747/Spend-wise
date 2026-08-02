@@ -39,8 +39,7 @@ final class Expense {
             self.method = method
           
 
-            let f = DateFormatter(); f.dateFormat = "yyyy-MM"
-            self.monthKey = f.string(from: date)
+            self.monthKey = MonthUtil.monthKey(date)
         }
     
  

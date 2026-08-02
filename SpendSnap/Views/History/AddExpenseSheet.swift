@@ -34,7 +34,7 @@ struct AddExpenseSheet: View {
     @State private var showCalendar = false
     
     @Binding var month: Date
-    private let cal = Calendar.current
+    private var cal: Calendar { MonthUtil.gregorian }
     
     private var monthInterval: DateInterval {
         if let interval = cal.dateInterval(of: .month, for: month) {

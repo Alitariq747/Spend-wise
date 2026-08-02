@@ -9,14 +9,38 @@ import Foundation
 import SwiftUI
 
 enum MonthUtil {
-  static let cal = Calendar.current
+  /// Gregorian calendar for any arithmetic whose result feeds `monthKey`, or that
+  /// buckets data already keyed by it. Never `Calendar.current` — a Hijri or
+  /// Buddhist region would shift the month out from under the key.
+  ///
+  /// Pins the calendar identifier only: `firstWeekday` and `timeZone` are inherited
+  /// from `Calendar.current`, so week starts and day boundaries still follow the
+  /// user's settings. Computed rather than stored so a mid-session region or
+  /// timezone change is observed.
+  static var gregorian: Calendar {
+    var c = Calendar(identifier: .gregorian)
+    c.firstWeekday = Calendar.current.firstWeekday
+    c.timeZone = Calendar.current.timeZone
+    return c
+  }
+
+  /// Canonical `monthKey` formatter. Pinned on locale, calendar and format so the
+  /// persisted key is always ASCII Gregorian `yyyy-MM` regardless of the user's region.
+  private static let keyFormatter: DateFormatter = {
+    let f = DateFormatter()
+    f.locale = Locale(identifier: "en_US_POSIX")
+    f.calendar = Calendar(identifier: .gregorian)
+    f.dateFormat = "yyyy-MM"
+    return f
+  }()
+
   static let fmt: DateFormatter = { let f = DateFormatter(); f.dateFormat = "LLLL yyyy"; return f }()
-  static func addMonths(_ date: Date, _ n: Int) -> Date { cal.date(byAdding: .month, value: n, to: date) ?? date }
-  static func monthKey(_ d: Date) -> String { let f = DateFormatter(); f.dateFormat = "yyyy-MM"; return f.string(from: d) }
+  static func addMonths(_ date: Date, _ n: Int) -> Date { gregorian.date(byAdding: .month, value: n, to: date) ?? date }
+  static func monthKey(_ d: Date) -> String { keyFormatter.string(from: d) }
 }
 
 func daysRemaining(in month: Date) -> Int {
-    let cal = Calendar.current
+    let cal = MonthUtil.gregorian
     let today = cal.startOfDay(for: Date())
 
  
@@ -68,7 +92,7 @@ func cardCycleAndDue(
     statementDay: Int,
     dueDay: Int,
     reference today: Date = Date(),
-    calendar cal: Calendar = .current
+    calendar cal: Calendar = MonthUtil.gregorian
 ) -> CardCycle {
    
     let thisYM = cal.dateComponents([.year, .month], from: today)
@@ -108,7 +132,7 @@ func cardCycleAndDue(
 func cardCycleReference(
     from cycle: CardCycle,
     offsetByMonths offset: Int,
-    calendar cal: Calendar = .current
+    calendar cal: Calendar = MonthUtil.gregorian
 ) -> Date {
     let shiftedStart = cal.date(byAdding: .month, value: offset, to: cycle.start) ?? cycle.start
     return cal.date(byAdding: .day, value: 1, to: shiftedStart) ?? shiftedStart
@@ -132,7 +156,7 @@ func dueLabel(for date: Date, calendar: Calendar = .current) -> String {
 }
 
 func monthRange(for d: Date) -> ClosedRange<Date> {
-    let cal = Calendar.current
+    let cal = MonthUtil.gregorian
     if let interval = cal.dateInterval(of: .month, for: d) {
         let start = interval.start
         // make end inclusive by subtracting 1 second from the start of next month

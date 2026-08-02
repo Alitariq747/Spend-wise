@@ -36,13 +36,15 @@ func makeBands(from points: [PacePoint]) -> [PaceBand] {
 
 
 func dailyTotals(expenses: [Expense], month: Date) -> [Decimal] {
-    let cal = Calendar.current
+    let cal = MonthUtil.gregorian
     guard let lastDay = cal.range(of: .day, in: .month, for: month)?.count, lastDay > 0 else {
         return []
     }
     var perDay = Array(repeating: Decimal(0), count: lastDay)
     for e in expenses {
         let d = cal.component(.day, from: e.date)   // 1…lastDay
+        // An expense from another month can reach here via a stale monthKey; never index out of bounds.
+        guard d >= 1, d <= lastDay else { continue }
         perDay[d - 1] += e.amount
     }
     return perDay

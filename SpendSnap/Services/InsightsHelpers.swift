@@ -8,7 +8,7 @@
 import Foundation
 
 func daysInMonth(_ month: Date) -> Int {
-    Calendar.current.range(of: .day, in: .month, for: month)?.count ?? 0
+    MonthUtil.gregorian.range(of: .day, in: .month, for: month)?.count ?? 0
 }
 
 
@@ -23,8 +23,10 @@ func idealPerDay(budget: Decimal?, month: Date) -> Decimal {
 }
 
 func daysElapsed(_ month: Date) -> Int {
-    let cal = Calendar.current
-    let startOfMonth = cal.date(from: cal.dateComponents([.year, .month], from: month))!
+    let cal = MonthUtil.gregorian
+    guard let startOfMonth = cal.date(from: cal.dateComponents([.year, .month], from: month)) else {
+        return 0
+    }
     let totalDays = daysInMonth(month)
     let today = Date()
 

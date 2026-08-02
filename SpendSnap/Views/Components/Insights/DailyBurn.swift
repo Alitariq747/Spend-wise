@@ -14,7 +14,7 @@ struct DailyBurn: View {
     let budgetAmount: Decimal?
     
     private var totalsByDay: [(day: Int, amount: Decimal)] {
-        let cal = Calendar.current
+        let cal = MonthUtil.gregorian
         let grouped = Dictionary(grouping: expenses, by: { cal.component(.day, from: $0.date) })
         return grouped.keys.sorted().map { d in
             let dayTotal = grouped[d]!.map(\.amount).reduce(0 as Decimal, +)
@@ -23,7 +23,7 @@ struct DailyBurn: View {
     }
     
     private var dailyTotalsForAllDays: [(day: Int, amount: Decimal)] {
-           let cal = Calendar.current
+           let cal = MonthUtil.gregorian
            guard let lastDay = cal.range(of: .day, in: .month, for: month)?.count, lastDay > 0 else {
                return []
            }
@@ -39,19 +39,22 @@ struct DailyBurn: View {
     }
     
     private func weekdayLetter(for day: Int) -> String {
-        let cal = Calendar.current
+        let cal = MonthUtil.gregorian
         var comps = cal.dateComponents([.year, .month], from: month)
         comps.day = day
         guard let date = cal.date(from: comps) else { return "" }
 
-        
-        let letters = cal.veryShortWeekdaySymbols
+        // Symbols come from Calendar.current — the letter shown is display, and
+        // `veryShortWeekdaySymbols` is always Sunday-indexed, matching the
+        // Gregorian .weekday component.
+        let letters = Calendar.current.veryShortWeekdaySymbols
         let idx = cal.component(.weekday, from: date) - 1
+        guard letters.indices.contains(idx) else { return "" }
         return letters[idx]
     }
-    
+
     private var dailyTarget: Decimal {
-        let days = Calendar.current.range(of: .day, in: .month, for: month)?.count ?? 0
+        let days = MonthUtil.gregorian.range(of: .day, in: .month, for: month)?.count ?? 0
         guard let b = budgetAmount, b > 0, days > 0 else { return 0 }
         return b / Decimal(days)
     }

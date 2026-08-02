@@ -27,7 +27,7 @@ struct WeekTotal {
 
 func fourWeekTotals(monthExpenses: [Expense], month: Date) -> [WeekTotal] {
     var totals: [Decimal] = [0, 0, 0, 0]
-    let cal = Calendar.current
+    let cal = MonthUtil.gregorian
 
   
     for e in monthExpenses {
