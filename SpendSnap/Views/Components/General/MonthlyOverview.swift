@@ -10,10 +10,10 @@ import SwiftData
 
 struct MonthlyOverview: View {
     @Environment(\.colorScheme) private var colorScheme
-    @Query private var settingsRow: [Settings]
+    @Query(sort: Settings.oldestFirst) private var settingsRow: [Settings]
     
     private var currencyCode: String {
-        settingsRow.first?.currencyCode ?? "USD"
+        settingsRow.first?.currencyCode ?? Settings.defaultCurrencyCode
     }
     
     let lightBlue = Color(red: 0.85, green: 0.93, blue: 1.0)

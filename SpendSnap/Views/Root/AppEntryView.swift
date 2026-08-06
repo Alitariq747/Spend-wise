@@ -11,7 +11,7 @@ import SwiftData
 struct AppEntryView: View {
     @Environment(\.modelContext) private var modelContext
     @EnvironmentObject private var storeKit: StoreKitManager
-    @Query private var settingsRow: [Settings]
+    @Query(sort: Settings.oldestFirst) private var settingsRow: [Settings]
     @State private var showPostOnboardingPaywall = false
     
     var body: some View {
@@ -31,6 +31,17 @@ struct AppEntryView: View {
                         }
                 }
             }
+        }
+        .task {
+            SettingsReconciler.reconcile(in: modelContext)
+        }
+        // The duplicate is inserted at launch on a second device, but only
+        // becomes visible once CloudKit's first sync merges into this context —
+        // long after `.task` has run. `@Query` is live, so the count change is
+        // the signal.
+        .onChange(of: settingsRow.count) { _, newCount in
+            guard newCount > 1 else { return }
+            SettingsReconciler.reconcile(in: modelContext)
         }
         .onChange(of: settingsRow.first?.onboardingComplete ?? false) { oldValue, newValue in
             guard oldValue == false, newValue == true else { return }

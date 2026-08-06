@@ -17,10 +17,10 @@ struct AddExpenseSheet: View {
     @Query(sort: \CreditCard.name) private var cards: [CreditCard]
     @State private var selectedCard: CreditCard? = nil
     
-    @Query private var settingsRow: [Settings]
+    @Query(sort: Settings.oldestFirst) private var settingsRow: [Settings]
     
     private var currencyCode: String {
-        settingsRow.first?.currencyCode ?? "USD"
+        settingsRow.first?.currencyCode ?? Settings.defaultCurrencyCode
     }
     
     @State private var selectedCategory: CategoryEntity?

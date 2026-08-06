@@ -12,11 +12,11 @@ struct HistoryView: View {
     @Environment(\.modelContext) private var ctx
     @EnvironmentObject private var storeKit: StoreKitManager
     @Environment(\.colorScheme) private var colorScheme
-    @Query private var settingsRow: [Settings]
+    @Query(sort: Settings.oldestFirst) private var settingsRow: [Settings]
     @Query(sort: \CategoryEntity.name) private var categories: [CategoryEntity]
     
     private var currencyCode: String {
-        settingsRow.first?.currencyCode ?? "USD"
+        settingsRow.first?.currencyCode ?? Settings.defaultCurrencyCode
     }
     
     @State private var selectedMonth = Date()

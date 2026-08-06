@@ -18,10 +18,10 @@ struct CategoryEditSheet: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var modelContext
     
-    @Query private var settingsRows: [Settings]
+    @Query(sort: Settings.oldestFirst) private var settingsRows: [Settings]
     
     private var currency: String {
-        settingsRows.first?.currencyCode ?? "USD"
+        settingsRows.first?.currencyCode ?? Settings.defaultCurrencyCode
     }
     @State private var emoji: String
     @State private var showEmojiPicker = false

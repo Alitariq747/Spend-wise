@@ -10,10 +10,10 @@ import SwiftData
 
 struct CategorySpendingCard: View {
     @Environment(\.colorScheme) private var colorScheme
-    @Query private var settingsRow: [Settings]
+    @Query(sort: Settings.oldestFirst) private var settingsRow: [Settings]
     
     private var currencyCode: String {
-        settingsRow.first?.currencyCode ?? "USD"
+        settingsRow.first?.currencyCode ?? Settings.defaultCurrencyCode
     }
     
     let category: CategoryEntity

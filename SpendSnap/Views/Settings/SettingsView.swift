@@ -20,7 +20,7 @@ struct SettingsView: View {
     @Environment(\.openURL) private var openUrl
     @Environment(\.requestReview) private var requestReview
     @Environment(\.modelContext) private var modelContext
-    @Query private var settingsRow: [Settings]
+    @Query(sort: Settings.oldestFirst) private var settingsRow: [Settings]
     
     private var settings: Settings? {
         settingsRow.first
@@ -76,7 +76,7 @@ struct SettingsView: View {
     var body: some View {
         
         
-        let symbol = CurrencyUtil.symbol(for: settings?.currencyCode ?? "USD")
+        let symbol = CurrencyUtil.symbol(for: settings?.currencyCode ?? Settings.defaultCurrencyCode)
         
        
             
@@ -314,7 +314,7 @@ struct SettingsView: View {
                         }
                     }
         .sheet(isPresented: $showCurrencySheet) {
-            CurrencyPickerSheet(allCurrencies: CurrencyOption.allCurrencies, selectedCode: settings?.currencyCode ?? "USD") {
+            CurrencyPickerSheet(allCurrencies: CurrencyOption.allCurrencies, selectedCode: settings?.currencyCode ?? Settings.defaultCurrencyCode) {
                 newCode in
                 settings?.currencyCode = newCode
                 try? modelContext.save()

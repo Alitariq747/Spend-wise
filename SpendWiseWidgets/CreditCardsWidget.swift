@@ -152,9 +152,9 @@ struct CreditCardsProvider: TimelineProvider {
         let now = Date()
         
         // currency
-        let settingsFetch = FetchDescriptor<Settings>()
+        let settingsFetch = FetchDescriptor<Settings>(sortBy: Settings.oldestFirst)
         let settings = (try? context.fetch(settingsFetch))?.first
-        let currencyCode = settings?.currencyCode ?? "$"
+        let currencyCode = settings?.currencyCode ?? Settings.defaultCurrencyCode
         let symbol = CurrencyUtil.symbol(for: currencyCode)
         
         // fetch cards

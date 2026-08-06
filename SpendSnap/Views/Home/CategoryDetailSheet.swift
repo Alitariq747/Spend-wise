@@ -21,12 +21,12 @@ struct CategoryDetailSheet: View {
     
     @Environment(\.dismiss) private var dismiss
     
-    @Query private var settingsRow: [Settings]
+    @Query(sort: Settings.oldestFirst) private var settingsRow: [Settings]
     
     @State private var selectedExpense: Expense? = nil
     
     private var currencyCode: String {
-        settingsRow.first?.currencyCode ?? "USD"
+        settingsRow.first?.currencyCode ?? Settings.defaultCurrencyCode
     }
     
     @State private var showCategoryEditSheet: Bool = false

@@ -15,10 +15,10 @@ struct AddBudgetSheet: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.colorScheme) private var colorScheme
     
-    @Query private var settingsRows: [Settings]
+    @Query(sort: Settings.oldestFirst) private var settingsRows: [Settings]
     
     private var currency: String {
-        settingsRows.first?.currencyCode ?? "USD"
+        settingsRows.first?.currencyCode ?? Settings.defaultCurrencyCode
     }
     
     @State private var amountText: String = ""

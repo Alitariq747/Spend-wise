@@ -11,7 +11,7 @@ import SwiftData
 struct CardDetailSheet: View {
     @Environment(\.dismiss) private var dismiss
     
-    @Query private var settingsRow: [Settings]
+    @Query(sort: Settings.oldestFirst) private var settingsRow: [Settings]
     @Query(sort: \Expense.date, order: .reverse) private var allExpenses: [Expense]
     @State private var showEditSheet = false
     @State private var cycleReference = Date()
@@ -22,7 +22,7 @@ struct CardDetailSheet: View {
     var onExpensesChanged: (() -> Void)? = nil
     
     private var currencyCode: String {
-        settingsRow.first?.currencyCode ?? "USD"
+        settingsRow.first?.currencyCode ?? Settings.defaultCurrencyCode
     }
     @State private var selectedExpense: Expense? = nil
 

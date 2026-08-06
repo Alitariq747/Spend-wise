@@ -12,12 +12,12 @@ struct ExpenseDetailSheet: View {
     
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var modelContext
-    @Query private var settingsRow: [Settings]
+    @Query(sort: Settings.oldestFirst) private var settingsRow: [Settings]
     @Query(sort: \CreditCard.name) private var cards: [CreditCard]
     @Query(sort: \CategoryEntity.name) private var categories: [CategoryEntity]
     
     private var currencyCode: String {
-        settingsRow.first?.currencyCode ?? "USD"
+        settingsRow.first?.currencyCode ?? Settings.defaultCurrencyCode
     }
     
     let expense: Expense

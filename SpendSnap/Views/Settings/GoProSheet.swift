@@ -21,13 +21,6 @@ enum SubscriptionTier: String, CaseIterable, Identifiable {
         }
     }
     
-    var fallbackPrice: String {
-        switch self {
-        case .monthly: return "$2.99"
-        case .yearly: return "$29.99"
-        }
-    }
-    
     var period: String {
         switch self {
         case .monthly: return "month"
@@ -46,40 +39,43 @@ enum SubscriptionTier: String, CaseIterable, Identifiable {
 }
 
 enum PremiumFeature: String, CaseIterable, Identifiable {
+    case expenses
+    case budgets
+    case categories
     case iCloudBackup
     case widgets
     case reminders
-   case display
+    case display
     case card
     case support
-    
-    
+
     var id: String { rawValue }
-    
+
     var emoji: String {
         switch self {
+        case .expenses: return "checkmark.seal.fill"
+        case .budgets: return "checkmark.seal.fill"
+        case .categories: return "checkmark.seal.fill"
         case .iCloudBackup: return "checkmark.seal.fill"
         case .widgets: return "checkmark.seal.fill"
         case .reminders: return "checkmark.seal.fill"
         case .display: return "checkmark.seal.fill"
-        case .card:
-            return "checkmark.seal.fill"
+        case .card: return "checkmark.seal.fill"
         case .support: return "heart.fill"
-        
-      
         }
     }
-    
+
     var text: String {
         switch self {
-            case .iCloudBackup: return "iCloud Sync"
-        case .widgets: return "Home Screen Widgets"
-        case .reminders: return "Expense Reminders"
-        case .display: return "Dark Mode"
-        case .card:
-            return "Credit Card Tracking"
-        case .support: return "Support Indie Developer"
-       
+        case .expenses: return "Add and track expenses"
+        case .budgets: return "Monthly and category budgets"
+        case .categories: return "Custom categories"
+        case .iCloudBackup: return "iCloud sync across devices"
+        case .widgets: return "Home Screen widgets"
+        case .reminders: return "Expense reminders"
+        case .display: return "Light and dark appearance"
+        case .card: return "Credit card tracking"
+        case .support: return "Support an indie developer"
         }
     }
 }
@@ -87,6 +83,7 @@ enum PremiumFeature: String, CaseIterable, Identifiable {
 struct GoProSheet: View {
     private enum TrialEligibilityState {
         case checking
+        case unavailable
         case eligible
         case ineligible
         case noOffer
@@ -109,16 +106,34 @@ struct GoProSheet: View {
         storeKit.products.first(where: { $0.id == tier.productID })
     }
     
-    private func displayPrice(for tier: SubscriptionTier) -> String {
-        product(for: tier)?.displayPrice ?? tier.fallbackPrice
+    /// A tier is purchasable only when StoreKit returned a product *and* its
+    /// subscription terms, since a price may never be shown without them.
+    private func isAvailable(_ tier: SubscriptionTier) -> Bool {
+        product(for: tier)?.subscription != nil
     }
-    
+
+    /// The only source of a currency string in this view. Never falls back to a
+    /// literal — an unavailable tier has no price to show.
+    private func displayPrice(for tier: SubscriptionTier) -> String? {
+        guard isAvailable(tier) else { return nil }
+        return product(for: tier)?.displayPrice
+    }
+
+    private func pricePerPeriod(for tier: SubscriptionTier) -> String? {
+        guard let price = displayPrice(for: tier) else { return nil }
+        return "\(price)/\(tier.period)"
+    }
+
+    private var isUnavailable: Bool {
+        trialEligibilityState == .unavailable
+    }
+
     private var chargeDisclosureTitle: String {
         switch trialEligibilityState {
-        case .checking:
+        case .checking, .unavailable:
             return "Final details shown by App Store"
         case .eligible:
-            return "2-week free trial"
+            return "14-day free trial"
         case .ineligible, .noOffer:
             return "Subscribe anytime"
         }
@@ -128,29 +143,33 @@ struct GoProSheet: View {
         switch trialEligibilityState {
         case .eligible:
             return "Start your 14-day free trial"
-        case .checking:
-            return "Continue with SpendWise Pro"
+        case .checking, .unavailable:
+            return "Subscribe to SpendWise Pro"
         case .ineligible, .noOffer:
             return "Subscribe to SpendWise Pro"
         }
     }
-    
+
     private var chargeDisclosureDetail: String {
-        let price = "\(displayPrice(for: selectedTier))/\(selectedTier.period)"
-        
+        // No real price means no terms can be stated. The unavailable notice
+        // replaces this banner entirely, so this is a belt-and-braces guard.
+        guard let price = pricePerPeriod(for: selectedTier) else {
+            return "Review the price and terms before confirming with the App Store."
+        }
+
         switch trialEligibilityState {
-        case .checking:
+        case .checking, .unavailable:
             return "Review the price and terms before confirming with the App Store."
         case .eligible:
-            return "Nothing due today. After 2 weeks, you'll be charged \(price), auto-renewing unless canceled."
+            return "Nothing due today. After 14 days, you'll be charged \(price), auto-renewing unless canceled."
         case .ineligible, .noOffer:
-            return "\(price). Cancel anytime in App Store settings."
+            return "\(price), auto-renewing. Cancel anytime in App Store settings."
         }
     }
-    
+
     private var chargeDisclosureAccent: Color {
         switch trialEligibilityState {
-        case .checking:
+        case .checking, .unavailable:
             return .gray
         case .eligible:
             return .green
@@ -187,16 +206,55 @@ struct GoProSheet: View {
                 .stroke(accent.opacity(0.22), lineWidth: 1)
         )
     }
-    
+
+    private var productsUnavailableNotice: some View {
+        HStack(spacing: 10) {
+            Image(systemName: "exclamationmark.triangle.fill")
+                .font(.system(size: 14, weight: .semibold))
+                .foregroundStyle(Color.orange.opacity(0.9))
+
+            VStack(alignment: .leading, spacing: 2) {
+                Text("Plans couldn't be loaded")
+                    .font(.system(size: 13, weight: .semibold))
+                    .foregroundStyle(.primary)
+                Text("Check your internet connection and try again. Prices and subscription terms appear once plans load.")
+                    .font(.system(size: 12, weight: .regular))
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+
+            Spacer()
+        }
+        .padding(.horizontal, 12)
+        .padding(.vertical, 10)
+        .background(Color.orange.opacity(0.08), in: RoundedRectangle(cornerRadius: 12))
+        .overlay(
+            RoundedRectangle(cornerRadius: 12)
+                .stroke(Color.orange.opacity(0.22), lineWidth: 1)
+        )
+    }
+
+    @ViewBuilder
+    private var purchaseDisclosureSection: some View {
+        if isUnavailable {
+            productsUnavailableNotice
+        } else {
+            chargeDisclosureBanner
+        }
+    }
+
     private func refreshTrialEligibilityState() async {
         await MainActor.run {
             trialEligibilityState = .checking
         }
 
         guard let subscription = product(for: selectedTier)?.subscription else {
+            await MainActor.run {
+                trialEligibilityState = .unavailable
+            }
             return
         }
-        
+
         guard subscription.introductoryOffer != nil else {
             await MainActor.run {
                 trialEligibilityState = .noOffer
@@ -213,6 +271,16 @@ struct GoProSheet: View {
         }
     }
     
+    private func handleRetryTap() {
+        Task {
+            paywallMessage = nil
+            await storeKit.loadProducts()
+            // Re-run explicitly: a repeated failure leaves `products` empty, so
+            // the onChange(of:) observer would not fire on its own.
+            await refreshTrialEligibilityState()
+        }
+    }
+
     private func handleSubscribeTap() {
         guard let selectedProduct = product(for: selectedTier) else {
             paywallMessage = "Plan is unavailable right now. Please try again."
@@ -235,6 +303,30 @@ struct GoProSheet: View {
         }
     }
     
+    private var primaryButtonTitle: String {
+        if storeKit.isPurchasing { return "Processing..." }
+        if isUnavailable { return storeKit.isLoadingProducts ? "Loading..." : "Try Again" }
+        return "Continue"
+    }
+
+    private var isPrimaryButtonDisabled: Bool {
+        if storeKit.isPurchasing { return true }
+        if isUnavailable { return storeKit.isLoadingProducts }
+        return product(for: selectedTier) == nil
+    }
+
+    private var showsPrimaryButtonSpinner: Bool {
+        storeKit.isPurchasing || (isUnavailable && storeKit.isLoadingProducts)
+    }
+
+    /// The unavailable notice already explains a failed product load, so the
+    /// generic store error is suppressed there rather than stated twice.
+    private var statusMessage: String? {
+        if let paywallMessage { return paywallMessage }
+        if isUnavailable { return nil }
+        return storeKit.lastErrorMessage
+    }
+
     private func handleRestoreTap() {
         Task {
             let restored = await storeKit.restorePurchases()
@@ -269,8 +361,8 @@ struct GoProSheet: View {
             
             Text(paywallTitle)
                 .font(.system(size: 18, weight: .semibold))
-            Text("SpendWise Pro includes the tools below to track spending, stay on budget, and keep your data available across devices.")
-                .font(.system(size: 12, weight: .light))
+            Text("Adding and tracking expenses requires an active SpendWise Pro subscription. Here's everything included.")
+                .font(.system(size: 12, weight: .regular))
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
                 .lineLimit(nil)
@@ -292,7 +384,7 @@ struct GoProSheet: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                 }
             }
-            .frame(maxWidth: 200, alignment: .leading)
+            .frame(maxWidth: 260, alignment: .leading)
             .frame(maxWidth: .infinity, alignment: .center)
 
             // VStack for monthly
@@ -303,7 +395,7 @@ struct GoProSheet: View {
                             .font(.system(size: 14, weight: .semibold))
                             .foregroundStyle(.secondary)
                         
-                        Text(verbatim: "\(displayPrice(for: sub)) / \(sub.period)")
+                        Text(verbatim: displayPrice(for: sub).map { "\($0) / \(sub.period)" } ?? "—")
                             .font(.system(size: 12, weight: .bold))
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -319,18 +411,22 @@ struct GoProSheet: View {
                 
             }
             .frame(maxWidth: .infinity, alignment: .leading)
-            chargeDisclosureBanner
-            
-            
+            purchaseDisclosureSection
+
+
             Button {
-                handleSubscribeTap()
+                if isUnavailable {
+                    handleRetryTap()
+                } else {
+                    handleSubscribeTap()
+                }
             } label: {
                 HStack(spacing: 8) {
-                    if storeKit.isPurchasing {
+                    if showsPrimaryButtonSpinner {
                         ProgressView()
                             .tint(.white)
                     }
-                    Text(storeKit.isPurchasing ? "Processing..." : "Continue")
+                    Text(primaryButtonTitle)
                         .font(.system(size: 18, weight: .semibold))
                 }
                     .foregroundStyle(.white)
@@ -340,7 +436,7 @@ struct GoProSheet: View {
                 
                 
             }
-            .disabled(storeKit.isPurchasing || product(for: selectedTier) == nil)
+            .disabled(isPrimaryButtonDisabled)
             Button {
                 handleRestoreTap()
             } label: {
@@ -358,12 +454,12 @@ struct GoProSheet: View {
             .buttonStyle(.plain)
             .disabled(storeKit.isPurchasing)
             
-            if storeKit.isLoadingProducts {
+            if storeKit.isLoadingProducts && !isUnavailable {
                 ProgressView("Loading plans...")
                     .font(.system(size: 12, weight: .regular))
             }
-            
-            if let message = paywallMessage ?? storeKit.lastErrorMessage {
+
+            if let message = statusMessage {
                 Text(message)
                     .font(.system(size: 12, weight: .regular))
                     .foregroundStyle(.secondary)
