@@ -9,11 +9,19 @@ import SwiftUI
 import SwiftData
 import StoreKit
 import UIKit
+import WidgetKit
 
 enum LegalLinks {
     static let privacy = URL(string: "https://ahmadtariq.co/apps/spendwise/privacy")!
     static let terms   = URL(string: "https://ahmadtariq.co/apps/spendwise/terms")!
     static let contact = URL(string: "mailto:support-spendwise@ahmadtariq.co")!
+}
+
+extension Notification.Name {
+    /// Posted synchronously after `SettingsView.deleteAllSyncedData()` commits,
+    /// so views holding manually-fetched model arrays in `@State` can drop them
+    /// before SwiftUI re-evaluates a body against an invalidated object.
+    static let spendWiseDidDeleteAllData = Notification.Name("spendWiseDidDeleteAllData")
 }
 
 struct SettingsView: View {
@@ -35,6 +43,9 @@ struct SettingsView: View {
     @State private var isRestoringPurchases: Bool = false
     @State private var showRestoreAlert: Bool = false
     @State private var restoreAlertMessage: String = ""
+    @State private var showDeleteResultAlert: Bool = false
+    @State private var deleteResultTitle: String = ""
+    @State private var deleteResultMessage: String = ""
     
     @StateObject private var iCloudVM = ICloudStatusViewModel()
     @EnvironmentObject private var storeKit: StoreKitManager
@@ -275,9 +286,19 @@ struct SettingsView: View {
                         .padding(.vertical, 12)
                         .frame(maxWidth: .infinity)
                         .background(Color.red, in: RoundedRectangle(cornerRadius: 12))
-                        .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color.red, lineWidth: 1))
                 }
+                .buttonStyle(.plain)
                 .padding(.horizontal)
+                .confirmationDialog(
+                    "Delete All Data?",
+                    isPresented: $showDeleteConfirmation,
+                    titleVisibility: .visible
+                ) {
+                    Button("Delete", role: .destructive) { deleteAllSyncedData() }
+                    Button("Cancel", role: .cancel) { }
+                } message: {
+                    Text("This permanently removes your expenses, categories, cards, and budgets from this device — and from your other devices once iCloud finishes syncing. Your currency, appearance, and reminder preferences are kept. This can't be undone.")
+                }
 
             }
             .padding(.vertical)
@@ -343,44 +364,6 @@ struct SettingsView: View {
             GoProSheet()
         }
         .presentationDetents([.large])
-        .sheet(isPresented: $showDeleteConfirmation) {
-            VStack(spacing: 16) {
-                Capsule()
-                    .frame(width: 40, height: 4)
-                    .foregroundColor(Color(.systemGray4))
-                    .padding(.top, 8)
-
-                Text("Delete All Data")
-                    .font(.headline)
-
-                Text("This will delete your SpendWise data from this device and iCloud, including expenses, categories, cards, budgets, and settings. This action cannot be undone.")
-                    .font(.subheadline)
-                    .foregroundColor(.secondary)
-                    .multilineTextAlignment(.center)
-
-                HStack(spacing: 12) {
-                    Button("Cancel") {
-                        showDeleteConfirmation = false
-                    }
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 10)
-                    .background(Color(.secondarySystemBackground), in: RoundedRectangle(cornerRadius: 12))
-
-                    Button("Delete Everything") {
-                        deleteAllSyncedData()
-                        showDeleteConfirmation = false
-                    }
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 10)
-                    .background(Color.red, in: RoundedRectangle(cornerRadius: 12))
-                    .foregroundColor(.white)
-                }
-                .padding(.bottom, 8)
-            }
-            .padding(.horizontal, 16)
-            .presentationDetents([.height(250)])
-            .presentationDragIndicator(.hidden)
-        }
         .sheet(isPresented: $showWidgetInfoSheet) {
             WidgetInfoSheet()
         }
@@ -388,6 +371,11 @@ struct SettingsView: View {
             Button("OK", role: .cancel) { }
         } message: {
             Text(restoreAlertMessage)
+        }
+        .alert(deleteResultTitle, isPresented: $showDeleteResultAlert) {
+            Button("OK", role: .cancel) { }
+        } message: {
+            Text(deleteResultMessage)
         }
     }
     
@@ -448,20 +436,43 @@ struct SettingsView: View {
         showRestoreAlert = true
     }
 
+  
     private func deleteAllSyncedData() {
         do {
+            // Leaf-first: every child is gone before its parent, so the
+            // `.cascade` rules on CategoryEntity and CreditCard never fire
+            // against a live object.
             try deleteAll(of: Expense.self)
             try deleteAll(of: CategoryMonthlyBudget.self)
             try deleteAll(of: CategoryEntity.self)
             try deleteAll(of: Budget.self)
             try deleteAll(of: CreditCard.self)
-            try deleteAll(of: Settings.self)
 
             try modelContext.save()
-            print("✅ Deleted all data")
+
+            // Synchronous, still inside this call stack — the tab views drop
+            // their cached model arrays before SwiftUI can re-evaluate any body
+            // against an invalidated object.
+            NotificationCenter.default.post(name: .spendWiseDidDeleteAllData, object: nil)
+
+            WidgetCenter.shared.reloadAllTimelines()
+
+            deleteResultTitle = "All Data Deleted"
+            deleteResultMessage = "Your expenses, categories, cards, and budgets have been removed. If iCloud sync is on, your other devices will update the next time they sync."
         } catch {
+            // Without this the context keeps the objects marked for deletion:
+            // `@Query` shows an empty app while the store still holds the rows,
+            // and the next unrelated save() commits the delete silently.
+            modelContext.rollback()
+
+            deleteResultTitle = "Couldn't Delete Your Data"
+            deleteResultMessage = "Something went wrong and your data wasn't deleted. Please try again, or contact us from the General section if the problem continues."
+            #if DEBUG
             print("❌ Failed to delete all data: \(error)")
+            #endif
         }
+
+        showDeleteResultAlert = true
     }
 
     private func deleteAll<T: PersistentModel>(of type: T.Type) throws {

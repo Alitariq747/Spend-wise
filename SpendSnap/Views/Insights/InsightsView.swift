@@ -47,6 +47,12 @@ struct InsightsView: View {
             fetchBudget()
             fetchExpenses()
         }
+        // These caches hold objects fetched by hand, so they survive a delete
+        // that `@Query` would have swept. Drop them before a body can read one.
+        .onReceive(NotificationCenter.default.publisher(for: .spendWiseDidDeleteAllData)) { _ in
+            monthExpenses = []
+            budgetForMonth = nil
+        }
         .onChange(of: selectedMonth) {
             fetchBudget()
             fetchExpenses()

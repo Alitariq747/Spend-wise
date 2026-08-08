@@ -103,6 +103,12 @@ struct CreditCardView: View {
             CardDetailSheet(snapshot: snap, onClose: { selected = nil })
         }
         .presentationDetents([.large])
+        // `CardSnapShot` retains a CreditCard and its expenses, so drop it
+        // before a body can read one of them back after a delete.
+        .onReceive(NotificationCenter.default.publisher(for: .spendWiseDidDeleteAllData)) { _ in
+            selected = nil
+            selectedCard = nil
+        }
     }
 }
 

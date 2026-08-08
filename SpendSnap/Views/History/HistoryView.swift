@@ -148,6 +148,13 @@ struct HistoryView: View {
             fetchExpenses()
             handleDeepLinkIfNeeded()
         })
+        // These caches hold objects fetched by hand, so they survive a delete
+        // that `@Query` would have swept. Drop them before a body can read one.
+        .onReceive(NotificationCenter.default.publisher(for: .spendWiseDidDeleteAllData)) { _ in
+            monthExpenses = []
+            selectedExpense = nil
+            showExpenseDetailSheet = false
+        }
         .onChange(of: deepLinkMonth) {
             handleDeepLinkIfNeeded()
                }
