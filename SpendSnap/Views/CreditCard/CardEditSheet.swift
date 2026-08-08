@@ -197,9 +197,10 @@ struct CardEditSheet: View {
         card.color = selectedColor
         
         try? modelContext.save()
+        WidgetRefresh.reloadAll()
         dismiss()
     }
-    
+
     private func deleteCard() {
         for exp in allExpenses where exp.card == card {
             exp.card = nil
@@ -207,6 +208,7 @@ struct CardEditSheet: View {
         }
         modelContext.delete(card)
         try? modelContext.save()
+        WidgetRefresh.reloadAll()
         onDelete?()
         dismiss()
     }

@@ -156,6 +156,7 @@ struct AddCardSheet: View {
             )
         modelContext.insert(newCard)
         try? modelContext.save()
+        WidgetRefresh.reloadAll()
         dismiss()
     }
 }

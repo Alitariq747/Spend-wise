@@ -9,7 +9,6 @@ import SwiftUI
 import SwiftData
 import StoreKit
 import UIKit
-import WidgetKit
 
 enum LegalLinks {
     static let privacy = URL(string: "https://ahmadtariq.co/apps/spendwise/privacy")!
@@ -339,6 +338,9 @@ struct SettingsView: View {
                 newCode in
                 settings?.currencyCode = newCode
                 try? modelContext.save()
+                // Every widget renders this symbol; without this they keep the
+                // old one until their next scheduled timeline refresh.
+                WidgetRefresh.reloadAll()
             }
                 .presentationDetents([.medium])
         }
@@ -455,7 +457,7 @@ struct SettingsView: View {
             // against an invalidated object.
             NotificationCenter.default.post(name: .spendWiseDidDeleteAllData, object: nil)
 
-            WidgetCenter.shared.reloadAllTimelines()
+            WidgetRefresh.reloadAll()
 
             deleteResultTitle = "All Data Deleted"
             deleteResultMessage = "Your expenses, categories, cards, and budgets have been removed. If iCloud sync is on, your other devices will update the next time they sync."

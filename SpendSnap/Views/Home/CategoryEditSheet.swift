@@ -321,10 +321,11 @@ struct CategoryEditSheet: View {
         }
 
         try? modelContext.save()
+        WidgetRefresh.reloadAll()
         onSaved?()
         dismiss()
     }
-    
+
     private func deleteCategory() {
         let descriptor = FetchDescriptor<Expense>()
         if let expenses = try? modelContext.fetch(descriptor) {
@@ -338,6 +339,9 @@ struct CategoryEditSheet: View {
         
         modelContext.delete(category)
         try? modelContext.save()
+        // Deleting a category deletes its expenses, so the month and week
+        // totals move even though no expense screen was involved.
+        WidgetRefresh.reloadAll()
         onSaved?()
         dismiss()
     }

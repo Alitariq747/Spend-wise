@@ -220,6 +220,7 @@ struct AddCategorySheet: View {
             modelContext.insert(override)
         }
         try? modelContext.save()
+        WidgetRefresh.reloadAll()
         dismiss()
     }
 }

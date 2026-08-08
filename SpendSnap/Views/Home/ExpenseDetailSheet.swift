@@ -86,7 +86,8 @@ struct ExpenseDetailSheet: View {
         expense.card = (method == .card) ? selectedCard : nil
         
         try? modelContext.save()
-  
+        WidgetRefresh.reloadAll()
+
         dismiss()
         
     }
@@ -331,6 +332,7 @@ struct ExpenseDetailSheet: View {
             Button("Delete", role: .destructive) {
                 modelContext.delete(expense)
                 try? modelContext.save()
+                WidgetRefresh.reloadAll()
                 onDeleteExpense?()
                 dismiss()
             }

@@ -7,7 +7,6 @@
 
 import SwiftUI
 import SwiftData
-import WidgetKit
 
 struct AddExpenseSheet: View {
     
@@ -288,8 +287,7 @@ struct AddExpenseSheet: View {
         ctx.insert(exp)
         do {
             try ctx.save()
-            WidgetCenter.shared.reloadTimelines(ofKind: "MonthOverviewWidget")
-            WidgetCenter.shared.reloadTimelines(ofKind: "WeeklySpentWidget")
+            WidgetRefresh.reloadAll()
             dismiss()
         } catch {
             print("Error saving expense: \(error.localizedDescription)")
