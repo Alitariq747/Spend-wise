@@ -165,12 +165,7 @@ struct AddExpenseSheet: View {
                             
                             Button {
                                 if cards.isEmpty {
-                                    toastMessage = "No cards yet. Add one in cards tab"
-                                    withAnimation(.spring()) {showToast = true}
-                                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                                        withAnimation(.spring()) {showToast = false}
-                                    }
-                                    
+                                    presentToast("No cards yet. Add one in cards tab")
                                 } else {
                                     method = .card
                                 }
@@ -290,7 +285,21 @@ struct AddExpenseSheet: View {
             WidgetRefresh.reloadAll()
             dismiss()
         } catch {
+            // Without the rollback the context keeps the orphaned insert, and the
+            // next unrelated save() commits an expense the user was told failed.
+            ctx.rollback()
+            presentToast("Couldn't save that expense. Please try again.")
+            #if DEBUG
             print("Error saving expense: \(error.localizedDescription)")
+            #endif
+        }
+    }
+
+    private func presentToast(_ message: String) {
+        toastMessage = message
+        withAnimation(.spring()) { showToast = true }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+            withAnimation(.spring()) { showToast = false }
         }
     }
 }

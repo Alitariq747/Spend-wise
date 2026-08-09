@@ -22,7 +22,7 @@ final class NotificationManager {
         .init(title: "Spending snapshot", body: "Capture today’s spend before it fades. Your insights stay sharp."),
         .init(title: "Tiny habit, big clarity", body: "Add what you spent today and stay on top of your goals."),
         .init(title: "Keep the streak alive", body: "Log today’s expenses so your trends stay accurate."),
-        .init(title: "Daily money moment", body: "Open SpendSnap and drop today’s expenses. Future you will thank you.")
+        .init(title: "Daily money moment", body: "Open SpendWise and drop today’s expenses. Future you will thank you.")
     ]
 
     func clearAll() {

@@ -75,7 +75,7 @@ struct WidgetInfoSheet: View {
         VStack(alignment: .leading, spacing: 8) {
             Text("Stay on track at a glance")
                 .font(.title2).bold()
-            Text("Add SpendSnap widgets to quickly see budgets, weekly spend, and card due dates.")
+            Text("Add SpendWise widgets to quickly see budgets, weekly spend, and card due dates.")
                 .foregroundStyle(.secondary)
                 .font(.subheadline)
         }
@@ -124,7 +124,7 @@ struct WidgetInfoSheet: View {
     private var steps: some View {
         VStack(alignment: .leading, spacing: 8) {
             Text("How to add").font(.headline)
-            ForEach(Array(["Touch & hold on Home/Lock Screen", "Tap +, search “SpendSnap”", "Pick a size, tap Add Widget"].enumerated()), id: \.offset) { idx, text in
+            ForEach(Array(["Touch & hold on Home/Lock Screen", "Tap +, search “SpendWise”", "Pick a size, tap Add Widget"].enumerated()), id: \.offset) { idx, text in
                 HStack(alignment: .top, spacing: 8) {
                     Text(verbatim: "\(idx + 1).").bold()
                     Text(text)

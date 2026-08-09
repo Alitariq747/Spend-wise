@@ -128,12 +128,50 @@ struct GoProSheet: View {
         trialEligibilityState == .unavailable
     }
 
+    /// The trial length is read from the offer StoreKit actually returned, never
+    /// hardcoded — a literal here would state terms App Store won't honor the
+    /// moment the offer is changed in App Store Connect.
+    private func trialLength(for tier: SubscriptionTier) -> (count: Int, unit: String)? {
+        guard let offer = product(for: tier)?.subscription?.introductoryOffer,
+              offer.paymentMode == .freeTrial else { return nil }
+
+        let period = offer.period
+        let count = period.value * offer.periodCount
+
+        let unit: String
+        switch period.unit {
+        case .day: unit = "day"
+        case .week: unit = "week"
+        case .month: unit = "month"
+        case .year: unit = "year"
+        @unknown default: return nil
+        }
+
+        return (count, unit)
+    }
+
+    /// Compound-adjective form for headings: "14-day", "2-week".
+    private func trialDuration(for tier: SubscriptionTier) -> String? {
+        guard let length = trialLength(for: tier) else { return nil }
+        return "\(length.count)-\(length.unit)"
+    }
+
+    /// Noun-phrase form for sentences: "14 days", "2 weeks".
+    private func trialDurationPhrase(for tier: SubscriptionTier) -> String? {
+        guard let length = trialLength(for: tier) else { return nil }
+        let noun = length.count == 1 ? length.unit : "\(length.unit)s"
+        return "\(length.count) \(noun)"
+    }
+
     private var chargeDisclosureTitle: String {
         switch trialEligibilityState {
         case .checking, .unavailable:
             return "Final details shown by App Store"
         case .eligible:
-            return "14-day free trial"
+            guard let duration = trialDuration(for: selectedTier) else {
+                return "Free trial included"
+            }
+            return "\(duration) free trial"
         case .ineligible, .noOffer:
             return "Subscribe anytime"
         }
@@ -142,7 +180,10 @@ struct GoProSheet: View {
     private var paywallTitle: String {
         switch trialEligibilityState {
         case .eligible:
-            return "Start your 14-day free trial"
+            guard let duration = trialDuration(for: selectedTier) else {
+                return "Start your free trial"
+            }
+            return "Start your \(duration) free trial"
         case .checking, .unavailable:
             return "Subscribe to SpendWise Pro"
         case .ineligible, .noOffer:
@@ -161,7 +202,10 @@ struct GoProSheet: View {
         case .checking, .unavailable:
             return "Review the price and terms before confirming with the App Store."
         case .eligible:
-            return "Nothing due today. After 14 days, you'll be charged \(price), auto-renewing unless canceled."
+            guard let phrase = trialDurationPhrase(for: selectedTier) else {
+                return "Nothing due today. After your free trial, you'll be charged \(price), auto-renewing unless canceled."
+            }
+            return "Nothing due today. After \(phrase), you'll be charged \(price), auto-renewing unless canceled."
         case .ineligible, .noOffer:
             return "\(price), auto-renewing. Cancel anytime in App Store settings."
         }
@@ -255,7 +299,10 @@ struct GoProSheet: View {
             return
         }
 
-        guard subscription.introductoryOffer != nil else {
+        // Only a *free* intro offer may be described as a trial. A pay-up-front
+        // or pay-as-you-go intro offer still costs money on day one, so it falls
+        // through to the plain-price copy rather than claiming a free trial.
+        guard subscription.introductoryOffer?.paymentMode == .freeTrial else {
             await MainActor.run {
                 trialEligibilityState = .noOffer
             }
