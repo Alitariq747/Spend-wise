@@ -358,6 +358,12 @@ struct GoProSheet: View {
 
     private var isPrimaryButtonDisabled: Bool {
         if storeKit.isPurchasing { return true }
+        // A restore in flight may be about to grant the very thing this button
+        // sells, so buying is held until we know the answer.
+        if storeKit.isRestoring { return true }
+        // And once it has: the sheet is closing, but it is still on screen for
+        // the beat it takes to read the confirmation. Nothing left to sell.
+        if storeKit.hasActiveSubscription { return true }
         if isUnavailable { return storeKit.isLoadingProducts }
         return product(for: selectedTier) == nil
     }
@@ -376,8 +382,24 @@ struct GoProSheet: View {
 
     private func handleRestoreTap() {
         Task {
-            let restored = await storeKit.restorePurchases()
-            paywallMessage = restored ? "Subscription restored successfully." : "No active subscription found to restore."
+            switch await storeKit.restorePurchases() {
+            case .restored:
+                // Unlike a purchase, a restore has no App Store confirmation of
+                // its own — closing instantly would leave the user unsure
+                // anything happened, so the confirmation gets a beat to be read.
+                paywallMessage = "Subscription restored successfully."
+                try? await Task.sleep(for: .seconds(1.2))
+                dismiss()
+
+            case .nothingToRestore:
+                paywallMessage = "No active subscription found to restore."
+
+            case .cancelled:
+                paywallMessage = nil
+
+            case .failed(let message):
+                paywallMessage = message
+            }
         }
     }
     
@@ -487,19 +509,25 @@ struct GoProSheet: View {
             Button {
                 handleRestoreTap()
             } label: {
-                Text("Restore Purchases")
-                    .font(.system(size: 14, weight: .semibold))
-                    .foregroundStyle(.primary)
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 10)
-                    .background(Color(.systemGray6), in: RoundedRectangle(cornerRadius: 12))
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 12)
-                            .stroke(Color.gray.opacity(0.15), lineWidth: 1)
-                    )
+                HStack(spacing: 8) {
+                    if storeKit.isRestoring {
+                        ProgressView()
+                            .controlSize(.small)
+                    }
+                    Text(storeKit.isRestoring ? "Restoring..." : "Restore Purchases")
+                        .font(.system(size: 14, weight: .semibold))
+                        .foregroundStyle(.primary)
+                }
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 10)
+                .background(Color(.systemGray6), in: RoundedRectangle(cornerRadius: 12))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 12)
+                        .stroke(Color.gray.opacity(0.15), lineWidth: 1)
+                )
             }
             .buttonStyle(.plain)
-            .disabled(storeKit.isPurchasing)
+            .disabled(storeKit.isPurchasing || storeKit.isRestoring)
             
             if storeKit.isLoadingProducts && !isUnavailable {
                 ProgressView("Loading plans...")

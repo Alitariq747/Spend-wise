@@ -39,7 +39,6 @@ struct SettingsView: View {
     @State private var showGoProSheet: Bool = false
     @State private var showDeleteConfirmation: Bool = false
     @State private var showWidgetInfoSheet: Bool = false
-    @State private var isRestoringPurchases: Bool = false
     @State private var showRestoreAlert: Bool = false
     @State private var restoreAlertMessage: String = ""
     @State private var showDeleteResultAlert: Bool = false
@@ -157,7 +156,7 @@ struct SettingsView: View {
                                 
                                 Spacer()
                                 
-                                if isRestoringPurchases {
+                                if storeKit.isRestoring {
                                     ProgressView()
                                         .tint(.primary)
                                 } else {
@@ -179,7 +178,7 @@ struct SettingsView: View {
                             .background(Color(.systemGray6), in: RoundedRectangle(cornerRadius: 12))
                         }
                         .buttonStyle(.plain)
-                        .disabled(isRestoringPurchases)
+                        .disabled(storeKit.isRestoring)
                     }
                     
                     // Currency Hstack
@@ -420,21 +419,22 @@ struct SettingsView: View {
     
     @MainActor
     private func restorePurchasesFromSettings() async {
-        guard !isRestoringPurchases else { return }
-        
-        isRestoringPurchases = true
-        defer { isRestoringPurchases = false }
-        
-        let restored = await storeKit.restorePurchases()
-        
-        if restored {
+        switch await storeKit.restorePurchases() {
+        case .restored:
             restoreAlertMessage = "Your subscription was restored successfully."
-        } else if let errorMessage = storeKit.lastErrorMessage {
-            restoreAlertMessage = errorMessage
-        } else {
+
+        case .nothingToRestore:
             restoreAlertMessage = "No active purchases were found to restore."
+
+        // The user closed the sign-in sheet themselves; an alert confirming that
+        // would be a second dialog they also have to dismiss.
+        case .cancelled:
+            return
+
+        case .failed(let message):
+            restoreAlertMessage = message
         }
-        
+
         showRestoreAlert = true
     }
 

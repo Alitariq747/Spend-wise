@@ -101,6 +101,7 @@ struct SpendSnapApp: App {
 private struct AppBootView: View {
     @ObservedObject var boot: AppBootController
     @EnvironmentObject private var storeKit: StoreKitManager
+    @Environment(\.scenePhase) private var scenePhase
 
     var body: some View {
         Group {
@@ -127,6 +128,15 @@ private struct AppBootView: View {
             if storeKit.products.isEmpty {
                 await storeKit.loadProducts()
             }
+        }
+        // Entitlements are a snapshot, not a subscription to the truth. A lapse
+        // is never delivered as a `Transaction.update` — the receipt simply
+        // stops being current — so without re-reading on every foreground, a
+        // cancelled user keeps Pro until the process is killed. This is also
+        // what picks up a subscription bought on another device.
+        .onChange(of: scenePhase) { _, newPhase in
+            guard newPhase == .active else { return }
+            Task { await storeKit.refreshEntitlements() }
         }
     }
 }
