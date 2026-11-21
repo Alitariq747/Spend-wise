@@ -16,6 +16,23 @@ Swap the scheme for `SpendWiseWidgetsExtension` to build the widget target. `.de
 
 There is **no test target and no tests** in this project. Verification is: build succeeds, then run in the simulator.
 
+## Working in steps
+
+Ahmad works in small chunks. These rules apply to every code change, whether it comes from `docs/BUILD_ORDER.md` or from a new request:
+
+- **Size.** A step adds or changes at most ~150 lines of Swift. The hard limit is 200. Count the insertions from `git diff --numstat`. Deletions, String Catalog data, asset JSON, `project.pbxproj` and docs don't count.
+- **Split before coding.** If a step or request would go over the limit, split it into sub-steps (`3.5a`, `3.5b`…) without being asked. Each sub-step must build and run on its own. Write the sub-steps into `docs/BUILD_ORDER.md` first, then do them one at a time.
+- **Plan first.** Start each step with a short plan in chat: files, approach, estimated size, and how it will be checked. Wait for Ahmad's go-ahead before writing code.
+- **Finish cleanly.** A step is done when:
+  - both targets build
+  - its **Done when** line has been checked
+  - it is ticked in `docs/BUILD_ORDER.md`, and its box in `docs/MASTER_PLAN.md` §6 is ticked when it completes a feature
+  - this file is updated if the step changed something it describes
+
+  Each step should be committable on its own. Commit only when Ahmad asks.
+- **Pure logic without a test target.** Parsers, date maths, payoff maths and CSV building live in Foundation-only files. Check them by compiling the file with a throwaway `main.swift` in the scratchpad (`swiftc File.swift main.swift -o check && ./check`) and running the step's cases.
+- **Cold starts.** Each step in `BUILD_ORDER.md` is written so a fresh session can pick it up. Read the step, the decisions it cites, and the files it names.
+
 ## Targets and file membership
 
 Two targets: `SpendSnap` (app) and `SpendWiseWidgetsExtension` (widget bundle).
@@ -70,3 +87,9 @@ Feature gating reads **`storeKit.hasActiveSubscription`** — the persisted `Set
 ## Credit card cycles
 
 `cardCycleAndDue(statementDay:dueDay:)` in `DateUtils.swift` derives the current statement window and due date from a card's `statementDay`/`dueDay`, clamping day-of-month to the month's length (`Calendar.clampedDate`). Due date rolls to the following month when `dueDay <= statementDay`. Card spend is the sum of expenses with `date` in `[cycle.start, cycle.end)`.
+
+## Growth plan
+
+The v2.4 relaunch (rename, freemium, Siri, bills & cards, income and savings goals, Arabic and German, ASO) is planned in `docs/MASTER_PLAN.md`. Read it before product or App Store work, and keep its decision log and checklists current.
+
+The order of work is `docs/BUILD_ORDER.md`: 85 numbered steps in phases 0–12 (Phase 9 was dropped), plus Ahmad's non-code tasks and the slip order. Take the first unticked step unless Ahmad names another.
