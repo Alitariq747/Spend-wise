@@ -30,7 +30,7 @@ Sizes are estimates of added or changed Swift lines. Deletions, String Catalog d
 
 | Phase | Steps | Target finish | Done |
 |---|---|---|---|
-| 0 Groundwork | 3 | Nov 19 | 2 |
+| 0 Groundwork | 3 | Nov 19 | 3 |
 | 1 Data model | 3 | Nov 19 | 0 |
 | 2 Fixes and shared building blocks | 8 | Nov 21 | 0 |
 | 3 Design kit and core screens | 12 | Nov 24 | 0 |
@@ -43,7 +43,7 @@ Sizes are estimates of added or changed Swift lines. Deletions, String Catalog d
 | 10 Polish | 4 | Dec 4 | 0 |
 | 11 Languages and rename | 6 | Dec 4 | 0 |
 | 12 Release prep | 4 | Dec 7 | 0 |
-| **Total** | **85** | Freeze Dec 4, submit Dec 7 | **2** |
+| **Total** | **85** | Freeze Dec 4, submit Dec 7 | **3** |
 
 Phases run in order: Bills & Cards (the riskiest sync work) comes before the free tier, as MASTER_PLAN §7 decided. Phase 10 can run alongside 8 in a parallel session.
 
@@ -85,9 +85,9 @@ All of these are recorded in MASTER_PLAN §3. The ones added for this build:
   - Replace the 8 hard-coded "SpendWise" texts in onboarding, notifications, the paywall, Settings and widget descriptions.
   - Internal identifiers stay as they are: bundle IDs, `SpendWise://`, the CloudKit container and the App Group.
   - *Done when:* "SpendWise" appears in Swift code only in `AppInfo` and internal identifiers, so the rename (11.6) is a one-line change.
-- [ ] **0.3 String Catalogs** · ~10 lines
+- [x] **0.3 String Catalogs** · ~10 lines
   - Add `Localizable.xcstrings` to the app and widget folders, and add `ar` and `de` to the project's known regions. Extraction is already on (`SWIFT_EMIT_LOC_STRINGS`).
-  - Ahmad builds once in Xcode so the catalogs fill with the existing strings, because `xcodebuild` may not write them back.
+  - `xcodebuild` doesn't write strings back, so the catalogs are filled with `xcstringstool sync` from the build's `.stringsdata` (command in CLAUDE.md → Strings and languages).
   - *Done when:* both catalogs list their target's strings and both targets build. From here on, every new user-facing string goes through a catalog.
 
 ## Phase 1 — Data model (one pass)

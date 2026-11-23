@@ -1,0 +1,339 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "" : {
+
+    },
+    "0.00" : {
+
+    },
+    "200" : {
+
+    },
+    "Actual VS Target" : {
+
+    },
+    "Add" : {
+
+    },
+    "Add %@ widgets to quickly see budgets, weekly spend, and card due dates." : {
+
+    },
+    "Add Category" : {
+
+    },
+    "Add a category first" : {
+
+    },
+    "Add new category" : {
+
+    },
+    "Add your credit cards here to track cycles, stay under your limit, and never miss a payment." : {
+
+    },
+    "Adding and tracking expenses requires an active %@ subscription. Here's everything included." : {
+
+    },
+    "All months" : {
+
+    },
+    "Allocated Budget" : {
+
+    },
+    "Amount" : {
+
+    },
+    "App Settings" : {
+
+    },
+    "Appearance" : {
+
+    },
+    "Applies" : {
+
+    },
+    "Billing Cycle" : {
+
+    },
+    "Budgeted" : {
+
+    },
+    "CATEGORIES" : {
+
+    },
+    "Cancel" : {
+
+    },
+    "Card" : {
+
+    },
+    "Card Color" : {
+
+    },
+    "Card Name" : {
+
+    },
+    "Card purchases linked to this billing cycle will appear here." : {
+
+    },
+    "Cards" : {
+
+    },
+    "Cash" : {
+
+    },
+    "Category name" : {
+
+    },
+    "Check your internet connection and try again. Prices and subscription terms appear once plans load." : {
+
+    },
+    "Choose one that best matches this category." : {
+
+    },
+    "Confirm Delete" : {
+
+    },
+    "Contact Us" : {
+
+    },
+    "Create" : {
+
+    },
+    "Currency" : {
+
+    },
+    "Daily Burn" : {
+
+    },
+    "Date" : {
+
+    },
+    "Day" : {
+
+    },
+    "Delete" : {
+
+    },
+    "Delete All Data" : {
+
+    },
+    "Delete All Data?" : {
+
+    },
+    "Delete this category?" : {
+
+    },
+    "Done" : {
+
+    },
+    "Edit" : {
+
+    },
+    "Enter Budget" : {
+
+    },
+    "Enter your card limit" : {
+
+    },
+    "Enter your card name" : {
+
+    },
+    "Expenses must belong to a category so your totals and insights stay organized." : {
+
+    },
+    "General" : {
+
+    },
+    "Gentle Reminders" : {
+
+    },
+    "Get started" : {
+
+    },
+    "Hello, World!" : {
+
+    },
+    "High" : {
+
+    },
+    "How to add" : {
+
+    },
+    "Left" : {
+
+    },
+    "Loading plans..." : {
+
+    },
+    "Low" : {
+
+    },
+    "Merchant" : {
+
+    },
+    "Method:" : {
+
+    },
+    "Missing Information" : {
+
+    },
+    "Monthly" : {
+
+    },
+    "Never over-spend!" : {
+
+    },
+    "Next" : {
+
+    },
+    "No Cards Yet" : {
+
+    },
+    "No expenses in this cycle" : {
+
+    },
+    "Not now" : {
+
+    },
+    "Notifications are off. Enable them in iPhone Settings to receive reminders." : {
+
+    },
+    "OK" : {
+
+    },
+    "Pay with" : {
+
+    },
+    "Personal Limit" : {
+
+    },
+    "Pick a category emoji" : {
+
+    },
+    "Pick a color" : {
+
+    },
+    "Pick a currency" : {
+
+    },
+    "Pick how chatty your expense coach should be — stay quiet, get gentle nudges, or let us really keep you on track." : {
+
+    },
+    "Plans couldn't be loaded" : {
+
+    },
+    "Please try again. If this keeps happening, reinstall the app or contact support." : {
+
+    },
+    "Preparing your data…" : {
+
+    },
+    "Privacy Policy" : {
+
+    },
+    "Privacy policy" : {
+
+    },
+    "Pro Plan" : {
+
+    },
+    "Rate us 🖤" : {
+
+    },
+    "Restore" : {
+
+    },
+    "Restore Purchases" : {
+
+    },
+    "Restoring..." : {
+
+    },
+    "Save" : {
+
+    },
+    "Save Budget" : {
+
+    },
+    "Sign in to iCloud in Settings to sync your %@ data across devices." : {
+
+    },
+    "State" : {
+
+    },
+    "Stay on track at a glance" : {
+
+    },
+    "Subscription" : {
+
+    },
+    "Target Budget" : {
+
+    },
+    "Terms of Service" : {
+
+    },
+    "Terms of service" : {
+
+    },
+    "This Week" : {
+
+    },
+    "This can not be undone.!" : {
+
+    },
+    "This month" : {
+
+    },
+    "This permanently removes your expenses, categories, cards, and budgets from this device — and from your other devices once iCloud finishes syncing. Your currency, appearance, and reminder preferences are kept. This can't be undone." : {
+
+    },
+    "This removes the card. Existing expenses will stay, but their payment method/card link will be cleared." : {
+
+    },
+    "This will delete this category and all expenses assigned to it. This action cannot be undone." : {
+
+    },
+    "Tips" : {
+
+    },
+    "Try Again" : {
+
+    },
+    "Update Budget" : {
+
+    },
+    "Walmart" : {
+
+    },
+    "We couldn’t open your data" : {
+
+    },
+    "Weekly Trends" : {
+
+    },
+    "Widgets" : {
+
+    },
+    "Widgets auto-refresh, but you can tap a card to refresh inside the app after changes." : {
+
+    },
+    "X" : {
+
+    },
+    "iCloud" : {
+
+    },
+    "iCloud Sync" : {
+
+    },
+    "•" : {
+
+    },
+    "💸" : {
+
+    }
+  },
+  "version" : "1.0"
+}

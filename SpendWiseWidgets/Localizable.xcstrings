@@ -1,0 +1,39 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "Cards" : {
+
+    },
+    "Credit Cards" : {
+
+    },
+    "Month Overview" : {
+
+    },
+    "See this month’s budget and spending at a glance." : {
+
+    },
+    "See your top cards with spend, limits, cycles, and due dates." : {
+
+    },
+    "Shows how much you spent this week" : {
+
+    },
+    "Soonest due" : {
+
+    },
+    "Weekly Spending" : {
+
+    },
+    "spent this month" : {
+
+    },
+    "spent this week" : {
+
+    },
+    "💸" : {
+
+    }
+  },
+  "version" : "1.0"
+}

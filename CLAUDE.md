@@ -41,7 +41,25 @@ The project uses Xcode's **file-system-synchronized groups** (`PBXFileSystemSync
 
 **But** files the widget target shares from the app folder are listed explicitly as `membershipExceptions` in `SpendSnap.xcodeproj/project.pbxproj` (search for `Exceptions for "SpendSnap" folder in "SpendWiseWidgetsExtension" target`). Today that list is all of `Models/` plus `Services/AppInfo.swift`, `Services/CurrencyHelpers.swift` and `Services/DateUtils.swift`.
 
-`AppInfo` (`Services/AppInfo.swift`) is the one home for the user-facing app name, Pro name, App Store id, support email and legal URLs. User-facing text uses `AppInfo.name`/`AppInfo.proName`, never a literal "SpendWise". Internal identifiers (bundle IDs, `SpendWise://`, the App Group, the CloudKit container) stay literal and never change with a rename. If widget code needs another app file, it must be added to that exception list or the widget target won't compile.
+If widget code needs another app file, it must be added to that exception list or the widget target won't compile.
+
+`AppInfo` (`Services/AppInfo.swift`) is the one home for the user-facing app name, Pro name, App Store id, support email and legal URLs. User-facing text uses `AppInfo.name`/`AppInfo.proName`, never a literal "SpendWise". Internal identifiers (bundle IDs, `SpendWise://`, the App Group, the CloudKit container) stay literal and never change with a rename.
+
+## Strings and languages
+
+Each target has its own String Catalog: `SpendSnap/Localizable.xcstrings` and `SpendWiseWidgets/Localizable.xcstrings`. Languages are English (source), Arabic (`ar`) and German (`de`). Every new user-facing string goes through a catalog: SwiftUI literals (`Text("…")`, button titles) are extracted automatically; a string held in a plain `String` is not, and needs `String(localized:)` or `LocalizedStringResource`.
+
+`xcodebuild` does not write new strings back into the catalogs. After a build, refresh them from the build's `.stringsdata`:
+
+```bash
+bash -c 'D=.derivedData/Build/Intermediates.noindex/SpendSnap.build/Debug-iphonesimulator
+for p in SpendSnap/Localizable.xcstrings:SpendSnap SpendWiseWidgets/Localizable.xcstrings:SpendWiseWidgetsExtension; do
+  f=( $(ls $D/${p##*:}.build/Objects-normal/arm64/*.stringsdata | grep -v /Generated) )
+  xcrun xcstringstool sync "${p%%:*}" --stringsdata "${f[@]}"
+done'
+```
+
+Building once in Xcode does the same.
 
 ## Data layer
 
