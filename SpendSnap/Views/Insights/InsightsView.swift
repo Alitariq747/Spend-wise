@@ -17,8 +17,6 @@ struct InsightsView: View {
     @State private var budgetForMonth: Budget? = nil
     @State private var monthExpenses: [Expense] = []
  
-    @State private var tab: InsightsTab = .overview
-    
     var body: some View {
         VStack {
             MonthPicker(month: $selectedMonth)

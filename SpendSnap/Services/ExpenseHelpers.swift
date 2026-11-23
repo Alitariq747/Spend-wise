@@ -47,12 +47,6 @@ func fourWeekTotals(monthExpenses: [Expense], month: Date) -> [WeekTotal] {
     ]
 }
 
-func round2(_ x: Decimal) -> Decimal {
-    var a = x, r = Decimal()
-    NSDecimalRound(&r, &a, 2, .plain)   // .plain = standard rounding
-    return r
-}
-
 func string(from dec: Decimal) -> String {
        let n = NSDecimalNumber(decimal: dec)
        let f = NumberFormatter()

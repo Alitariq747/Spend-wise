@@ -40,13 +40,3 @@ func daysElapsed(_ month: Date) -> Int {
 }
 
 
-func idealToDate(budget: Decimal?, month: Date) -> Decimal {
-    idealPerDay(budget: budget, month: month) * Decimal(daysElapsed(month))
-}
-
-func format2(_ d: Decimal) -> String {
-    let f = NumberFormatter()
-    f.minimumFractionDigits = 2
-    f.maximumFractionDigits = 2
-    return f.string(from: d as NSDecimalNumber) ?? "\(d)"
-}

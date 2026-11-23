@@ -30,7 +30,7 @@ Sizes are estimates of added or changed Swift lines. Deletions, String Catalog d
 
 | Phase | Steps | Target finish | Done |
 |---|---|---|---|
-| 0 Groundwork | 3 | Nov 19 | 0 |
+| 0 Groundwork | 3 | Nov 19 | 1 |
 | 1 Data model | 3 | Nov 19 | 0 |
 | 2 Fixes and shared building blocks | 8 | Nov 21 | 0 |
 | 3 Design kit and core screens | 12 | Nov 24 | 0 |
@@ -43,7 +43,7 @@ Sizes are estimates of added or changed Swift lines. Deletions, String Catalog d
 | 10 Polish | 4 | Dec 4 | 0 |
 | 11 Languages and rename | 6 | Dec 4 | 0 |
 | 12 Release prep | 4 | Dec 7 | 0 |
-| **Total** | **85** | Freeze Dec 4, submit Dec 7 | **0** |
+| **Total** | **85** | Freeze Dec 4, submit Dec 7 | **1** |
 
 Phases run in order: Bills & Cards (the riskiest sync work) comes before the free tier, as MASTER_PLAN §7 decided. Phase 10 can run alongside 8 in a parallel session.
 
@@ -71,8 +71,8 @@ All of these are recorded in MASTER_PLAN §3. The ones added for this build:
 
 ## Phase 0 — Groundwork (nothing changes for users)
 
-- [ ] **0.1 Version number and dead code** · ~10 lines
-  - Set `MARKETING_VERSION` to 2.4 for both targets (it is 1.0 today) and bump the build number.
+- [x] **0.1 Version number and dead code** · ~10 lines
+  - Set `MARKETING_VERSION` to 2.4 for both targets (it is 1.0 today) and bump the build number. Ahmad does this himself in Xcode.
   - Delete the unused `ExpenseCard`, `CategoryMacroCard`, `TabPill` (with `InsightsTab` and its one `@State`), `CompactHeader`, `UnlockPro`, `UpgradeToPro`, `CurrencyUtil.format`, `format2`, `round2` and `idealToDate`.
   - Keep the unused `Settings.proUnlocked` and `iCloudSyncOn` fields: 2.3 devices still sync them, and removing them gains nothing.
   - *Done when:* both targets build and the app behaves exactly as before.

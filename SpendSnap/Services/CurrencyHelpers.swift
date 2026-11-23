@@ -38,14 +38,6 @@ enum CurrencyUtil {
         cache[code.uppercased()] = code
         return code
     }
-
-
-    /// Optional: full formatted money string using the chosen currency
-    static func format(_ amount: Decimal) -> String {
-        let f = NumberFormatter()
-        f.numberStyle = .currency
-        return f.string(from: amount as NSDecimalNumber) ?? "\(amount)"
-    }
 }
 
 
