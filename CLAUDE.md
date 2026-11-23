@@ -29,7 +29,7 @@ Ahmad works in small chunks. These rules apply to every code change, whether it 
   - it is ticked in `docs/BUILD_ORDER.md`, and its box in `docs/MASTER_PLAN.md` §6 is ticked when it completes a feature
   - this file is updated if the step changed something it describes
 
-  Each step should be committable on its own. Commit only when Ahmad asks.
+  Each step should be committable on its own. **Ahmad commits every step himself in Xcode, and sets the version and build number there too.** Never run `git commit` or edit `MARKETING_VERSION`/`CURRENT_PROJECT_VERSION`; end a step by saying it is ready to commit, with a suggested message.
 - **Pure logic without a test target.** Parsers, date maths, payoff maths and CSV building live in Foundation-only files. Check them by compiling the file with a throwaway `main.swift` in the scratchpad (`swiftc File.swift main.swift -o check && ./check`) and running the step's cases.
 - **Cold starts.** Each step in `BUILD_ORDER.md` is written so a fresh session can pick it up. Read the step, the decisions it cites, and the files it names.
 
@@ -39,7 +39,9 @@ Two targets: `SpendSnap` (app) and `SpendWiseWidgetsExtension` (widget bundle).
 
 The project uses Xcode's **file-system-synchronized groups** (`PBXFileSystemSynchronizedRootGroup`). A new `.swift` file dropped into `SpendSnap/` or `SpendWiseWidgets/` is picked up by its own target automatically — no pbxproj edit needed.
 
-**But** files the widget target shares from the app folder are listed explicitly as `membershipExceptions` in `SpendSnap.xcodeproj/project.pbxproj` (search for `Exceptions for "SpendSnap" folder in "SpendWiseWidgetsExtension" target`). Today that list is all of `Models/` plus `Services/CurrencyHelpers.swift` and `Services/DateUtils.swift`. If widget code needs another app file, it must be added to that exception list or the widget target won't compile.
+**But** files the widget target shares from the app folder are listed explicitly as `membershipExceptions` in `SpendSnap.xcodeproj/project.pbxproj` (search for `Exceptions for "SpendSnap" folder in "SpendWiseWidgetsExtension" target`). Today that list is all of `Models/` plus `Services/AppInfo.swift`, `Services/CurrencyHelpers.swift` and `Services/DateUtils.swift`.
+
+`AppInfo` (`Services/AppInfo.swift`) is the one home for the user-facing app name, Pro name, App Store id, support email and legal URLs. User-facing text uses `AppInfo.name`/`AppInfo.proName`, never a literal "SpendWise". Internal identifiers (bundle IDs, `SpendWise://`, the App Group, the CloudKit container) stay literal and never change with a rename. If widget code needs another app file, it must be added to that exception list or the widget target won't compile.
 
 ## Data layer
 

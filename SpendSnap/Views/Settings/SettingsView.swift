@@ -10,12 +10,6 @@ import SwiftData
 import StoreKit
 import UIKit
 
-enum LegalLinks {
-    static let privacy = URL(string: "https://ahmadtariq.co/apps/spendwise/privacy")!
-    static let terms   = URL(string: "https://ahmadtariq.co/apps/spendwise/terms")!
-    static let contact = URL(string: "mailto:support-spendwise@ahmadtariq.co")!
-}
-
 extension Notification.Name {
     /// Posted synchronously after `SettingsView.deleteAllSyncedData()` commits,
     /// so views holding manually-fetched model arrays in `@State` can drop them
@@ -247,20 +241,20 @@ struct SettingsView: View {
                     
                   
                     Button {
-                        openUrl(LegalLinks.privacy)
+                        openUrl(AppInfo.privacyURL)
                     } label: {
                         PrivacyPolicyRow()
                     }
                     .buttonStyle(.plain)
                     
                     Button {
-                        openUrl(LegalLinks.terms)
+                        openUrl(AppInfo.termsURL)
                     } label: {
                         TermsOfServiceRow()
                     }
                     .buttonStyle(.plain)
                     Button {
-                        openUrl(LegalLinks.contact)
+                        openUrl(AppInfo.supportURL)
                     } label: {
                         ContactUsRow()
                     }
@@ -312,7 +306,7 @@ struct SettingsView: View {
                     }
             .overlay(alignment: .bottom) {
                         if showICloudToast || showNotificationToast {
-                            Text(showNotificationToast ? "Notifications are off. Enable them in iPhone Settings to receive reminders." : "Sign in to iCloud in Settings to sync your SpendWise data across devices.")
+                            Text(showNotificationToast ? "Notifications are off. Enable them in iPhone Settings to receive reminders." : "Sign in to iCloud in Settings to sync your \(AppInfo.name) data across devices.")
                                 .font(.system(size: 13))
                                 .foregroundColor(.white)
                                 .padding(.horizontal, 16)

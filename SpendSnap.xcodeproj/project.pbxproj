@@ -74,6 +74,7 @@
 				Models/PaymentMethod.swift,
 				Models/ReminderLevel.swift,
 				Models/Settings.swift,
+				Services/AppInfo.swift,
 				Services/CurrencyHelpers.swift,
 				Services/DateUtils.swift,
 			);

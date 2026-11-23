@@ -15,7 +15,7 @@
 2. Claude posts a short plan in chat (files, approach, estimated size, how it will be checked). Ahmad says go.
 3. Claude builds it. A step adds or changes about 150 lines of Swift at most, never more than 200. Anything bigger is split into `3.5a`, `3.5b`… and written into this file before coding starts.
 4. Both targets build, and the step's **Done when** line is checked in the simulator or with a scratch harness.
-5. Tick the box here. When a feature's last step lands, tick its box in MASTER_PLAN §6 too. Commit when Ahmad asks.
+5. Tick the box here. When a feature's last step lands, tick its box in MASTER_PLAN §6 too. Claude says the step is ready to commit, and Ahmad commits it in Xcode. He also sets the version and build number there.
 
 Sizes are estimates of added or changed Swift lines. Deletions, String Catalog data, asset JSON, `project.pbxproj` and docs don't count.
 
@@ -30,7 +30,7 @@ Sizes are estimates of added or changed Swift lines. Deletions, String Catalog d
 
 | Phase | Steps | Target finish | Done |
 |---|---|---|---|
-| 0 Groundwork | 3 | Nov 19 | 1 |
+| 0 Groundwork | 3 | Nov 19 | 2 |
 | 1 Data model | 3 | Nov 19 | 0 |
 | 2 Fixes and shared building blocks | 8 | Nov 21 | 0 |
 | 3 Design kit and core screens | 12 | Nov 24 | 0 |
@@ -43,7 +43,7 @@ Sizes are estimates of added or changed Swift lines. Deletions, String Catalog d
 | 10 Polish | 4 | Dec 4 | 0 |
 | 11 Languages and rename | 6 | Dec 4 | 0 |
 | 12 Release prep | 4 | Dec 7 | 0 |
-| **Total** | **85** | Freeze Dec 4, submit Dec 7 | **1** |
+| **Total** | **85** | Freeze Dec 4, submit Dec 7 | **2** |
 
 Phases run in order: Bills & Cards (the riskiest sync work) comes before the free tier, as MASTER_PLAN §7 decided. Phase 10 can run alongside 8 in a parallel session.
 
@@ -76,7 +76,7 @@ All of these are recorded in MASTER_PLAN §3. The ones added for this build:
   - Delete the unused `ExpenseCard`, `CategoryMacroCard`, `TabPill` (with `InsightsTab` and its one `@State`), `CompactHeader`, `UnlockPro`, `UpgradeToPro`, `CurrencyUtil.format`, `format2`, `round2` and `idealToDate`.
   - Keep the unused `Settings.proUnlocked` and `iCloudSyncOn` fields: 2.3 devices still sync them, and removing them gains nothing.
   - *Done when:* both targets build and the app behaves exactly as before.
-- [ ] **0.2 One home for the app's name and links** · ~60 lines
+- [x] **0.2 One home for the app's name and links** · ~60 lines
   - Add an `AppInfo` type shared with the widget target. It holds:
     - the display name and Pro name
     - the App Store id and write-review URL

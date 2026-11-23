@@ -97,11 +97,6 @@ struct GoProSheet: View {
     @State private var paywallMessage: String?
     @State private var trialEligibilityState: TrialEligibilityState = .checking
     
-    private enum PaywallLinks {
-        static let privacy = URL(string: "https://ahmadtariq.co/apps/spendwise/privacy")!
-        static let terms = URL(string: "https://ahmadtariq.co/apps/spendwise/terms")!
-    }
-    
     private func product(for tier: SubscriptionTier) -> Product? {
         storeKit.products.first(where: { $0.id == tier.productID })
     }
@@ -185,9 +180,9 @@ struct GoProSheet: View {
             }
             return "Start your \(duration) free trial"
         case .checking, .unavailable:
-            return "Subscribe to SpendWise Pro"
+            return "Subscribe to \(AppInfo.proName)"
         case .ineligible, .noOffer:
-            return "Subscribe to SpendWise Pro"
+            return "Subscribe to \(AppInfo.proName)"
         }
     }
 
@@ -430,7 +425,7 @@ struct GoProSheet: View {
             
             Text(paywallTitle)
                 .font(.system(size: 18, weight: .semibold))
-            Text("Adding and tracking expenses requires an active SpendWise Pro subscription. Here's everything included.")
+            Text("Adding and tracking expenses requires an active \(AppInfo.proName) subscription. Here's everything included.")
                 .font(.system(size: 12, weight: .regular))
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
@@ -544,7 +539,7 @@ struct GoProSheet: View {
             
             HStack(spacing: 6) {
                 Button("Terms of Service") {
-                    openURL(PaywallLinks.terms)
+                    openURL(AppInfo.termsURL)
                 }
                 .font(.system(size: 12, weight: .regular))
                 .foregroundStyle(.secondary)
@@ -555,7 +550,7 @@ struct GoProSheet: View {
                     .foregroundStyle(.secondary)
                 
                 Button("Privacy Policy") {
-                    openURL(PaywallLinks.privacy)
+                    openURL(AppInfo.privacyURL)
                 }
                 .font(.system(size: 12, weight: .regular))
                 .foregroundStyle(.secondary)

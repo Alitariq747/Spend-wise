@@ -43,7 +43,7 @@ struct OnboardingView: View {
             imageName: "problem3"
         ),
         .init(
-            title: "Meet SpendWise",
+            title: "Meet \(AppInfo.name)",
             subtitle: "Budget by category, track weekly pace, and never miss a card due date.",
             imageName: "solution"
         )
