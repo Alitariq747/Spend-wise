@@ -14,7 +14,7 @@ xcodebuild -project SpendSnap.xcodeproj -scheme SpendSnap -destination 'platform
 
 Swap the scheme for `SpendWiseWidgetsExtension` to build the widget target. `.derivedData/` is the repo-local, gitignored derived data path — always pass `-derivedDataPath .derivedData` so incremental builds reuse it.
 
-There is **no test target and no tests** in this project. Verification is: build succeeds, then run in the simulator.
+There is **no test target and no tests** in this project. Verification is: build succeeds, then run in the simulator. For any model change, also run the upgrade test (`docs/upgrade-test/run.sh old`, then `new`, then `clean`), which checks that a store from the live 2.3 build upgrades with every row intact.
 
 ## Working in steps
 
@@ -72,6 +72,13 @@ Consequences that shape the code:
 - **Boot fallback** (`SpendSnapApp.swift`): `AppBootController` builds the container with `cloudKitDatabase: .automatic`; on failure it retries with `.none`, and only then shows an error screen. Schema changes must be added in *both* this schema list and `SpendWiseWidgets/WidgetModelContainer.swift`, and the two lists must stay identical: the widget opens the same file, and a list missing a model could migrate that model's table away.
 - **`Settings` is a singleton by convention, not by constraint.** Because uniqueness can't be enforced, duplicate rows appear (e.g. two devices insert one before first sync). Every reader — app and both widget processes — must fetch with `FetchDescriptor<Settings>(sortBy: Settings.oldestFirst)` and take `.first`, so all processes agree on the same row. `SettingsReconciler.reconcile(in:)` merges duplicates into the oldest row; it runs on `AppEntryView` appearance and again whenever the live `@Query` count rises above 1.
 - **Stable ids.** `CreditCard` and `CategoryEntity` carry `stableID: UUID?` for anything that must point at a row across devices (Siri entities, `Settings.defaultCardID`). It is optional and not named `id` on purpose: a non-optional default gives every migrated row, and every row synced from a 2.3 device, the same value, and a field named `id` would replace SwiftData's identity in `ForEach`. `IdentityBackfill.run(in:)` fills `nil` ids at launch and on every foreground, and never changes a set one. Readers must handle `nil`.
+- **Rules for new models** (on top of the CloudKit rules above):
+  - A model whose rows must be matched across devices (Siri entities, recurrence keys, a stored default) gets `stableID: UUID? = nil`, set in `init`. Never a non-optional `UUID = UUID()` default, and never a field named `id`.
+  - Enum values are stored as raw `String`s with a computed accessor that falls back on unknown values.
+  - Every relationship is optional, has an inverse, and has a deliberate delete rule (`.nullify` to keep the other side, `.cascade` when it means nothing alone).
+  - Field names, types and raw values are permanent once the CloudKit schema is in Production. Additions are fine; renames, removals and type changes are not.
+  - Check every model change with the upgrade test (`docs/upgrade-test/README.md`).
+- **Never run an Xcode debug build of 2.4 on a phone that holds real data.** Debug builds sync with CloudKit's Development environment, real data lives in Production, and the app would push the local store into Development. Use the simulator, or TestFlight builds (Production) once the schema is deployed.
 - Widgets open the same store with `cloudKitDatabase: .none` (read-only view of shared data), falling back to an in-memory container so the widget never crashes.
 
 ### monthKey

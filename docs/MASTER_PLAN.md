@@ -9,7 +9,7 @@
 
 ## 1. Where we are (baseline, 2026-10-24)
 
-Live since 2026-08-25 as **"SpendWise: Budgets & Cards"** (App Store id `6756066717`). No update since 2026-08-26.
+Live since 2026-08-25 as **"SpendWise: Budgets & Cards"** (App Store id `6756066717`), built from commit `80917e6` ("version2.3"), which the upgrade test in [docs/upgrade-test](upgrade-test/README.md) builds. No update since 2026-08-26.
 
 | Metric (launch → 2026-10-24) | Value | Read |
 |---|---|---|
@@ -432,6 +432,7 @@ Rules:
 | Scenario | Covered |
 |---|---|
 | Two devices on the same iCloud account (sync, no duplicate categories or recurring expenses, mark-as-paid merge, savings contributions merge) | [ ] |
+| A 2.3 device and a 2.4 device on one iCloud account: 2.3 doesn't crash on income, rules or payments and doesn't show them; editing a card on 2.3 keeps its 2.4 fields (`stableID`, `last4`, payoff values); cards and categories created on 2.3 get a `stableID` on 2.4 after a foreground | [ ] |
 | iOS 17 (no Control Center control), iOS 18, iOS 26 (snippets), iOS 27 (new Siri) | [ ] |
 | Fresh install vs upgrade from 2.3 with existing data (every card and category gets its own id; the latest month's budget becomes the every-month default) | [ ] |
 | Free user vs subscriber vs lifetime vs lapsed subscriber | [ ] |

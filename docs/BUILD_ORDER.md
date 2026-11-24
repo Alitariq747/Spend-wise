@@ -452,16 +452,17 @@ Dropped on 2026-11-22, with its six steps (9.1–9.6), the camera permission and
   - About 45 enum and computed display strings (categories, reminder levels, appearance, plans, paywall features…) move to `LocalizedStringResource`.
   - *Done when:* switching the simulator to German shows no English in those places, once 11.5 has filled the catalog.
 - [ ] **11.2 Widgets and Siri phrases localizable** · ~60 lines
-  - Widget names and descriptions, and the App Shortcut phrases.
+  - Widget names and descriptions, and the App Shortcut phrases. The widget names and descriptions are already in the widget catalog (their APIs extract them; checked in 0.3), so this is mainly the Siri phrases and any widget text held in plain `String`s.
   - *Done when:* they appear in the catalogs ready for translation.
 - [ ] **11.3 Right-to-left pass** · ~100 lines
   - The tab bar, charts, progress bars, card visuals, chevrons and onboarding, checked in Arabic.
   - *Done when:* every screen mirrors correctly in Arabic.
 - [ ] **11.4 Arabic draft**
   - Catalog data, reviewed by a native speaker (Q4).
+  - Mark keys that are not words as "Don't translate", for example `X`, `0.00` and `💸` (unless 3.2 has removed them already).
   - *Done when:* the app runs fully in Arabic with no truncation.
 - [ ] **11.5 German draft**
-  - Catalog data, reviewed by a native speaker (Q4).
+  - Catalog data, reviewed by a native speaker (Q4). The "Don't translate" marks from 11.4 apply to every language.
   - *Done when:* the app runs fully in German with no truncation.
 - [ ] **11.6 Rename** · ~20 lines · needs Q1
   - `AppInfo.name`, the app and widget display names, and the StoreKit display names.
