@@ -69,7 +69,7 @@ CloudKit imposes hard constraints on every model — **all stored properties mus
 
 Consequences that shape the code:
 
-- **Boot fallback** (`SpendSnapApp.swift`): `AppBootController` builds the container with `cloudKitDatabase: .automatic`; on failure it retries with `.none`, and only then shows an error screen. Schema changes must be added in *both* this schema list and `SpendWiseWidgets/WidgetModelContainer.swift`, and the two lists must stay identical: the widget opens the same file, and a list missing a model could migrate that model's table away.
+- **Boot fallback** (`SpendSnapApp.swift`): `AppBootController` builds the container with `cloudKitDatabase: .automatic`; on failure it retries with `.none`, and only then shows an error screen. Schema changes must be added in *both* `AppBootController.models` and `SpendWiseWidgets/WidgetModelContainer.swift`, and the two lists must stay identical: the widget opens the same file, and a list missing a model could migrate that model's table away.
 - **`Settings` is a singleton by convention, not by constraint.** Because uniqueness can't be enforced, duplicate rows appear (e.g. two devices insert one before first sync). Every reader — app and both widget processes — must fetch with `FetchDescriptor<Settings>(sortBy: Settings.oldestFirst)` and take `.first`, so all processes agree on the same row. `SettingsReconciler.reconcile(in:)` merges duplicates into the oldest row; it runs on `AppEntryView` appearance and again whenever the live `@Query` count rises above 1.
 - **Stable ids.** `CreditCard` and `CategoryEntity` carry `stableID: UUID?` for anything that must point at a row across devices (Siri entities, `Settings.defaultCardID`). It is optional and not named `id` on purpose: a non-optional default gives every migrated row, and every row synced from a 2.3 device, the same value, and a field named `id` would replace SwiftData's identity in `ForEach`. `IdentityBackfill.run(in:)` fills `nil` ids at launch and on every foreground, and never changes a set one. Readers must handle `nil`.
 - **Rules for new models** (on top of the CloudKit rules above):
@@ -78,6 +78,14 @@ Consequences that shape the code:
   - Every relationship is optional, has an inverse, and has a deliberate delete rule (`.nullify` to keep the other side, `.cascade` when it means nothing alone).
   - Field names, types and raw values are permanent once the CloudKit schema is in Production. Additions are fine; renames, removals and type changes are not.
   - Check every model change with the upgrade test (`docs/upgrade-test/README.md`).
+  - Then upload it to CloudKit's Development schema and check it, before the schema is deployed again (below).
+- **CloudKit schema upload.** Development only learns a field when a record carrying it syncs, so empty optionals and models with no rows would be left out of a deploy to Production. A DEBUG-only launch argument uploads every model and field from `AppBootController.models` (`Services/CloudKitSchemaInit.swift`), using a throwaway store; it never opens the real store. The simulator must be signed into iCloud. Run it after any model change:
+
+  ```bash
+  xcrun simctl launch --console-pty 'iPhone 17 Pro' com.ahmad.SpendWise -initCloudKitSchema
+  ```
+
+  It prints `CloudKitSchemaInit OK: …` or the error. Check the result with `xcrun cktool export-schema --team-id 8Q2JY29B23 --container-id iCloud.com.ahmad.SpendWise --environment development` (Ahmad's management token is saved in the keychain with `cktool save-token`): every model is a `CD_<Model>` record type and every stored property a `CD_<name>` field.
 - **Never run an Xcode debug build of 2.4 on a phone that holds real data.** Debug builds sync with CloudKit's Development environment, real data lives in Production, and the app would push the local store into Development. Use the simulator, or TestFlight builds (Production) once the schema is deployed.
 - Widgets open the same store with `cloudKitDatabase: .none` (read-only view of shared data), falling back to an in-memory container so the widget never crashes.
 

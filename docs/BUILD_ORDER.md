@@ -31,7 +31,7 @@ Sizes are estimates of added or changed Swift lines. Deletions, String Catalog d
 | Phase | Steps | Target finish | Done |
 |---|---|---|---|
 | 0 Groundwork | 3 | Nov 19 | 3 |
-| 1 Data model | 4 | Nov 19 | 3 |
+| 1 Data model | 4 | Nov 19 | 4 |
 | 2 Fixes and shared building blocks | 8 | Nov 21 | 0 |
 | 3 Design kit and core screens | 12 | Nov 24 | 0 |
 | 4 Income | 4 | Nov 25 | 0 |
@@ -43,7 +43,7 @@ Sizes are estimates of added or changed Swift lines. Deletions, String Catalog d
 | 10 Polish | 4 | Dec 4 | 0 |
 | 11 Languages and rename | 6 | Dec 4 | 0 |
 | 12 Release prep | 4 | Dec 7 | 0 |
-| **Total** | **86** | Freeze Dec 4, submit Dec 7 | **6** |
+| **Total** | **86** | Freeze Dec 4, submit Dec 7 | **7** |
 
 Phases run in order: Bills & Cards (the riskiest sync work) comes before the free tier, as MASTER_PLAN §7 decided. Phase 10 can run alongside 8 in a parallel session.
 
@@ -126,7 +126,7 @@ Relationships are optional and have inverses, because CloudKit requires both.
   - `GoalContribution`: amount (negative for a withdrawal), date, goal.
   - "Delete all data" also removes the five new models, deleting children before parents.
   - *Done when:* delete-all leaves no rows of any model, and the app shows its empty state without crashing.
-- [ ] **1.4 CloudKit schema in Development** · ~40 lines · needs 1.3
+- [x] **1.4 CloudKit schema in Development** · ~40 lines · needs 1.3
   - CloudKit's Development database only gains a field when a record carrying it syncs. Empty optionals (`defaultCardID`) and models with no rows yet (everything from 1.2 and 1.3) would be missing, so deploying them to Production would leave them out.
   - A DEBUG-only launch argument, `-initCloudKitSchema`, calls Apple's `initializeCloudKitSchema()` on an `NSPersistentCloudKitContainer` built from the same SwiftData models. It uploads placeholder records for every model and field, then deletes them. It only works against Development.
   - With the argument, the app does not boot normally: it never opens the real store or starts sync. It uses a throwaway store in the temp folder, shows the result and stops. Without the argument nothing changes, and release builds don't contain it.

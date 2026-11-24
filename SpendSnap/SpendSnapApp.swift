@@ -16,6 +16,23 @@ final class AppBootController: ObservableObject {
         case failed(primary: Error, fallbackError: Error?)
     }
 
+    /// Every model in the store. The normal boot and the CloudKit schema upload
+    /// both read this list. `WidgetModelContainer` keeps its own copy, which
+    /// must stay identical: the widget opens the same file.
+    static let models: [any PersistentModel.Type] = [
+        Expense.self,
+        CategoryEntity.self,
+        CategoryMonthlyBudget.self,
+        Budget.self,
+        CreditCard.self,
+        Settings.self,
+        Income.self,
+        RecurringRule.self,
+        StatementPayment.self,
+        SavingsGoal.self,
+        GoalContribution.self
+    ]
+
     @Published private(set) var state: State = .loading
     private var didStart = false
 
@@ -50,19 +67,7 @@ final class AppBootController: ObservableObject {
     }
 
     private static func buildContainer(cloudKit: ModelConfiguration.CloudKitDatabase) -> Result<ModelContainer, Error> {
-        let schema = Schema([
-            Expense.self,
-            CategoryEntity.self,
-            CategoryMonthlyBudget.self,
-            Budget.self,
-            CreditCard.self,
-            Settings.self,
-            Income.self,
-            RecurringRule.self,
-            StatementPayment.self,
-            SavingsGoal.self,
-            GoalContribution.self
-        ])
+        let schema = Schema(models)
 
         let configuration = ModelConfiguration(
             schema: schema,
@@ -97,9 +102,21 @@ struct SpendSnapApp: App {
 
     var body: some Scene {
         WindowGroup {
-            AppBootView(boot: boot)
-                .environmentObject(storeKit)
+            #if DEBUG
+            if CloudKitSchemaInit.isRequested {
+                CloudKitSchemaInitView()
+            } else {
+                bootView
+            }
+            #else
+            bootView
+            #endif
         }
+    }
+
+    private var bootView: some View {
+        AppBootView(boot: boot)
+            .environmentObject(storeKit)
     }
 }
 
