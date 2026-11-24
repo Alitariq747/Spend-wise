@@ -74,7 +74,6 @@ struct CCView: View {
     
     var body: some View {
         
-        let symbol = CurrencyUtil.symbol(for: currencyCode)
         
         let cc = cardCycleAndDue(statementDay: card.statementDay, dueDay: card.dueDay)
         
@@ -106,7 +105,7 @@ struct CCView: View {
 
                
             }
-            Text(verbatim: "\(symbol) \(spentThisCycle)")
+            MoneyText(spentThisCycle, code: currencyCode)
                 .font(.system(size: 24, weight: .semibold))
                 .foregroundStyle(fg)
                 .shadow(color: .black.opacity(fg == .white ? 0.25 : 0), radius: 2, y: 1)
@@ -122,7 +121,7 @@ struct CCView: View {
                     .scaleEffect(y: 1.2, anchor: .center)
                 
                 HStack {
-                    Text(verbatim: "of \(symbol) \(card.cycleLimit)")
+                    Text("of \(Money.format(card.cycleLimit, code: currencyCode))")
                         .font(.system(size: 14, weight: .regular))
                         .foregroundStyle(card.color.onCardText)
                         .shadow(color: .black.opacity(fg == .white ? 0.25 : 0), radius: 2, y: 1)

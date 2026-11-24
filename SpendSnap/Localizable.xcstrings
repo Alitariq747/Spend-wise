@@ -4,6 +4,16 @@
     "" : {
 
     },
+    "%@ • %lld expenses" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ • %2$lld expenses"
+          }
+        }
+      }
+    },
     "0.00" : {
 
     },
@@ -56,6 +66,9 @@
 
     },
     "Budgeted" : {
+
+    },
+    "Budgeted: %@" : {
 
     },
     "CATEGORIES" : {
@@ -259,6 +272,9 @@
     "Sign in to iCloud in Settings to sync your %@ data across devices." : {
 
     },
+    "Spent: %@" : {
+
+    },
     "State" : {
 
     },
@@ -329,6 +345,9 @@
 
     },
     "iCloud Sync" : {
+
+    },
+    "of %@" : {
 
     },
     "•" : {

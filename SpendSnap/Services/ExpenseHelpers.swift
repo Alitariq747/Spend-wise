@@ -47,11 +47,3 @@ func fourWeekTotals(monthExpenses: [Expense], month: Date) -> [WeekTotal] {
     ]
 }
 
-func string(from dec: Decimal) -> String {
-       let n = NSDecimalNumber(decimal: dec)
-       let f = NumberFormatter()
-       f.numberStyle = .decimal       // no currency symbol inside the field text
-       f.minimumFractionDigits = 0
-       f.maximumFractionDigits = 2
-       return f.string(from: n) ?? "\(n)"
-   }

@@ -23,7 +23,8 @@ struct CardSummary: Identifiable {
 
 struct CreditCardsEntry: TimelineEntry {
     let date: Date
-    let currencySymbol: String
+    /// ISO code (`PKR`), formatted with `Money.format`.
+    let currencyCode: String
     let cards: [CardSummary]
 }
 
@@ -42,9 +43,9 @@ private struct CreditCardsWidgetView: View {
     private func availableText(for summary: CardSummary) -> String {
         let available = summary.limit - summary.spent
         if available < 0 {
-            return "Over by \(entry.currencySymbol)\(available * -1)"
+            return String(localized: "Over by \(Money.format(available * -1, code: entry.currencyCode))")
         }
-        return "Avail \(entry.currencySymbol)\(available)"
+        return String(localized: "Avail \(Money.format(available, code: entry.currencyCode))")
     }
     
     var body: some View {
@@ -79,11 +80,11 @@ private struct CreditCardsWidgetView: View {
                         }
                         Spacer()
                         VStack(alignment: .trailing, spacing: 4) {
-                            Text(verbatim: "\(entry.currencySymbol)\(summary.spent)")
+                            Text(verbatim: Money.format(summary.spent, code: entry.currencyCode))
                                 .font(.system(size: 18, weight: .bold))
                                 .foregroundStyle(fg)
                             
-                            Text(verbatim: "of \(entry.currencySymbol)\(summary.limit)")
+                            Text("of \(Money.format(summary.limit, code: entry.currencyCode))")
                                 .font(.system(size: 12, weight: .regular))
                                 .foregroundStyle(fg.opacity(0.9))
                         }
@@ -125,7 +126,7 @@ struct CreditCardsProvider: TimelineProvider {
     func placeholder(in context: Context) -> CreditCardsEntry {
         CreditCardsEntry(
             date: Date(),
-            currencySymbol: "$",
+            currencyCode: "USD",
             cards: [
                 CardSummary(name: "Alfalah", color: .royalBlue, spent: 23000, limit: 40000, cycleStart: Date(), cycleEnd: Date().addingTimeInterval(86400 * 30), dueDate: Date().addingTimeInterval(86400 * 20)),
                 CardSummary(name: "HBL", color: .roseGold, spent: 12000, limit: 30000, cycleStart: Date(), cycleEnd: Date().addingTimeInterval(86400 * 30), dueDate: Date().addingTimeInterval(86400 * 22)),
@@ -155,12 +156,11 @@ struct CreditCardsProvider: TimelineProvider {
         let settingsFetch = FetchDescriptor<Settings>(sortBy: Settings.oldestFirst)
         let settings = (try? context.fetch(settingsFetch))?.first
         let currencyCode = settings?.currencyCode ?? Settings.defaultCurrencyCode
-        let symbol = CurrencyUtil.symbol(for: currencyCode)
         
         // fetch cards
         let cardFetch = FetchDescriptor<CreditCard>(sortBy: [SortDescriptor(\.name)])
         guard let cards = try? context.fetch(cardFetch), !cards.isEmpty else {
-            return CreditCardsEntry(date: now, currencySymbol: symbol, cards: [])
+            return CreditCardsEntry(date: now, currencyCode: currencyCode, cards: [])
         }
         
         var summaries: [CardSummary] = []
@@ -201,7 +201,7 @@ struct CreditCardsProvider: TimelineProvider {
             return lhs.dueDate < rhs.dueDate
         }
         
-        return CreditCardsEntry(date: now, currencySymbol: symbol, cards: Array(sorted.prefix(2)))
+        return CreditCardsEntry(date: now, currencyCode: currencyCode, cards: Array(sorted.prefix(2)))
     }
 }
 
@@ -221,7 +221,7 @@ struct CreditCardsWidget: Widget {
 } timeline: {
     CreditCardsEntry(
         date: Date(),
-        currencySymbol: "$",
+        currencyCode: "USD",
         cards: [
             CardSummary(name: "Alfalah", color: .royalBlue, spent: 23000, limit: 40000, cycleStart: Date(), cycleEnd: Date().addingTimeInterval(86400 * 30), dueDate: Date().addingTimeInterval(86400 * 20)),
             CardSummary(name: "HBL", color: .roseGold, spent: 12000, limit: 30000, cycleStart: Date(), cycleEnd: Date().addingTimeInterval(86400 * 30), dueDate: Date().addingTimeInterval(86400 * 22)),

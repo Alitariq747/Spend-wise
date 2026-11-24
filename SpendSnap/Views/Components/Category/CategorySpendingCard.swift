@@ -33,7 +33,6 @@ struct CategorySpendingCard: View {
     
     var body: some View {
         
-        let symbol = CurrencyUtil.symbol(for: currencyCode)
         
     
         Button(action: action) {
@@ -48,7 +47,7 @@ struct CategorySpendingCard: View {
                             VStack(alignment: .leading, spacing: 2) {
                                 Text(category.name)
                                     .font(.system(size:16, weight: .semibold))
-                                Text(verbatim: "\(symbol) \(spent) / \(budget > 0 ? budget : 0)") // adapt currency
+                                Text(verbatim: "\(Money.format(spent, code: currencyCode)) / \(Money.format(max(budget, 0), code: currencyCode))")
                                     .font(.system(size:14, weight:.medium))
                                     .foregroundStyle(.primary)
                             }
@@ -79,7 +78,6 @@ struct CategorySpendingCard: View {
 //                            Spacer()
 //                            if budget > 0 {
 //                                HStack(spacing:8) {
-//                                    Text("\(symbol)\(budget)")
 //                                        .font(.system(size:14, weight:.semibold))
 //                                    Text("\(Int(percent * 100))%")
 //                                        .font(.caption2)

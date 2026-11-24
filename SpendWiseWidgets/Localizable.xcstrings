@@ -1,6 +1,9 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "Avail %@" : {
+
+    },
     "Cards" : {
 
     },
@@ -8,6 +11,9 @@
 
     },
     "Month Overview" : {
+
+    },
+    "Over by %@" : {
 
     },
     "See this month’s budget and spending at a glance." : {
@@ -23,6 +29,9 @@
 
     },
     "Weekly Spending" : {
+
+    },
+    "of %@" : {
 
     },
     "spent this month" : {

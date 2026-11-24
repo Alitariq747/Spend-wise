@@ -2,7 +2,7 @@
 
 > [MASTER_PLAN.md](MASTER_PLAN.md) says **what** ships in 2.4. This file says **in what order** we build it, as small numbered steps done one at a time.
 > Created 2026-11-18. It replaces the week-by-week table in MASTER_PLAN §7, whose dates are stale: no 2.4 code had landed by Nov 18.
-> On 2026-11-22, D36 and D37 dropped Spanish and receipt scanning: step 11.6 and all of Phase 9 are gone, leaving 85 steps. On 2026-11-24, step 1.4 (CloudKit schema in Development) was added, making 86.
+> On 2026-11-22, D36 and D37 dropped Spanish and receipt scanning: step 11.6 and all of Phase 9 are gone, leaving 85 steps. On 2026-11-24, step 1.4 (CloudKit schema in Development) was added, making 86, and step 11.7 (month labels on the Islamic calendar), making 87.
 > Tick a step when it lands. The rules for step size and workflow are in [CLAUDE.md → Working in steps](../CLAUDE.md#working-in-steps).
 
 **Contents:** How a step works · Status board · Decisions this order builds on · Phases 0–12 · Ahmad's track · Slip order · Schedule check
@@ -32,7 +32,7 @@ Sizes are estimates of added or changed Swift lines. Deletions, String Catalog d
 |---|---|---|---|
 | 0 Groundwork | 3 | Nov 19 | 3 |
 | 1 Data model | 4 | Nov 19 | 4 |
-| 2 Fixes and shared building blocks | 8 | Nov 21 | 1 |
+| 2 Fixes and shared building blocks | 8 | Nov 21 | 3 |
 | 3 Design kit and core screens | 12 | Nov 24 | 0 |
 | 4 Income | 4 | Nov 25 | 0 |
 | 5 Bills & Cards | 14 | Nov 28 | 0 |
@@ -41,9 +41,9 @@ Sizes are estimates of added or changed Swift lines. Deletions, String Catalog d
 | 8 Fast logging | 11 | Dec 3 | 0 |
 | 9 Receipt scanning: dropped (D37) | 0 | — | — |
 | 10 Polish | 4 | Dec 4 | 0 |
-| 11 Languages and rename | 6 | Dec 4 | 0 |
+| 11 Languages and rename | 7 | Dec 4 | 0 |
 | 12 Release prep | 4 | Dec 7 | 0 |
-| **Total** | **86** | Freeze Dec 4, submit Dec 7 | **8** |
+| **Total** | **87** | Freeze Dec 4, submit Dec 7 | **10** |
 
 Phases run in order: Bills & Cards (the riskiest sync work) comes before the free tier, as MASTER_PLAN §7 decided. Phase 10 can run alongside 8 in a parallel session.
 
@@ -148,11 +148,11 @@ Relationships are optional and have inverses, because CloudKit requires both.
     - 1500 for `1,500` in en_US
 
     Each field saves those values in the simulator.
-- [ ] **2.2 One money formatter: app screens** · ~110 lines
+- [x] **2.2 One money formatter: app screens** · ~110 lines
   - `Money.format(_:code:)` and a `MoneyText` view: the app's currency symbols, thousands separators, sensible decimals, and the user's numerals.
   - It replaces the 23 hand-built `"\(symbol)\(amount)"` strings.
   - *Done when:* every screen shows grouped amounts, such as `Rs 1,250` and `$12.50`, and an Arabic locale shows Arabic numerals.
-- [ ] **2.3 One money formatter: widgets** · ~50 lines
+- [x] **2.3 One money formatter: widgets** · ~50 lines
   - Share the formatter with the widget target. It replaces the widget strings, which glue the symbol to a raw number.
   - *Done when:* all three widgets show the same amounts as the app.
 - [ ] **2.4 Cards show the statement that is actually due** · ~100 lines · D25
@@ -468,6 +468,13 @@ Dropped on 2026-11-22, with its six steps (9.1–9.6), the camera permission and
   - `AppInfo.name`, the app and widget display names, and the StoreKit display names.
   - *Done when:* the new name shows everywhere a user can see it, and internal identifiers are unchanged.
 
+- [ ] **11.7 Month labels on the Islamic calendar** · ~30 lines
+  - Found in 2.1: on a phone set to the Islamic calendar (the default for `ar_SA`), the month header and month picker show a Hijri month ("Jumada II 1448"), but budgets and history are grouped by Gregorian month (`monthKey`). The label doesn't match the dates under it.
+  - The cause: `MonthUtil.fmt` formats with the user's calendar. Pin it to `MonthUtil.gregorian`, so headers name the Gregorian month in the user's language and numerals.
+  - Single dates (expense rows, the date picker, card cycles) can stay in the user's calendar: they show the right day either way.
+  - Budget months stay Gregorian in 2.4. Hijri budget months would mean a second `monthKey` scheme; if wanted, that is 2.5 work.
+  - *Done when:* on `ar_SA` with the Islamic calendar, every month header and the month picker name the Gregorian month whose data they show.
+
 ## Phase 12 — Release prep
 
 - [ ] **12.1 Privacy and review check**
@@ -521,7 +528,7 @@ Everything else is the release: the fixes, free logging, paywall, onboarding, in
 
 ## Schedule check
 
-- **The pace needed.** None of the 85 steps (86 since 1.4 was added) had landed by Nov 22, so the Dec 4 freeze needs about 6–7 steps a day, every day.
+- **The pace needed.** None of the 85 steps (87 since 1.4 and 11.7 were added) had landed by Nov 22, so the Dec 4 freeze needs about 6–7 steps a day, every day.
 - **Parallel help.** The ⇄ steps (2.1, 5.1, 5.8, 5.12, 5.13, 7.5, 8.1) can run in parallel sessions.
 - **The fallback.** At 4–5 steps a day, the work needs MASTER_PLAN's fallback dates: freeze Dec 11, submit Dec 14. That still leaves two weeks before Dec 28.
 - **Checkpoints.** Nov 24 (end of Phase 3) and Nov 30 (end of Phase 6). More than a day behind at a checkpoint means a choice: take the fallback dates, or cut from the slip order.

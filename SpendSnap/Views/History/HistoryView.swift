@@ -62,7 +62,6 @@ struct HistoryView: View {
     }
     
     var body: some View {
-        let symbol = CurrencyUtil.symbol(for: currencyCode)
             
         ZStack {
             VStack {
@@ -95,7 +94,7 @@ struct HistoryView: View {
                                     Text(exp.merchant)
                                         .font(.system(size: 16, weight: .regular))
                                     Spacer()
-                                    Text(verbatim: "\(symbol)\(exp.amount)")
+                                    MoneyText(exp.amount, code: currencyCode)
                                 }
                             }
                             .frame(maxWidth: .infinity)

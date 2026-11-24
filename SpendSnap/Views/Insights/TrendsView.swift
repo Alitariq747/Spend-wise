@@ -24,7 +24,6 @@ struct TrendsView: View {
         let weekly = fourWeekTotals(monthExpenses: expenses, month: selectedMonth)
         let maxAmt = weekly.map(\.amount).max() ?? 0
         
-        let symbol = CurrencyUtil.symbol(for: currencyCode)
         
         let highest = weekly.max(by: { $0.amount < $1.amount })
         let lowest  = weekly.min(by: { $0.amount < $1.amount })   
@@ -64,14 +63,14 @@ struct TrendsView: View {
                     VStack(spacing: 6) {
                         Text(verbatim: "Highest: \(highest?.title ?? "-")")
                             .font(.system(size: 10, weight: .light))
-                        Text(verbatim: "\(symbol) \(highest?.amount ?? 0)")
+                        MoneyText(highest?.amount ?? 0, code: currencyCode)
                             .font(.system(size: 12, weight: .semibold))
                     }
                     Spacer()
                     VStack(spacing: 6) {
                         Text(verbatim: "Lowest: \(lowest?.title ?? "-")")
                             .font(.system(size: 10, weight: .light))
-                        Text(verbatim: "\(symbol) \(lowest?.amount ?? 0)")
+                        MoneyText(lowest?.amount ?? 0, code: currencyCode)
                             .font(.system(size: 12, weight: .semibold))
                     }
                     Spacer()

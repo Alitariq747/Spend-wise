@@ -15,6 +15,7 @@ struct MonthOverviewEntry: TimelineEntry {
     let date: Date
 
     // What MonthlyOverview needs
+    /// ISO code (`PKR`), formatted with `Money.format`.
     let currencyCode: String
     let budgetAmount: Decimal
     let spent: Decimal
@@ -48,7 +49,7 @@ struct MonthOverviewWidgetView: View {
         VStack(alignment: .leading, spacing: 8) {
        
             HStack {
-                Text(verbatim: "\(entry.currencyCode)\(entry.spent)")
+                Text(verbatim: Money.format(entry.spent, code: entry.currencyCode))
                     .font(.system(size: 24, weight: .bold))
                     .foregroundStyle(.white)
                 Spacer()
@@ -63,7 +64,7 @@ struct MonthOverviewWidgetView: View {
             }
             
             VStack(alignment: .leading) {
-                Text(verbatim: "of \(entry.currencyCode)\(entry.budgetAmount)")
+                Text("of \(Money.format(entry.budgetAmount, code: entry.currencyCode))")
                     .font(.system(size: 12, weight: .medium))
                     .foregroundStyle(.white)
                 Text("spent this month")
@@ -101,7 +102,7 @@ struct MonthOverviewProvider: TimelineProvider {
     func placeholder(in context: Context) -> MonthOverviewEntry {
         MonthOverviewEntry(
             date: Date(),
-            currencyCode: "$",
+            currencyCode: "USD",
             budgetAmount: 80000,
             spent: 52300,
             todaySpent: 2300,
@@ -166,9 +167,7 @@ struct MonthOverviewProvider: TimelineProvider {
         
         let daysRemaining = daysRemaining(in: now)
         
-        let symbol = CurrencyUtil.symbol(for: code)
-        
-        return MonthOverviewEntry(date: now, currencyCode: symbol, budgetAmount: budgetAmount, spent: totalSpent, todaySpent: todaySpent, weekSpent: weekSpent, daysRemaining: daysRemaining)
+        return MonthOverviewEntry(date: now, currencyCode: code, budgetAmount: budgetAmount, spent: totalSpent, todaySpent: todaySpent, weekSpent: weekSpent, daysRemaining: daysRemaining)
     }
 }
 
@@ -177,7 +176,7 @@ struct MonthOverviewProvider: TimelineProvider {
 } timeline: {
     MonthOverviewEntry(
         date: Date(),
-        currencyCode: "$",
+        currencyCode: "USD",
         budgetAmount: 80000,
         spent: 52300,
         todaySpent: 2300,

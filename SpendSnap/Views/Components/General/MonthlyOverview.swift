@@ -28,14 +28,9 @@ struct MonthlyOverview: View {
     let daysRemaining: Int
   
     
-    private func money(_ x: Decimal) -> String {
-           let f = NumberFormatter(); f.numberStyle = .currency
-           return f.string(from: x as NSDecimalNumber) ?? "\(x)"
-       }
     
     var body: some View {
         
-        let symbol = CurrencyUtil.symbol(for: currencyCode)
         
         VStack(spacing: 12) {
             
@@ -56,7 +51,7 @@ struct MonthlyOverview: View {
                     VStack(alignment: .leading, spacing: 2) {
                         Text("Budgeted")
                             .font(.system(size: 12, weight: .light))
-                        Text(verbatim: "\(symbol)\(budget?.amount ?? 0)")
+                        MoneyText(budget?.amount ?? 0, code: currencyCode)
                             .font(.system(size: 14, weight: .regular))
                     }
                  
@@ -65,7 +60,7 @@ struct MonthlyOverview: View {
                             .font(.system(size: 12, weight: .light))
                         let remaining = (budget?.amount ?? 0) - spent
                        
-                        Text(verbatim: "\(symbol)\(remaining)")
+                        MoneyText(remaining, code: currencyCode)
                             .font(.system(size: 14, weight: .regular))
                             .foregroundColor(remaining >= 0 ? .primary : .red)
                     }
@@ -95,7 +90,7 @@ struct MonthlyOverview: View {
                     Text("Day")
                         .font(.system(size: 12, weight: .medium))
                         .foregroundStyle(.secondary)
-                    Text(verbatim: "\(symbol)\(todaySpent)")
+                    MoneyText(todaySpent, code: currencyCode)
                         .font(.system(size: 14, weight: .regular))
                         .foregroundStyle(.primary)
                 }
@@ -114,7 +109,7 @@ struct MonthlyOverview: View {
                     Text("This Week")
                         .font(.system(size: 12, weight: .medium))
                         .foregroundStyle(.secondary)
-                    Text(verbatim: "\(symbol)\(weekSpent)")
+                    MoneyText(weekSpent, code: currencyCode)
                         .font(.system(size: 14, weight: .regular))
                         .foregroundStyle(.primary)
 

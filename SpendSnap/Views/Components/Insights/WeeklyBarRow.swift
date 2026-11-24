@@ -42,7 +42,6 @@ struct WeekBarRow: View {
 
     var body: some View {
         
-        let symbol = CurrencyUtil.symbol(for: currencyCode)
         
         HStack(spacing: 10) {
             Text(title)
@@ -64,7 +63,7 @@ struct WeekBarRow: View {
             }
             .frame(height: 10) // bar thickness
 
-            Text(verbatim: "\(symbol) \(amount)")
+            MoneyText(amount, code: currencyCode)
                 .font(.caption).foregroundStyle(.secondary)
                 .frame(width: 90, alignment: .trailing)
         }

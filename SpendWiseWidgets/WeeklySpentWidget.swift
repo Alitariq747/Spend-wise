@@ -79,7 +79,7 @@ struct WeekSpentWigetView: View {
            
             
             HStack {
-                Text(verbatim: "\(entry.currencyCode)\(entry.weekSpent)")
+                Text(verbatim: Money.format(entry.weekSpent, code: entry.currencyCode))
                     .font(.system(size: 20, weight: .bold))
                     .foregroundStyle(textColor)
                     .padding(.bottom, 8)
@@ -90,7 +90,7 @@ struct WeekSpentWigetView: View {
             }
             
             VStack(alignment: .leading) {
-                Text(verbatim: "of \(entry.currencyCode)\(weeklyBudget)")
+                Text("of \(Money.format(Decimal(weeklyBudget), code: entry.currencyCode))")
                     .font(.system(size: 12, weight: .light))
                     .foregroundStyle(secondary)
                 Text("spent this week")
@@ -138,7 +138,7 @@ struct WeeklySpentWidget: Widget {
 } timeline: {
     MonthOverviewEntry(
         date: Date(),
-        currencyCode: "$",
+        currencyCode: "USD",
         budgetAmount: 80000,
         spent: 52300,
         todaySpent: 2300,

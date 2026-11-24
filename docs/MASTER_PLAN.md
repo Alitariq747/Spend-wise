@@ -158,7 +158,7 @@ Each item has a **Done when** line. Tick the boxes as items land.
   - *Done when:* a new user can log their first expense with zero setup, and two devices don't produce duplicate categories.
 - [ ] **Onboarding setup.** Ask for currency (default from `Locale.current.currency` if supported), monthly budget, default payment method, and optionally the first card (statement and due day). Then show "Your plan is ready" and the paywall.
   - *Done when:* the steps can be skipped, and values persist to `Settings` and the models.
-- [ ] **Money formatting everywhere.** Use `.formatted(.currency(code:))` and drop raw `"\(symbol)\(amount)"` interpolation.
+- [x] **Money formatting everywhere.** Use `.formatted(.currency(code:))` and drop raw `"\(symbol)\(amount)"` interpolation.
   - *Done when:* amounts show thousands separators and correct decimals, and Arabic-locale numerals render correctly.
 - [ ] **Faster add-expense form.** Amount first. Merchant optional. Category chips visible without scrolling. Payment method defaults from Settings.
 - [ ] **Review prompt.**

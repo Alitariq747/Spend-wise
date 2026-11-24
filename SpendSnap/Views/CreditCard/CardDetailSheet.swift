@@ -61,7 +61,6 @@ struct CardDetailSheet: View {
     
     var body: some View {
        
-        let symbol = CurrencyUtil.symbol(for: currencyCode)
         
         // parent view
         VStack {
@@ -80,7 +79,7 @@ struct CardDetailSheet: View {
                             .font(.system(size: 18, weight: .medium))
                             .foregroundColor(.primary)
                         
-                        Text(verbatim: "\(symbol) \(snapshot.card.cycleLimit)")
+                        MoneyText(snapshot.card.cycleLimit, code: currencyCode)
                             .font(.system(size: 14, weight: .regular))
                             .foregroundColor(.primary)
                     }
@@ -114,7 +113,7 @@ struct CardDetailSheet: View {
                         .foregroundStyle(.secondary)
                     Text(verbatim: "\(selectedCycle.start.formatted(date: .abbreviated, time: .omitted)) - \(selectedCycle.end.formatted(date: .abbreviated, time: .omitted))")
                         .font(.system(size: 13, weight: .medium))
-                    Text(verbatim: "\(symbol) \(displayedSpent) • \(displayedExpenses.count) expenses")
+                    Text("\(Money.format(displayedSpent, code: currencyCode)) • \(displayedExpenses.count) expenses")
                         .font(.system(size: 12, weight: .regular))
                         .foregroundStyle(.secondary)
                 }
@@ -166,7 +165,7 @@ struct CardDetailSheet: View {
                                 Text(exp.merchant)
                                     .font(.system(size: 16, weight: .regular))
                                 Spacer()
-                                Text(verbatim: "\(symbol)\(exp.amount)")
+                                MoneyText(exp.amount, code: currencyCode)
                             }
                         }
                         .frame(maxWidth: .infinity)

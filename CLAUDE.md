@@ -39,7 +39,7 @@ Two targets: `SpendSnap` (app) and `SpendWiseWidgetsExtension` (widget bundle).
 
 The project uses Xcode's **file-system-synchronized groups** (`PBXFileSystemSynchronizedRootGroup`). A new `.swift` file dropped into `SpendSnap/` or `SpendWiseWidgets/` is picked up by its own target automatically — no pbxproj edit needed.
 
-**But** files the widget target shares from the app folder are listed explicitly as `membershipExceptions` in `SpendSnap.xcodeproj/project.pbxproj` (search for `Exceptions for "SpendSnap" folder in "SpendWiseWidgetsExtension" target`). Today that list is all of `Models/` plus `Services/AppInfo.swift`, `Services/CurrencyHelpers.swift` and `Services/DateUtils.swift`.
+**But** files the widget target shares from the app folder are listed explicitly as `membershipExceptions` in `SpendSnap.xcodeproj/project.pbxproj` (search for `Exceptions for "SpendSnap" folder in "SpendWiseWidgetsExtension" target`). Today that list is all of `Models/` plus `Services/AppInfo.swift`, `Services/CurrencyHelpers.swift`, `Services/DateUtils.swift` and `Services/Money.swift`.
 
 If widget code needs another app file, it must be added to that exception list or the widget target won't compile.
 
@@ -101,6 +101,8 @@ Consequences that shape the code:
 
 Every amount field reads its text with `AmountParser.parse` and prefills an edit with `AmountParser.editString` (`Services/AmountParser.swift`). It accepts `12,50`, `1.250,00`, Arabic-Indic and Persian digits and stray currency symbols in any locale. Never use `Decimal(string:)` on user input: it ignores the locale.
 
+Every amount on screen goes through `Money.format(_:code:)` (`Services/Money.swift`) or the `MoneyText` view: the locale's grouping, decimal mark, numerals and symbol position, with the app's own symbol from `CurrencyUtil`. Never build `"\(symbol)\(amount)"`. Text around an amount is a localized string with the amount interpolated, e.g. `Text("Spent: \(Money.format(spent, code: currencyCode))")`. Arabic numerals only appear once the app ships Arabic strings: until then iOS reports an unlocalized app's locale as English-in-the-region.
+
 Two data-access styles coexist, deliberately:
 
 - `@Query` for lists that should track the store live (categories, cards, the settings row).
@@ -132,4 +134,4 @@ Feature gating reads **`storeKit.hasActiveSubscription`** — the persisted `Set
 
 The v2.4 relaunch (rename, freemium, Siri, bills & cards, income and savings goals, Arabic and German, ASO) is planned in `docs/MASTER_PLAN.md`. Read it before product or App Store work, and keep its decision log and checklists current.
 
-The order of work is `docs/BUILD_ORDER.md`: 86 numbered steps in phases 0–12 (Phase 9 was dropped), plus Ahmad's non-code tasks and the slip order. Take the first unticked step unless Ahmad names another.
+The order of work is `docs/BUILD_ORDER.md`: 87 numbered steps in phases 0–12 (Phase 9 was dropped), plus Ahmad's non-code tasks and the slip order. Take the first unticked step unless Ahmad names another.

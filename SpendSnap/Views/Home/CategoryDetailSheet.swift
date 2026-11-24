@@ -62,7 +62,6 @@ struct CategoryDetailSheet: View {
 
     
     var body: some View {
-        let symbol = CurrencyUtil.symbol(for: currencyCode)
         VStack(alignment: .leading, spacing: 12) {
             
             // HStack for category emoji, title and buttons to edit and close the sheet
@@ -111,10 +110,10 @@ struct CategoryDetailSheet: View {
                 Spacer()
                 
                 VStack(alignment: .leading, spacing: 4) {
-                    Text(verbatim: "Budgeted: \(symbol)\(budget)")
+                    Text("Budgeted: \(Money.format(budget, code: currencyCode))")
                         .font(.system(size: 15, weight: .regular))
                         .foregroundStyle(.primary)
-                    Text(verbatim: "Spent: \(symbol)\(spent)")
+                    Text("Spent: \(Money.format(spent, code: currencyCode))")
                         .font(.system(size: 15, weight: .regular))
                         .foregroundStyle(.primary)
                 }
@@ -146,7 +145,7 @@ struct CategoryDetailSheet: View {
                                 Text(exp.merchant)
                                     .font(.system(size: 16, weight: .regular))
                                 Spacer()
-                                Text(verbatim: "\(symbol)\(exp.amount)")
+                                MoneyText(exp.amount, code: currencyCode)
                             }         
                         }
                         .frame(maxWidth: .infinity)

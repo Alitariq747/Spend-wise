@@ -81,6 +81,7 @@
 				Services/AppInfo.swift,
 				Services/CurrencyHelpers.swift,
 				Services/DateUtils.swift,
+				Services/Money.swift,
 			);
 			target = 308B19A72ED7310E00E7674D /* SpendWiseWidgetsExtension */;
 		};
