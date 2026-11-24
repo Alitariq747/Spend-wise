@@ -71,5 +71,16 @@ enum SettingsReconciler {
            duplicate.reminderLevelRaw != defaultReminderLevelRaw {
             survivor.reminderLevelRaw = duplicate.reminderLevelRaw
         }
+
+        if survivor.defaultMonthlyBudget == 0, duplicate.defaultMonthlyBudget != 0 {
+            survivor.defaultMonthlyBudget = duplicate.defaultMonthlyBudget
+        }
+
+        // Method and card move as a pair, so the survivor never ends up with
+        // "card" from one row and a card id (or none) from another.
+        if survivor.defaultPaymentMethodRaw.isEmpty, !duplicate.defaultPaymentMethodRaw.isEmpty {
+            survivor.defaultPaymentMethodRaw = duplicate.defaultPaymentMethodRaw
+            survivor.defaultCardID = duplicate.defaultCardID
+        }
     }
 }

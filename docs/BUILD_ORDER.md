@@ -31,7 +31,7 @@ Sizes are estimates of added or changed Swift lines. Deletions, String Catalog d
 | Phase | Steps | Target finish | Done |
 |---|---|---|---|
 | 0 Groundwork | 3 | Nov 19 | 3 |
-| 1 Data model | 3 | Nov 19 | 0 |
+| 1 Data model | 3 | Nov 19 | 1 |
 | 2 Fixes and shared building blocks | 8 | Nov 21 | 0 |
 | 3 Design kit and core screens | 12 | Nov 24 | 0 |
 | 4 Income | 4 | Nov 25 | 0 |
@@ -43,7 +43,7 @@ Sizes are estimates of added or changed Swift lines. Deletions, String Catalog d
 | 10 Polish | 4 | Dec 4 | 0 |
 | 11 Languages and rename | 6 | Dec 4 | 0 |
 | 12 Release prep | 4 | Dec 7 | 0 |
-| **Total** | **85** | Freeze Dec 4, submit Dec 7 | **3** |
+| **Total** | **85** | Freeze Dec 4, submit Dec 7 | **4** |
 
 Phases run in order: Bills & Cards (the riskiest sync work) comes before the free tier, as MASTER_PLAN §7 decided. Phase 10 can run alongside 8 in a parallel session.
 
@@ -99,13 +99,14 @@ Every new model and field lands here, before any feature uses it. Each one:
 
 Relationships are optional and have inverses, because CloudKit requires both.
 
-- [ ] **1.1 New fields on existing models** · ~110 lines
-  - `CreditCard` gains `id`, `last4`, `amountOwed`, `yearlyRate` and `plannedPayment`.
-  - `CategoryEntity` gains `id` and `systemKey`: empty for the user's own categories, and `food`, `other`… for seeded ones.
+- [x] **1.1 New fields on existing models** · ~110 lines
+  - `CreditCard` gains `stableID`, `last4`, `amountOwed`, `yearlyRate` and `plannedPayment`.
+  - `CategoryEntity` gains `stableID` and `systemKey`: empty for the user's own categories, and `food`, `other`… for seeded ones.
   - `Expense` gains `recurrenceKey`.
   - `Settings` gains `defaultMonthlyBudget`, `defaultPaymentMethodRaw` and `defaultCardID`, and `SettingsReconciler` merges them.
-  - The migration may give every existing card and category the same default `id`, so a one-time backfill gives any shared id a fresh value.
-  - *Done when:* a 2.3 install with real data upgrades with every expense, budget, card and category intact, and every card and category has a distinct id.
+  - `stableID` is `UUID?`, `nil` by default, set in `init`. It is not called `id`, because that would replace SwiftData's identity in `ForEach`. A non-optional default would also give every migrated row, and every row synced from a 2.3 device, the same value.
+  - `IdentityBackfill` gives a fresh id to any card or category whose `stableID` is `nil`. It runs at launch and on every foreground, because 2.3 devices keep creating rows without one. It never changes an id that is set. Readers must handle `nil` until it runs.
+  - *Done when:* a 2.3 install with real data upgrades with every expense, budget, card and category intact, and every card and category has a distinct `stableID`.
 - [ ] **1.2 Income, recurring rules, statement payments** · ~110 lines
   - `Income`: amount, date, `monthKey`, source, note, `recurrenceKey`.
   - `RecurringRule` holds:
@@ -121,6 +122,8 @@ Relationships are optional and have inverses, because CloudKit requires both.
   - `GoalContribution`: amount (negative for a withdrawal), date, goal.
   - "Delete all data" also removes the five new models, deleting children before parents.
   - *Done when:* delete-all leaves no rows of any model, and the app shows its empty state without crashing.
+
+**Milestone: CloudKit schema to Production (12.3).** Once Phase 1 is done and checked, Ahmad deploys the schema. It must happen before TestFlight 1, because TestFlight builds sync against Production. After deploying, fields can be added but never renamed, removed or retyped.
 
 ## Phase 2 — Fixes and shared building blocks
 
@@ -245,7 +248,7 @@ Relationships are optional and have inverses, because CloudKit requires both.
   - *Done when:* a harness covers paid, partly paid, due today, overdue, and a statement day of 31 in February.
 - [ ] **5.2 Card tiles and card detail on the kit** · ~120 lines
   - The tile shows the 5.1 status: neutral, warning within 3 days, red when overdue. Today the due pill is always red.
-  - The card list is keyed by `id`. Today it is keyed by name, so two cards with the same name clash.
+  - The card list uses each card's own identity (`ForEach(cards)`). Today it is keyed by name, so two cards with the same name clash.
   - *Done when:* each status looks distinct in light and dark mode, and two cards with the same name both show.
 - [ ] **5.3 Mark a statement as paid** · ~130 lines · Pro
   - On the card, mark a statement "Paid in full" or enter a partial amount.
@@ -382,7 +385,7 @@ Relationships are optional and have inverses, because CloudKit requires both.
   - A merchant gets the category of its most recent expense. Otherwise it comes from a bundled list of about 100 common merchants (PK, IN, Gulf, US, UK, EU). Otherwise it is Other.
   - *Done when:* after logging "Careem" once as Transport, the next "Careem" picks Transport.
 - [ ] **8.3 Cards and categories for Siri** · ~110 lines
-  - App entities and queries for cards (by name and last 4) and categories, keyed by the ids from 1.1.
+  - App entities and queries for cards (by name and last 4) and categories, keyed by the `stableID`s from 1.1.
   - *Done when:* the Shortcuts app lists the user's cards and categories as choices.
 - [ ] **8.4 Log Expense intent** · ~140 lines
   - Runs without opening the app:
@@ -461,8 +464,9 @@ Dropped on 2026-11-22, with its six steps (9.1–9.6), the camera permission and
 - [ ] **12.2 TestFlight matrix**
   - Run every scenario in the MASTER_PLAN §11 table on TestFlight builds.
   - *Done when:* every row is ticked, or its failure is fixed or moved to 2.5.
-- [ ] **12.3 CloudKit schema to Production**
-  - Ahmad deploys it before submitting. Sync breaks for live users without it.
+- [ ] **12.3 CloudKit schema to Production** · done after Phase 1, before TestFlight 1
+  - Ahmad deploys it once Phase 1 is done and checked. TestFlight builds sync against Production, and sync breaks for live users without it.
+  - If a later step adds a field or model, deploy again before the next TestFlight build and before submitting.
   - *Done when:* the CloudKit console shows every new model and field in Production, and a TestFlight build syncs against it.
 - [ ] **12.4 Keyword check**
   - Remove the keyword of any feature that slipped (MASTER_PLAN §9.2).
@@ -485,7 +489,7 @@ Work only Ahmad can do, and what it holds up.
 | Test devices on iOS 17, 18, 26 and 27 | Dec 1 | checks in Phase 8 |
 | Screenshots per listing, with demo data | Dec 5 | submit |
 | Optional: a Spanish (Mexico) listing with extra English keywords for the US store (D36) | Dec 5 | nothing |
-| CloudKit schema deployed to Production (12.3) | Dec 6 | submit |
+| CloudKit schema deployed to Production (12.3) | after Phase 1, before Nov 28 | TestFlight 1, submit |
 | In-App Event "New Year Budget Reset" | Dec 11 | MASTER_PLAN §12 |
 
 ---

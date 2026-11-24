@@ -132,6 +132,18 @@ final class CreditCard {
     var statementDay: Int = 1
     var dueDay: Int = 20
     
+    /// Stable identity that survives sync (Siri entities, the default card).
+    /// Optional on purpose: rows migrated from 2.3, or synced from a 2.3
+    /// device, arrive as `nil` and `IdentityBackfill` fills them. Not named
+    /// `id`, so SwiftData's own identity keeps driving `ForEach`.
+    var stableID: UUID? = nil
+    /// Last four digits only, for "the card ending 4421". Never the full number.
+    var last4: String = ""
+    /// Payoff plan. `yearlyRate` 0 is a real value (Islamic and 0% cards).
+    var amountOwed: Decimal = 0
+    var yearlyRate: Decimal = 0
+    var plannedPayment: Decimal = 0
+
     var colorRaw: String = CardColor.royalBlue.rawValue
         var color: CardColor {
             get { CardColor(rawValue: colorRaw) ?? .royalBlue }
@@ -139,6 +151,7 @@ final class CreditCard {
         }
     
     init(name: String, cycleLimit: Decimal = 0, statementDay: Int = 1, dueDay: Int = 15, color: CardColor = .royalBlue) {
+        self.stableID = UUID()
         self.name = name
         self.cycleLimit = cycleLimit
         self.statementDay = statementDay

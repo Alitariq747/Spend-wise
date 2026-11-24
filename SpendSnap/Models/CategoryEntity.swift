@@ -15,10 +15,15 @@ final class CategoryEntity {
     var emoji: String = "📁"
     var monthlyBudget: Decimal = 0
     var isSystemOther: Bool = false
+    /// See `CreditCard.stableID`.
+    var stableID: UUID? = nil
+    /// `""` for the user's own categories; `food`, `other`… for seeded ones.
+    var systemKey: String = ""
 
     var colorHex: String = "CCCCCC"
     
     init(name: String, emoji: String, monthlyBudget: Decimal = .zero, colorHex: String = "CCCCCC", isSystemOther: Bool = false) {
+        self.stableID = UUID()
         self.name = name
         self.emoji = emoji
         self.monthlyBudget = monthlyBudget

@@ -19,6 +19,8 @@ final class Expense {
      
         var method: PaymentMethod = PaymentMethod.cash
         var monthKey: String = ""
+        /// Rule id plus occurrence date for expenses a recurring rule made; `""` otherwise.
+        var recurrenceKey: String = ""
 
         var category: CategoryEntity?
         var card: CreditCard?

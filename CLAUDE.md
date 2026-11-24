@@ -71,6 +71,7 @@ Consequences that shape the code:
 
 - **Boot fallback** (`SpendSnapApp.swift`): `AppBootController` builds the container with `cloudKitDatabase: .automatic`; on failure it retries with `.none`, and only then shows an error screen. Schema changes must be added in *both* this schema list and `SpendWiseWidgets/WidgetModelContainer.swift`.
 - **`Settings` is a singleton by convention, not by constraint.** Because uniqueness can't be enforced, duplicate rows appear (e.g. two devices insert one before first sync). Every reader — app and both widget processes — must fetch with `FetchDescriptor<Settings>(sortBy: Settings.oldestFirst)` and take `.first`, so all processes agree on the same row. `SettingsReconciler.reconcile(in:)` merges duplicates into the oldest row; it runs on `AppEntryView` appearance and again whenever the live `@Query` count rises above 1.
+- **Stable ids.** `CreditCard` and `CategoryEntity` carry `stableID: UUID?` for anything that must point at a row across devices (Siri entities, `Settings.defaultCardID`). It is optional and not named `id` on purpose: a non-optional default gives every migrated row, and every row synced from a 2.3 device, the same value, and a field named `id` would replace SwiftData's identity in `ForEach`. `IdentityBackfill.run(in:)` fills `nil` ids at launch and on every foreground, and never changes a set one. Readers must handle `nil`.
 - Widgets open the same store with `cloudKitDatabase: .none` (read-only view of shared data), falling back to an in-memory container so the widget never crashes.
 
 ### monthKey

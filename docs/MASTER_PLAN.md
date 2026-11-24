@@ -414,7 +414,7 @@ Rules:
 ## 11. App Review & release checklist
 
 **iCloud and the data model**
-- [ ] **Deploy the CloudKit schema to Production** (new models and fields) **before** release.
+- [ ] **Deploy the CloudKit schema to Production** (new models and fields) once Phase 1 of BUILD_ORDER is done, **before TestFlight 1**: TestFlight builds sync against Production. Deploy again if a later step adds a field.
 - [ ] Every new model follows the CloudKit rules: defaults on all properties, optional relationships, no `@Attribute(.unique)`.
 - [ ] New models are added to **both** schema lists: [SpendSnapApp.swift](../SpendSnap/SpendSnapApp.swift) and [WidgetModelContainer.swift](../SpendWiseWidgets/WidgetModelContainer.swift).
 - [ ] Shared files the widget target needs (intents, entities, models) are added to the widget **membershipExceptions** in `project.pbxproj`.

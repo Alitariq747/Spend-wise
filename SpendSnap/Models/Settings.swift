@@ -37,6 +37,12 @@ final class Settings {
     /// Creation timestamp. Sole ordering key for the settings singleton — see
     /// `Settings.oldestFirst`. Never mutate after insert.
     var createdAt: Date = Date.now
+    /// The "every month" budget. `0` means none set; a month's `Budget` row overrides it.
+    var defaultMonthlyBudget: Decimal = 0
+    /// A `PaymentMethod` raw value, or `""` when none is chosen (behaves as Cash).
+    var defaultPaymentMethodRaw: String = ""
+    /// `CreditCard.stableID` of the default card. A missing card falls back to Cash.
+    var defaultCardID: UUID? = nil
 
     init(onboardingComplete: Bool = false,
          proUnlocked: Bool = false,

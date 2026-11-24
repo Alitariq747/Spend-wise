@@ -10,6 +10,7 @@ import SwiftData
 
 struct AppEntryView: View {
     @Environment(\.modelContext) private var modelContext
+    @Environment(\.scenePhase) private var scenePhase
     @EnvironmentObject private var storeKit: StoreKitManager
     @Query(sort: Settings.oldestFirst) private var settingsRow: [Settings]
     @State private var showPostOnboardingPaywall = false
@@ -34,6 +35,13 @@ struct AppEntryView: View {
         }
         .task {
             SettingsReconciler.reconcile(in: modelContext)
+            IdentityBackfill.run(in: modelContext)
+        }
+        // Rows created on a device still running 2.3 sync in without a
+        // `stableID` at any time; foregrounding is the cheap catch-up point.
+        .onChange(of: scenePhase) { _, newPhase in
+            guard newPhase == .active else { return }
+            IdentityBackfill.run(in: modelContext)
         }
         // The duplicate is inserted at launch on a second device, but only
         // becomes visible once CloudKit's first sync merges into this context —
