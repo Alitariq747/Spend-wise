@@ -61,23 +61,15 @@ struct CategoryEditSheet: View {
         let key = MonthUtil.monthKey(activeMonth)
         if let override = category.monthlyBudgets?.first(where: { $0.monthKey == key }) {
             // this month has its own override
-            _categoryBudget = State(initialValue: Self.string(from: override.amount))
+            _categoryBudget = State(initialValue: AmountParser.editString(override.amount))
             _budgetScope = State(initialValue: .thisMonth)
         } else {
             // fall back to default monthlyBudget
-            _categoryBudget = State(initialValue: Self.string(from: category.monthlyBudget))
+            _categoryBudget = State(initialValue: AmountParser.editString(category.monthlyBudget))
             _budgetScope = State(initialValue: .everyMonth)
         }
     }
 
-    private static func string(from dec: Decimal) -> String {
-    
-        if dec == 0 { return "" }
-
-        var value = dec
-     
-        return NSDecimalString(&value, Locale(identifier: "en_US_POSIX"))
-    }
 
     var body: some View {
         let symbol = CurrencyUtil.symbol(for: currency)
@@ -276,13 +268,13 @@ struct CategoryEditSheet: View {
     }
     
     private var canSave: Bool {
-        let isAmountOk = Decimal(string: categoryBudget) != nil && !categoryBudget.isEmpty
+        let isAmountOk = AmountParser.parse(categoryBudget) != nil && !categoryBudget.isEmpty
         let hasName = !categoryName.trimmingCharacters(in: .whitespaces).isEmpty
         return isAmountOk && hasName
     }
     
     private func saveCategory() {
-        guard let newBudget = Decimal(string: categoryBudget),
+        guard let newBudget = AmountParser.parse(categoryBudget),
               newBudget > 0,
               !categoryName.trimmingCharacters(in: .whitespaces).isEmpty,
               categoryName.count <= 20 else {

@@ -132,7 +132,7 @@ struct AddCardSheet: View {
         guard !cardName.trimmingCharacters(in: .whitespaces).isEmpty else {
             return false
         }
-        guard Decimal(string: limitText.replacingOccurrences(of: ",", with: "")) != nil else {
+        guard AmountParser.parse(limitText) != nil else {
             return false
         }
         guard statementDay != nil, dueDay != nil else {
@@ -144,7 +144,7 @@ struct AddCardSheet: View {
     private func createCard() {
        
         guard let statementDay = statementDay else { return  }
-        guard let limit = Decimal(string: limitText.replacingOccurrences(of: ",", with: "")) else { return  }
+        guard let limit = AmountParser.parse(limitText) else { return  }
         guard let dueDay = dueDay else { return }
         
         let newCard = CreditCard(

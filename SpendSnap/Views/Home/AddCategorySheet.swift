@@ -203,13 +203,13 @@ struct AddCategorySheet: View {
     }
     
     private var canSave: Bool {
-        let isAmountOk = Decimal(string: categoryBudget) != nil && !categoryBudget.isEmpty
+        let isAmountOk = AmountParser.parse(categoryBudget) != nil && !categoryBudget.isEmpty
         let hasName = !categoryName.trimmingCharacters(in: .whitespaces).isEmpty
         return isAmountOk && hasName
     }
     
     private func saveCat() {
-        guard let budget = Decimal(string: categoryBudget), budget > 0, !categoryName.trimmingCharacters(in: .whitespaces).isEmpty, categoryName.count <= 20 else {
+        guard let budget = AmountParser.parse(categoryBudget), budget > 0, !categoryName.trimmingCharacters(in: .whitespaces).isEmpty, categoryName.count <= 20 else {
             return
         }
         let category = CategoryEntity(name: categoryName, emoji: emoji, monthlyBudget: budgetScope == .everyMonth ? budget : .zero, colorHex: selectedColorHex)

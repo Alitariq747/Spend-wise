@@ -99,6 +99,8 @@ Consequences that shape the code:
 
 `AppEntryView` → `OnboardingView` (until `settings.onboardingComplete`) → `RootTabView`, which drives a `TabView` with the system tab bar hidden and a hand-rolled `CustomTabBar`. Appearance (`.light`/`.dark`/`.system`) is applied once at `RootTabView` via `preferredColorScheme`.
 
+Every amount field reads its text with `AmountParser.parse` and prefills an edit with `AmountParser.editString` (`Services/AmountParser.swift`). It accepts `12,50`, `1.250,00`, Arabic-Indic and Persian digits and stray currency symbols in any locale. Never use `Decimal(string:)` on user input: it ignores the locale.
+
 Two data-access styles coexist, deliberately:
 
 - `@Query` for lists that should track the store live (categories, cards, the settings row).

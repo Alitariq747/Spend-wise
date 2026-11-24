@@ -33,7 +33,7 @@ struct CardEditSheet: View {
         self.card = card
         self.onDelete = onDelete
         _name          = State(initialValue: card.name)
-        _limitText     = State(initialValue: (card.cycleLimit as NSDecimalNumber).stringValue)
+        _limitText     = State(initialValue: card.cycleLimit == 0 ? "0" : AmountParser.editString(card.cycleLimit))
         _statementDay  = State(initialValue: card.statementDay)
         _dueDay        = State(initialValue: card.dueDay)
         _selectedColor = State(initialValue: card.color)
@@ -171,21 +171,21 @@ struct CardEditSheet: View {
         let statementDayChanged = statementDay != card.statementDay
         let dueDateChanged = dueDay != card.dueDay
         let colorChanged = selectedColor != card.color
-        let limitChange = parseAmount(limitText) != card.cycleLimit
+        let limitChange = AmountParser.parse(limitText) != card.cycleLimit
         
         return nameChanged || statementDayChanged || dueDateChanged || colorChanged || limitChange
     }
     
     private var isValid: Bool {
         !name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&
-        parseAmount(limitText) != nil &&
+        AmountParser.parse(limitText) != nil &&
         statementDay != nil &&
         dueDay != nil
         
     }
     
     private func saveChanges() {
-        guard isValid, let limit = parseAmount(limitText),
+        guard isValid, let limit = AmountParser.parse(limitText),
               let statementDay = statementDay,
               let dueDay = dueDay else {
             return

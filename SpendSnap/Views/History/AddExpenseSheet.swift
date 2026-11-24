@@ -55,7 +55,7 @@ struct AddExpenseSheet: View {
     private var isDateOK: Bool { allowedRange.contains(date) }
 
     private var canSave: Bool {
-        let hasAmount = parseAmount(amountText).map { $0 > 0 } ?? false
+        let hasAmount = AmountParser.parse(amountText).map { $0 > 0 } ?? false
         let hasMerchant = !merchant.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
         let methodOK = (method == .cash) || (method == .card && selectedCard != nil)
         let hasCategory = selectedCategory != nil
@@ -270,7 +270,7 @@ struct AddExpenseSheet: View {
     private func saveExpense() {
         let trimmedMerchant = merchant.trimmingCharacters(in: .whitespacesAndNewlines)
         guard
-            let amt = parseAmount(amountText),
+            let amt = AmountParser.parse(amountText),
             amt > 0,
             !trimmedMerchant.isEmpty,
             trimmedMerchant.count <= 40,

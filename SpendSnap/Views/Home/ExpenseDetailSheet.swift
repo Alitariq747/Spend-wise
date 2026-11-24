@@ -41,7 +41,7 @@ struct ExpenseDetailSheet: View {
         self.expense = expense
         self.onDeleteExpense = onDeleteExpense
      
-        _amountText = State(initialValue: Self.string(from: expense.amount))
+        _amountText = State(initialValue: AmountParser.editString(expense.amount))
         _merchant = State(initialValue: expense.merchant)
         let initialDate = expense.date
         _date = State(initialValue: initialDate)
@@ -52,26 +52,18 @@ struct ExpenseDetailSheet: View {
     }
     
     private var canSave: Bool {
-        let hasAmount = (parseAmount(amountText) ?? 0) > 0
+        let hasAmount = (AmountParser.parse(amountText) ?? 0) > 0
         let hasMerchant = !merchant.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
         let methodOK = (method == .cash) || (method == .card && selectedCard != nil)
         let hasCategory = selectedCategory != nil
         return hasAmount && hasMerchant && methodOK && hasCategory
     }
     
-    private static func string(from dec: Decimal) -> String {
-    
-        if dec == 0 { return "" }
-
-        var value = dec
-     
-        return NSDecimalString(&value, Locale(identifier: "en_US_POSIX"))
-    }
  
     private func confirmEdit() {
         let trimmedMerchant = merchant.trimmingCharacters(in: .whitespacesAndNewlines)
         guard
-            let amount = parseAmount(amountText),
+            let amount = AmountParser.parse(amountText),
             amount > 0,
             !trimmedMerchant.isEmpty,
             trimmedMerchant.count <= 40,

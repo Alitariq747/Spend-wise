@@ -114,15 +114,4 @@ extension CurrencyOption {
 }
 
 
-func parseAmount(_ raw: String, locale: Locale = .current) -> Decimal? {
-    let decSep = locale.decimalSeparator ?? "."
-    // Normalize: remove spaces (incl. non-breaking), remove commas, keep decimal sep
-    var s = raw.replacingOccurrences(of: "\u{00A0}", with: "") // NBSP
-    s = s.replacingOccurrences(of: " ", with: "")
-         .replacingOccurrences(of: ",", with: "")
-         .replacingOccurrences(of: "’", with: "") // some locales
-    // If user used comma as decimal, normalize to current sep
-    if decSep == "," { s = s.replacingOccurrences(of: ".", with: ",") }
-    return Decimal(string: s)
-}
 

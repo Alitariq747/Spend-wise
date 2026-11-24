@@ -22,12 +22,6 @@ struct AddBudgetSheet: View {
     
     @State private var amountText: String = ""
     
-    private func cleanUS(_ s: String) -> String {
-      // keep digits and one dot; strip commas/others
-      let filtered = s.replacingOccurrences(of: "[^0-9.]", with: "", options: .regularExpression)
-      let parts = filtered.split(separator: ".", maxSplits: 1)
-      return parts.count == 2 ? "\(parts[0]).\(parts[1].replacingOccurrences(of: ".", with: ""))" : filtered
-    }
    
     @FocusState private var focused: Bool
    
@@ -68,10 +62,9 @@ struct AddBudgetSheet: View {
                        .foregroundStyle(.dark)
                     
                     TextField("0.00", text: $amountText)
-                        .keyboardType(.numberPad)
+                        .keyboardType(.decimalPad)
                         .font(.system(size: 16, weight: .semibold))
                         .focused($focused)
-                        .onChange(of: amountText) { amountText = cleanUS(amountText) }
                         .foregroundStyle(.primary)
                       
 
@@ -141,7 +134,7 @@ struct AddBudgetSheet: View {
             .onAppear {
                  if let b = existingBudget {
                  
-                   amountText = NSDecimalNumber(decimal: b.amount).stringValue
+                   amountText = AmountParser.editString(b.amount)
                  } else {
                    amountText = ""
                  }
@@ -151,7 +144,7 @@ struct AddBudgetSheet: View {
     
     private func saveBudget() {
         
-        guard let amount = Decimal(string: amountText) , amount > 0 else {
+        guard let amount = AmountParser.parse(amountText) , amount > 0 else {
             return
         }
 
