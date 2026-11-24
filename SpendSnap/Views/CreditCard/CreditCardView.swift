@@ -11,9 +11,8 @@ import SwiftData
 struct CardSnapShot: Identifiable {
     let id = UUID()
     let card: CreditCard
+    /// The statement the tile shows (D25); the detail sheet opens on it.
     let cycle: CardCycle
-    let expensesThisCycle: [Expense]
-    let spentThisCycle: Decimal
 }
 
 struct CreditCardView: View {
@@ -21,7 +20,6 @@ struct CreditCardView: View {
     @EnvironmentObject private var storeKit: StoreKitManager
     
     @Query(sort: \CreditCard.name) private var cards: [CreditCard]
-    @Query(sort: \Expense.date, order: .reverse) private var allExpenses: [Expense]
     
     @State private var showAddCardSheet = false
     @State private var showGoProSheet = false
@@ -29,14 +27,7 @@ struct CreditCardView: View {
     @State private var selected: CardSnapShot? = nil
     
     private func makeSnapshot(for card: CreditCard) -> CardSnapShot {
-        let cycle = cardCycleAndDue(statementDay: card.statementDay, dueDay: card.dueDay)
-        let expensesThisCycle = allExpenses.filter {
-            $0.method == .card &&
-            $0.card == card &&
-            $0.date >= cycle.start && $0.date < cycle.end
-        }
-        let spent = expensesThisCycle.reduce(.zero) { $0 + $1.amount}
-        return CardSnapShot(card: card, cycle: cycle, expensesThisCycle: expensesThisCycle, spentThisCycle: spent)
+        CardSnapShot(card: card, cycle: cardStatementToShow(statementDay: card.statementDay, dueDay: card.dueDay).cycle)
     }
 
     @MainActor
@@ -103,7 +94,7 @@ struct CreditCardView: View {
             CardDetailSheet(snapshot: snap, onClose: { selected = nil })
         }
         .presentationDetents([.large])
-        // `CardSnapShot` retains a CreditCard and its expenses, so drop it
+        // `CardSnapShot` retains a CreditCard, so drop it
         // before a body can read one of them back after a delete.
         .onReceive(NotificationCenter.default.publisher(for: .spendWiseDidDeleteAllData)) { _ in
             selected = nil

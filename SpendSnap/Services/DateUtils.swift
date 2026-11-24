@@ -129,6 +129,23 @@ func cardCycleAndDue(
     return CardCycle(start: cycleStart, end: cycleEnd, due: due)
 }
 
+/// The statement a card should show (D25): the last closed statement until the
+/// end of its due date, then the open cycle. `isClosed` says which one it is.
+func cardStatementToShow(
+    statementDay: Int,
+    dueDay: Int,
+    reference today: Date = Date(),
+    calendar cal: Calendar = MonthUtil.gregorian
+) -> (cycle: CardCycle, isClosed: Bool) {
+    let open = cardCycleAndDue(statementDay: statementDay, dueDay: dueDay, reference: today, calendar: cal)
+    let dayBeforeOpen = cal.date(byAdding: .day, value: -1, to: open.start) ?? open.start
+    let closed = cardCycleAndDue(statementDay: statementDay, dueDay: dueDay, reference: dayBeforeOpen, calendar: cal)
+    if cal.startOfDay(for: today) <= cal.startOfDay(for: closed.due) {
+        return (closed, true)
+    }
+    return (open, false)
+}
+
 func cardCycleReference(
     from cycle: CardCycle,
     offsetByMonths offset: Int,

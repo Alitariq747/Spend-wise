@@ -165,7 +165,8 @@ struct CreditCardsProvider: TimelineProvider {
         
         var summaries: [CardSummary] = []
         for card in cards {
-            let cycle = cardCycleAndDue(statementDay: card.statementDay, dueDay: card.dueDay, reference: now)
+            // D25: the last closed statement until its due date, as the app's card tile shows.
+            let cycle = cardStatementToShow(statementDay: card.statementDay, dueDay: card.dueDay, reference: now).cycle
             let start = cycle.start
             let end = cycle.end
             let cardID = card.persistentModelID
@@ -178,7 +179,7 @@ struct CreditCardsProvider: TimelineProvider {
                 }
             )
             
-            let expenses = (try? context.fetch(expensesFetch)) ?? []
+            let expenses = ((try? context.fetch(expensesFetch)) ?? []).filter { $0.method == .card }
             let spent = expenses.reduce(Decimal.zero) { $0 + $1.amount }
             
             summaries.append(

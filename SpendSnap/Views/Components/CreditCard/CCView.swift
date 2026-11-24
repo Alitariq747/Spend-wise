@@ -12,7 +12,6 @@ struct CCView: View {
     @Environment(\.colorScheme) private var colorScheme
     
     @Query(sort: Settings.oldestFirst) private var settingsRow: [Settings]
-    @Query(sort: \Expense.date, order: .reverse) private var allExpenses: [Expense]
     
     private var currencyCode: String {
         settingsRow.first?.currencyCode ?? Settings.defaultCurrencyCode
@@ -20,49 +19,21 @@ struct CCView: View {
     
     let card: CreditCard
     
+    /// The statement this tile shows (D25): the last closed one until its due date passes.
     private var cycle: CardCycle {
-        cardCycleAndDue(
-            statementDay: card.statementDay,
-            dueDay: card.dueDay
-        )
+        cardStatementToShow(statementDay: card.statementDay, dueDay: card.dueDay).cycle
     }
 
-    private var expensesThisCycle: [Expense] {
-        allExpenses.filter { exp in
-            exp.method == .card &&
-            exp.card == card &&
-            exp.date >= cycle.start && exp.date < cycle.end
-            
-        }
-    }
-    
-    private var spentThisCycle: Decimal {
-        expensesThisCycle.reduce(.zero) { $0 + $1.amount }
-    }
-    
-    private var spentD: Double {
-        (spentThisCycle as NSDecimalNumber).doubleValue
-    }
-    private var limitD: Double {
-        (card.cycleLimit as NSDecimalNumber).doubleValue
-    }
-
-   
-    private var progress: Double {
+    private func progress(_ spent: Decimal) -> Double {
+        let spentD = (spent as NSDecimalNumber).doubleValue
+        let limitD = (card.cycleLimit as NSDecimalNumber).doubleValue
         guard spentD.isFinite, limitD.isFinite, limitD > 0 else { return 0 }
         let ratio = spentD / limitD
         guard ratio.isFinite else { return 0 }
         return min(max(ratio, 0), 1)
     }
 
-
-    private var remaining: Decimal {
-        let rem = card.cycleLimit - spentThisCycle
-        return rem
-    }
-
- 
-    private var progressColor: Color {
+    private func progressColor(_ progress: Double) -> Color {
         switch progress {
         case ..<0.6:  return .green
         case ..<0.85: return .orange
@@ -73,11 +44,17 @@ struct CCView: View {
     var onSelect: (() -> Void)? = nil
     
     var body: some View {
-        
-        
-        let cc = cardCycleAndDue(statementDay: card.statementDay, dueDay: card.dueDay)
-        
+        let cc = cycle
+        CardCycleExpenses(card: card, cycle: cc) { expenses in
+            tile(cc, spent: expenses.reduce(Decimal.zero) { $0 + $1.amount })
+        }
+    }
+
+    @ViewBuilder
+    private func tile(_ cc: CardCycle, spent spentThisCycle: Decimal) -> some View {
         let fg = card.color.onCardText
+        let ratio = progress(spentThisCycle)
+        let remaining = card.cycleLimit - spentThisCycle
         // Parent VStack
         
         VStack(alignment: .leading, spacing: 18) {
@@ -111,9 +88,9 @@ struct CCView: View {
                 .shadow(color: .black.opacity(fg == .white ? 0.25 : 0), radius: 2, y: 1)
             // Progress View -> b/w limit and spent on this card
             VStack(alignment: .leading, spacing: 8) {
-                ProgressView(value: progress)
+                ProgressView(value: ratio)
                     .progressViewStyle(.linear)
-                    .tint(progressColor)
+                    .tint(progressColor(ratio))
                     .background(
                         Capsule().fill(Color(.tertiarySystemFill))
                     )

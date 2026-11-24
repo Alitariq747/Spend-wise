@@ -32,7 +32,7 @@ Sizes are estimates of added or changed Swift lines. Deletions, String Catalog d
 |---|---|---|---|
 | 0 Groundwork | 3 | Nov 19 | 3 |
 | 1 Data model | 4 | Nov 19 | 4 |
-| 2 Fixes and shared building blocks | 8 | Nov 21 | 3 |
+| 2 Fixes and shared building blocks | 8 | Nov 21 | 4 |
 | 3 Design kit and core screens | 12 | Nov 24 | 0 |
 | 4 Income | 4 | Nov 25 | 0 |
 | 5 Bills & Cards | 14 | Nov 28 | 0 |
@@ -43,7 +43,7 @@ Sizes are estimates of added or changed Swift lines. Deletions, String Catalog d
 | 10 Polish | 4 | Dec 4 | 0 |
 | 11 Languages and rename | 7 | Dec 4 | 0 |
 | 12 Release prep | 4 | Dec 7 | 0 |
-| **Total** | **87** | Freeze Dec 4, submit Dec 7 | **10** |
+| **Total** | **87** | Freeze Dec 4, submit Dec 7 | **11** |
 
 Phases run in order: Bills & Cards (the riskiest sync work) comes before the free tier, as MASTER_PLAN §7 decided. Phase 10 can run alongside 8 in a parallel session.
 
@@ -155,7 +155,7 @@ Relationships are optional and have inverses, because CloudKit requires both.
 - [x] **2.3 One money formatter: widgets** · ~50 lines
   - Share the formatter with the widget target. It replaces the widget strings, which glue the symbol to a raw number.
   - *Done when:* all three widgets show the same amounts as the app.
-- [ ] **2.4 Cards show the statement that is actually due** · ~100 lines · D25
+- [x] **2.4 Cards show the statement that is actually due** · ~100 lines · D25
   - The cycle helper also returns the last closed statement: its period, total and due date. The card tile and the Credit Cards widget show that bill until its due date passes, then the next one.
   - Card views fetch only that card's expenses for the dates shown. Today four views load every expense in the store.
   - *Done when:* with statement day 1 and due day 21:

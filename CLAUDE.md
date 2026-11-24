@@ -130,6 +130,8 @@ Feature gating reads **`storeKit.hasActiveSubscription`** — the persisted `Set
 
 `cardCycleAndDue(statementDay:dueDay:)` in `DateUtils.swift` derives the current statement window and due date from a card's `statementDay`/`dueDay`, clamping day-of-month to the month's length (`Calendar.clampedDate`). Due date rolls to the following month when `dueDay <= statementDay`. Card spend is the sum of expenses with `date` in `[cycle.start, cycle.end)`.
 
+What a card *shows* comes from `cardStatementToShow(statementDay:dueDay:)`. It returns the last closed statement until the end of its due date, then the open cycle (D25), and `isClosed` says which. The card tile, the card list's snapshot (where the detail sheet opens) and the Credit Cards widget all use it. Card views get their expenses through `CardCycleExpenses(card:cycle:)`, a live `@Query` filtered to one card and one cycle, and never query every expense in the store.
+
 ## Growth plan
 
 The v2.4 relaunch (rename, freemium, Siri, bills & cards, income and savings goals, Arabic and German, ASO) is planned in `docs/MASTER_PLAN.md`. Read it before product or App Store work, and keep its decision log and checklists current.

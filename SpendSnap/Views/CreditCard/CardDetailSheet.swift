@@ -12,9 +12,9 @@ struct CardDetailSheet: View {
     @Environment(\.dismiss) private var dismiss
     
     @Query(sort: Settings.oldestFirst) private var settingsRow: [Settings]
-    @Query(sort: \Expense.date, order: .reverse) private var allExpenses: [Expense]
     @State private var showEditSheet = false
-    @State private var cycleReference = Date()
+    /// Set by the arrows; nil shows the statement the tile showed.
+    @State private var cycleReference: Date? = nil
     
     let snapshot: CardSnapShot
   
@@ -27,7 +27,8 @@ struct CardDetailSheet: View {
     @State private var selectedExpense: Expense? = nil
 
     private var selectedCycle: CardCycle {
-        cardCycleAndDue(
+        guard let cycleReference else { return snapshot.cycle }
+        return cardCycleAndDue(
             statementDay: snapshot.card.statementDay,
             dueDay: snapshot.card.dueDay,
             reference: cycleReference
@@ -45,20 +46,6 @@ struct CardDetailSheet: View {
         selectedCycle.start < currentCycle.start
     }
 
-    private var displayedExpenses: [Expense] {
-        allExpenses.filter {
-            $0.method == .card &&
-            $0.card == snapshot.card &&
-            $0.date >= selectedCycle.start &&
-            $0.date < selectedCycle.end
-        }
-    }
-
-    private var displayedSpent: Decimal {
-        displayedExpenses.reduce(.zero) { $0 + $1.amount }
-    }
-    
-    
     var body: some View {
        
         
@@ -96,6 +83,8 @@ struct CardDetailSheet: View {
 
             }
             Divider()
+            CardCycleExpenses(card: snapshot.card, cycle: selectedCycle) { displayedExpenses in
+            Group {
             HStack {
                 Button {
                     cycleReference = cardCycleReference(from: selectedCycle, offsetByMonths: -1)
@@ -113,7 +102,7 @@ struct CardDetailSheet: View {
                         .foregroundStyle(.secondary)
                     Text(verbatim: "\(selectedCycle.start.formatted(date: .abbreviated, time: .omitted)) - \(selectedCycle.end.formatted(date: .abbreviated, time: .omitted))")
                         .font(.system(size: 13, weight: .medium))
-                    Text("\(Money.format(displayedSpent, code: currencyCode)) • \(displayedExpenses.count) expenses")
+                    Text("\(Money.format(displayedExpenses.reduce(Decimal.zero) { $0 + $1.amount }, code: currencyCode)) • \(displayedExpenses.count) expenses")
                         .font(.system(size: 12, weight: .regular))
                         .foregroundStyle(.secondary)
                 }
@@ -179,6 +168,8 @@ struct CardDetailSheet: View {
                 }
               
             }
+            }
+            }
 
         }
         .padding()
@@ -195,5 +186,5 @@ struct CardDetailSheet: View {
 }
 
 #Preview {
-    CardDetailSheet(snapshot: CardSnapShot(card: CreditCard(name: "Alfalah", cycleLimit: 20000, statementDay: 5, dueDay: 25), cycle: cardCycleAndDue(statementDay: 5, dueDay: 25), expensesThisCycle: previewExpenses, spentThisCycle: 23000))
+    CardDetailSheet(snapshot: CardSnapShot(card: CreditCard(name: "Alfalah", cycleLimit: 20000, statementDay: 5, dueDay: 25), cycle: cardCycleAndDue(statementDay: 5, dueDay: 25)))
 }

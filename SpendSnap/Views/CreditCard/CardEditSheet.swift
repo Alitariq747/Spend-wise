@@ -14,7 +14,6 @@ struct CardEditSheet: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var modelContext
     
-    @Query(sort: \Expense.date, order: .reverse) private var allExpenses: [Expense]
     
     let card: CreditCard
     var onDelete: (() -> Void)?
@@ -202,7 +201,7 @@ struct CardEditSheet: View {
     }
 
     private func deleteCard() {
-        for exp in allExpenses where exp.card == card {
+        for exp in card.expenses ?? [] {
             exp.card = nil
             if exp.method == .card { exp.method = .cash }
         }
