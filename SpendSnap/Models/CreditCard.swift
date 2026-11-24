@@ -161,4 +161,12 @@ final class CreditCard {
     
     @Relationship(deleteRule: .cascade , inverse: \Expense.card)
     var expenses: [Expense]? = []
+
+    /// Deleting the card clears the link on its rules; the rules stay.
+    @Relationship(deleteRule: .nullify, inverse: \RecurringRule.card)
+    var recurringRules: [RecurringRule]? = []
+
+    /// A payment means nothing without its card.
+    @Relationship(deleteRule: .cascade, inverse: \StatementPayment.card)
+    var statementPayments: [StatementPayment]? = []
 }

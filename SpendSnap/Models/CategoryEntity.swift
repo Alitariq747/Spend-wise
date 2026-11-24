@@ -41,6 +41,10 @@ final class CategoryEntity {
     @Relationship(deleteRule: .cascade , inverse: \Expense.category)
     var expenses: [Expense]? = []
 
+    /// Deleting the category clears the link on its rules; the rules stay.
+    @Relationship(deleteRule: .nullify, inverse: \RecurringRule.category)
+    var recurringRules: [RecurringRule]? = []
+
 }
 
 extension Color {

@@ -63,13 +63,13 @@ Building once in Xcode does the same.
 
 ## Data layer
 
-SwiftData with **CloudKit private sync** over an **App Group** shared store (`group.ahmad.SpendWise`, container `iCloud.com.ahmad.SpendWise`). Models: `Expense`, `CategoryEntity`, `CategoryMonthlyBudget`, `Budget`, `CreditCard`, `Settings`.
+SwiftData with **CloudKit private sync** over an **App Group** shared store (`group.ahmad.SpendWise`, container `iCloud.com.ahmad.SpendWise`). Models: `Expense`, `CategoryEntity`, `CategoryMonthlyBudget`, `Budget`, `CreditCard`, `Settings`, plus (from 2.4) `Income`, `RecurringRule`, `StatementPayment`. New models store enum values as raw `String`s (`sourceRaw`, `kindRaw`…) with a computed accessor that falls back on unknown values; the raw values are permanent once the CloudKit schema is deployed.
 
 CloudKit imposes hard constraints on every model — **all stored properties must have defaults, relationships must be optional, and `@Attribute(.unique)` is forbidden.** Adding a non-optional property without a default silently breaks container creation at launch.
 
 Consequences that shape the code:
 
-- **Boot fallback** (`SpendSnapApp.swift`): `AppBootController` builds the container with `cloudKitDatabase: .automatic`; on failure it retries with `.none`, and only then shows an error screen. Schema changes must be added in *both* this schema list and `SpendWiseWidgets/WidgetModelContainer.swift`.
+- **Boot fallback** (`SpendSnapApp.swift`): `AppBootController` builds the container with `cloudKitDatabase: .automatic`; on failure it retries with `.none`, and only then shows an error screen. Schema changes must be added in *both* this schema list and `SpendWiseWidgets/WidgetModelContainer.swift`, and the two lists must stay identical: the widget opens the same file, and a list missing a model could migrate that model's table away.
 - **`Settings` is a singleton by convention, not by constraint.** Because uniqueness can't be enforced, duplicate rows appear (e.g. two devices insert one before first sync). Every reader — app and both widget processes — must fetch with `FetchDescriptor<Settings>(sortBy: Settings.oldestFirst)` and take `.first`, so all processes agree on the same row. `SettingsReconciler.reconcile(in:)` merges duplicates into the oldest row; it runs on `AppEntryView` appearance and again whenever the live `@Query` count rises above 1.
 - **Stable ids.** `CreditCard` and `CategoryEntity` carry `stableID: UUID?` for anything that must point at a row across devices (Siri entities, `Settings.defaultCardID`). It is optional and not named `id` on purpose: a non-optional default gives every migrated row, and every row synced from a 2.3 device, the same value, and a field named `id` would replace SwiftData's identity in `ForEach`. `IdentityBackfill.run(in:)` fills `nil` ids at launch and on every foreground, and never changes a set one. Readers must handle `nil`.
 - Widgets open the same store with `cloudKitDatabase: .none` (read-only view of shared data), falling back to an in-memory container so the widget never crashes.
@@ -113,4 +113,4 @@ Feature gating reads **`storeKit.hasActiveSubscription`** — the persisted `Set
 
 The v2.4 relaunch (rename, freemium, Siri, bills & cards, income and savings goals, Arabic and German, ASO) is planned in `docs/MASTER_PLAN.md`. Read it before product or App Store work, and keep its decision log and checklists current.
 
-The order of work is `docs/BUILD_ORDER.md`: 85 numbered steps in phases 0–12 (Phase 9 was dropped), plus Ahmad's non-code tasks and the slip order. Take the first unticked step unless Ahmad names another.
+The order of work is `docs/BUILD_ORDER.md`: 86 numbered steps in phases 0–12 (Phase 9 was dropped), plus Ahmad's non-code tasks and the slip order. Take the first unticked step unless Ahmad names another.

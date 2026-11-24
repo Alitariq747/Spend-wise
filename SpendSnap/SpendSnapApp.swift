@@ -56,7 +56,10 @@ final class AppBootController: ObservableObject {
             CategoryMonthlyBudget.self,
             Budget.self,
             CreditCard.self,
-            Settings.self
+            Settings.self,
+            Income.self,
+            RecurringRule.self,
+            StatementPayment.self
         ])
 
         let configuration = ModelConfiguration(

@@ -2,7 +2,7 @@
 
 > [MASTER_PLAN.md](MASTER_PLAN.md) says **what** ships in 2.4. This file says **in what order** we build it, as small numbered steps done one at a time.
 > Created 2026-11-18. It replaces the week-by-week table in MASTER_PLAN §7, whose dates are stale: no 2.4 code had landed by Nov 18.
-> On 2026-11-22, D36 and D37 dropped Spanish and receipt scanning: step 11.6 and all of Phase 9 are gone, leaving 85 steps.
+> On 2026-11-22, D36 and D37 dropped Spanish and receipt scanning: step 11.6 and all of Phase 9 are gone, leaving 85 steps. On 2026-11-24, step 1.4 (CloudKit schema in Development) was added, making 86.
 > Tick a step when it lands. The rules for step size and workflow are in [CLAUDE.md → Working in steps](../CLAUDE.md#working-in-steps).
 
 **Contents:** How a step works · Status board · Decisions this order builds on · Phases 0–12 · Ahmad's track · Slip order · Schedule check
@@ -31,7 +31,7 @@ Sizes are estimates of added or changed Swift lines. Deletions, String Catalog d
 | Phase | Steps | Target finish | Done |
 |---|---|---|---|
 | 0 Groundwork | 3 | Nov 19 | 3 |
-| 1 Data model | 3 | Nov 19 | 1 |
+| 1 Data model | 4 | Nov 19 | 2 |
 | 2 Fixes and shared building blocks | 8 | Nov 21 | 0 |
 | 3 Design kit and core screens | 12 | Nov 24 | 0 |
 | 4 Income | 4 | Nov 25 | 0 |
@@ -43,7 +43,7 @@ Sizes are estimates of added or changed Swift lines. Deletions, String Catalog d
 | 10 Polish | 4 | Dec 4 | 0 |
 | 11 Languages and rename | 6 | Dec 4 | 0 |
 | 12 Release prep | 4 | Dec 7 | 0 |
-| **Total** | **85** | Freeze Dec 4, submit Dec 7 | **4** |
+| **Total** | **86** | Freeze Dec 4, submit Dec 7 | **5** |
 
 Phases run in order: Bills & Cards (the riskiest sync work) comes before the free tier, as MASTER_PLAN §7 decided. Phase 10 can run alongside 8 in a parallel session.
 
@@ -107,23 +107,34 @@ Relationships are optional and have inverses, because CloudKit requires both.
   - `stableID` is `UUID?`, `nil` by default, set in `init`. It is not called `id`, because that would replace SwiftData's identity in `ForEach`. A non-optional default would also give every migrated row, and every row synced from a 2.3 device, the same value.
   - `IdentityBackfill` gives a fresh id to any card or category whose `stableID` is `nil`. It runs at launch and on every foreground, because 2.3 devices keep creating rows without one. It never changes an id that is set. Readers must handle `nil` until it runs.
   - *Done when:* a 2.3 install with real data upgrades with every expense, budget, card and category intact, and every card and category has a distinct `stableID`.
-- [ ] **1.2 Income, recurring rules, statement payments** · ~110 lines
-  - `Income`: amount, date, `monthKey`, source, note, `recurrenceKey`.
+- [x] **1.2 Income, recurring rules, statement payments** · ~120 lines
+  - Enum-backed fields are stored as raw `String`s, so a value from a newer version reads as a fallback instead of failing to decode. The raw values are permanent once deployed.
+  - `Income`: `amount`, `date`, `monthKey` (set in `init`), `sourceRaw` (`salary`, `business`, `freelance`, `gift`, `other`; D32), `note`, `recurrenceKey`.
   - `RecurringRule` holds:
-    - name, amount, and whether it makes an expense or income
-    - frequency and start date
-    - optional category, card, payment method or income source
-    - `isSubscription`, reminder days, and an active flag
-  - Deleting a card or category clears its link on a rule.
-  - `StatementPayment`: card, statement key (the statement's closing date), amount paid, paid in full, paid at.
-  - *Done when:* both targets build and launch against the store upgraded in 1.1.
+    - `stableID: UUID?`, set in `init`. Recurrence keys are built from it. A rule with no id generates nothing, so two rules can never share keys and have the 5.9 cleanup delete each other's entries.
+    - `name`, `amount`, and `kindRaw` (`expense`, `income`)
+    - `frequencyRaw` (`weekly`, `biweekly`, `monthly`, `yearly`) and `startDate`, which also fixes the day of the month
+    - optional `category` and `card`, `paymentMethodRaw`, `incomeSourceRaw`
+    - `isSubscription`, `reminderDays: Int?` (`nil` means no reminder, `0` means on the day), `isActive`, `createdAt`
+    - `generatedThrough: Date?`: how far entries have been created, so a deleted entry stays deleted and a resumed rule skips the paused months
+  - Deleting a card or category clears its link on a rule (`.nullify` inverses on both).
+  - `StatementPayment`: `card` (deleting a card deletes its payments), `statementKey` (the closing date as a POSIX Gregorian `yyyy-MM-dd` string, so every device groups it the same), `amountPaid`, `paidInFull`, `paidAt`.
+  - All three go into both schema lists and the widget's `membershipExceptions`. The lists must match: the widget opens the same file, and a list missing a model could migrate that model's table away.
+  - *Done when:* both targets build, the schema lists match, and a 2.3 store upgrades straight to 1.2 with all data intact. A debug check shows that deleting a card and a category clears a rule's links and deletes the card's payment.
 - [ ] **1.3 Savings goals, and delete-all for every new model** · ~90 lines
   - `SavingsGoal`: name, emoji, target, optional target date, created at.
   - `GoalContribution`: amount (negative for a withdrawal), date, goal.
   - "Delete all data" also removes the five new models, deleting children before parents.
   - *Done when:* delete-all leaves no rows of any model, and the app shows its empty state without crashing.
+- [ ] **1.4 CloudKit schema in Development** · ~40 lines · needs 1.3
+  - CloudKit's Development database only gains a field when a record carrying it syncs. Empty optionals (`defaultCardID`) and models with no rows yet (everything from 1.2 and 1.3) would be missing, so deploying them to Production would leave them out.
+  - A DEBUG-only launch argument, `-initCloudKitSchema`, calls Apple's `initializeCloudKitSchema()` on an `NSPersistentCloudKitContainer` built from the same SwiftData models. It uploads placeholder records for every model and field, then deletes them. It only works against Development.
+  - With the argument, the app does not boot normally: it never opens the real store or starts sync. It uses a throwaway store in the temp folder, shows the result and stops. Without the argument nothing changes, and release builds don't contain it.
+  - Ahmad signs the simulator into iCloud. Claude runs the app with the argument.
+  - Run it again whenever a later step adds a field or model, before deploying again.
+  - *Done when:* the CloudKit console's Development schema shows every model from both schema lists, with every field, including `defaultCardID` and the 1.2 and 1.3 models.
 
-**Milestone: CloudKit schema to Production (12.3).** Once Phase 1 is done and checked, Ahmad deploys the schema. It must happen before TestFlight 1, because TestFlight builds sync against Production. After deploying, fields can be added but never renamed, removed or retyped.
+**Milestone: CloudKit schema to Production (12.3).** Once Phase 1 is done and checked, including 1.4, Ahmad deploys the schema. It must happen before TestFlight 1, because TestFlight builds sync against Production. After deploying, fields can be added but never renamed, removed or retyped.
 
 ## Phase 2 — Fixes and shared building blocks
 
@@ -276,7 +287,7 @@ Relationships are optional and have inverses, because CloudKit requires both.
   - A Bills section in Bills & Cards lists rules by next due date, each with pause and delete.
   - *Done when:* each rule shows its next date and amount, and a paused rule drops out of Upcoming.
 - [ ] **5.8 Create recurring entries** · ~120 lines · date maths ⇄ needs 1.2
-  - On launch and on every foreground, each active rule creates an expense or income for every occurrence up to today, with `recurrenceKey` set to the rule id plus the occurrence date.
+  - On launch and on every foreground, each active rule creates an expense or income for every occurrence after `generatedThrough` up to today, then moves `generatedThrough` forward. `recurrenceKey` is the rule's `stableID` plus the occurrence date. Because of `generatedThrough`, an entry the user deleted is not created again. Resuming a paused rule sets `generatedThrough` to today, so the paused months are skipped.
   - Date maths uses `MonthUtil.gregorian`. A day-31 rule falls on the last day of shorter months, and a 29 Feb rule falls on 28 Feb in other years.
   - *Done when:*
     - a harness covers monthly on the 31st, yearly on 29 Feb, and every 2 weeks
@@ -465,8 +476,8 @@ Dropped on 2026-11-22, with its six steps (9.1–9.6), the camera permission and
   - Run every scenario in the MASTER_PLAN §11 table on TestFlight builds.
   - *Done when:* every row is ticked, or its failure is fixed or moved to 2.5.
 - [ ] **12.3 CloudKit schema to Production** · done after Phase 1, before TestFlight 1
-  - Ahmad deploys it once Phase 1 is done and checked. TestFlight builds sync against Production, and sync breaks for live users without it.
-  - If a later step adds a field or model, deploy again before the next TestFlight build and before submitting.
+  - Ahmad deploys it once Phase 1 is done and checked, after 1.4 has put the full schema into Development. TestFlight builds sync against Production, and sync breaks for live users without it.
+  - If a later step adds a field or model, rerun 1.4's launch argument, then deploy again before the next TestFlight build and before submitting.
   - *Done when:* the CloudKit console shows every new model and field in Production, and a TestFlight build syncs against it.
 - [ ] **12.4 Keyword check**
   - Remove the keyword of any feature that slipped (MASTER_PLAN §9.2).
@@ -509,7 +520,7 @@ Everything else is the release: the fixes, free logging, paywall, onboarding, in
 
 ## Schedule check
 
-- **The pace needed.** None of the 85 steps had landed by Nov 22, so the Dec 4 freeze needs about 6–7 steps a day, every day.
+- **The pace needed.** None of the 85 steps (86 since 1.4 was added) had landed by Nov 22, so the Dec 4 freeze needs about 6–7 steps a day, every day.
 - **Parallel help.** The ⇄ steps (2.1, 5.1, 5.8, 5.12, 5.13, 7.5, 8.1) can run in parallel sessions.
 - **The fallback.** At 4–5 steps a day, the work needs MASTER_PLAN's fallback dates: freeze Dec 11, submit Dec 14. That still leaves two weeks before Dec 28.
 - **Checkpoints.** Nov 24 (end of Phase 3) and Nov 30 (end of Phase 6). More than a day behind at a checkpoint means a choice: take the fallback dates, or cut from the slip order.
