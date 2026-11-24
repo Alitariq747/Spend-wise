@@ -31,7 +31,7 @@ Sizes are estimates of added or changed Swift lines. Deletions, String Catalog d
 | Phase | Steps | Target finish | Done |
 |---|---|---|---|
 | 0 Groundwork | 3 | Nov 19 | 3 |
-| 1 Data model | 4 | Nov 19 | 2 |
+| 1 Data model | 4 | Nov 19 | 3 |
 | 2 Fixes and shared building blocks | 8 | Nov 21 | 0 |
 | 3 Design kit and core screens | 12 | Nov 24 | 0 |
 | 4 Income | 4 | Nov 25 | 0 |
@@ -43,7 +43,7 @@ Sizes are estimates of added or changed Swift lines. Deletions, String Catalog d
 | 10 Polish | 4 | Dec 4 | 0 |
 | 11 Languages and rename | 6 | Dec 4 | 0 |
 | 12 Release prep | 4 | Dec 7 | 0 |
-| **Total** | **86** | Freeze Dec 4, submit Dec 7 | **5** |
+| **Total** | **86** | Freeze Dec 4, submit Dec 7 | **6** |
 
 Phases run in order: Bills & Cards (the riskiest sync work) comes before the free tier, as MASTER_PLAN §7 decided. Phase 10 can run alongside 8 in a parallel session.
 
@@ -121,7 +121,7 @@ Relationships are optional and have inverses, because CloudKit requires both.
   - `StatementPayment`: `card` (deleting a card deletes its payments), `statementKey` (the closing date as a POSIX Gregorian `yyyy-MM-dd` string, so every device groups it the same), `amountPaid`, `paidInFull`, `paidAt`.
   - All three go into both schema lists and the widget's `membershipExceptions`. The lists must match: the widget opens the same file, and a list missing a model could migrate that model's table away.
   - *Done when:* both targets build, the schema lists match, and a 2.3 store upgrades straight to 1.2 with all data intact. A debug check shows that deleting a card and a category clears a rule's links and deletes the card's payment.
-- [ ] **1.3 Savings goals, and delete-all for every new model** · ~90 lines
+- [x] **1.3 Savings goals, and delete-all for every new model** · ~90 lines
   - `SavingsGoal`: name, emoji, target, optional target date, created at.
   - `GoalContribution`: amount (negative for a withdrawal), date, goal.
   - "Delete all data" also removes the five new models, deleting children before parents.

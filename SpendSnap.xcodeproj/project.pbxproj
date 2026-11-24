@@ -75,6 +75,7 @@
 				Models/PaymentMethod.swift,
 				Models/RecurringRule.swift,
 				Models/ReminderLevel.swift,
+				Models/SavingsGoal.swift,
 				Models/Settings.swift,
 				Models/StatementPayment.swift,
 				Services/AppInfo.swift,

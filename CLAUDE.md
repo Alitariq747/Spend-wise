@@ -63,7 +63,7 @@ Building once in Xcode does the same.
 
 ## Data layer
 
-SwiftData with **CloudKit private sync** over an **App Group** shared store (`group.ahmad.SpendWise`, container `iCloud.com.ahmad.SpendWise`). Models: `Expense`, `CategoryEntity`, `CategoryMonthlyBudget`, `Budget`, `CreditCard`, `Settings`, plus (from 2.4) `Income`, `RecurringRule`, `StatementPayment`. New models store enum values as raw `String`s (`sourceRaw`, `kindRaw`…) with a computed accessor that falls back on unknown values; the raw values are permanent once the CloudKit schema is deployed.
+SwiftData with **CloudKit private sync** over an **App Group** shared store (`group.ahmad.SpendWise`, container `iCloud.com.ahmad.SpendWise`). Models: `Expense`, `CategoryEntity`, `CategoryMonthlyBudget`, `Budget`, `CreditCard`, `Settings`, plus (from 2.4) `Income`, `RecurringRule`, `StatementPayment`, `SavingsGoal`, `GoalContribution`. New models store enum values as raw `String`s (`sourceRaw`, `kindRaw`…) with a computed accessor that falls back on unknown values; the raw values are permanent once the CloudKit schema is deployed.
 
 CloudKit imposes hard constraints on every model — **all stored properties must have defaults, relationships must be optional, and `@Attribute(.unique)` is forbidden.** Adding a non-optional property without a default silently breaks container creation at launch.
 
@@ -97,6 +97,8 @@ Two data-access styles coexist, deliberately:
 - Manual `FetchDescriptor` into `@State` arrays for month-scoped data (`HomeView.monthExpenses`, `HistoryView`, `InsightsView`), refetched on `onAppear` and month change.
 
 Those hand-fetched caches hold strong references that a delete does not sweep, so **"Delete all data" posts `.spendWiseDidDeleteAllData`** (defined in `SettingsView.swift`) and every screen holding such a cache clears it in an `onReceive`. Any new screen that caches models by hand must do the same, or SwiftUI will render a body against an invalidated object.
+
+"Delete all data" runs `DataWipe.deleteAll(in:)` (`Services/DataWipe.swift`), which deletes every model except `Settings`, children before parents. **A new model must be added to it**, as well as to the two schema lists.
 
 ## Widgets
 

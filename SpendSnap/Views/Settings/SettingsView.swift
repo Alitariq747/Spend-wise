@@ -11,7 +11,7 @@ import StoreKit
 import UIKit
 
 extension Notification.Name {
-    /// Posted synchronously after `SettingsView.deleteAllSyncedData()` commits,
+    /// Posted synchronously after `DataWipe.deleteAll(in:)` commits,
     /// so views holding manually-fetched model arrays in `@State` can drop them
     /// before SwiftUI re-evaluates a body against an invalidated object.
     static let spendWiseDidDeleteAllData = Notification.Name("spendWiseDidDeleteAllData")
@@ -289,7 +289,7 @@ struct SettingsView: View {
                     Button("Delete", role: .destructive) { deleteAllSyncedData() }
                     Button("Cancel", role: .cancel) { }
                 } message: {
-                    Text("This permanently removes your expenses, categories, cards, and budgets from this device — and from your other devices once iCloud finishes syncing. Your currency, appearance, and reminder preferences are kept. This can't be undone.")
+                    Text("This permanently removes your expenses, income, categories, budgets, cards, bills and savings goals from this device — and from your other devices once iCloud finishes syncing. Your currency, appearance, and reminder preferences are kept. This can't be undone.")
                 }
 
             }
@@ -435,16 +435,7 @@ struct SettingsView: View {
   
     private func deleteAllSyncedData() {
         do {
-            // Leaf-first: every child is gone before its parent, so the
-            // `.cascade` rules on CategoryEntity and CreditCard never fire
-            // against a live object.
-            try deleteAll(of: Expense.self)
-            try deleteAll(of: CategoryMonthlyBudget.self)
-            try deleteAll(of: CategoryEntity.self)
-            try deleteAll(of: Budget.self)
-            try deleteAll(of: CreditCard.self)
-
-            try modelContext.save()
+            try DataWipe.deleteAll(in: modelContext)
 
             // Synchronous, still inside this call stack — the tab views drop
             // their cached model arrays before SwiftUI can re-evaluate any body
@@ -454,13 +445,9 @@ struct SettingsView: View {
             WidgetRefresh.reloadAll()
 
             deleteResultTitle = "All Data Deleted"
-            deleteResultMessage = "Your expenses, categories, cards, and budgets have been removed. If iCloud sync is on, your other devices will update the next time they sync."
+            deleteResultMessage = String(localized: "Your expenses, income, categories, budgets, cards, bills and savings goals have been removed. If iCloud sync is on, your other devices will update the next time they sync.")
         } catch {
-            // Without this the context keeps the objects marked for deletion:
-            // `@Query` shows an empty app while the store still holds the rows,
-            // and the next unrelated save() commits the delete silently.
-            modelContext.rollback()
-
+            // DataWipe has already rolled the context back.
             deleteResultTitle = "Couldn't Delete Your Data"
             deleteResultMessage = "Something went wrong and your data wasn't deleted. Please try again, or contact us from the General section if the problem continues."
             #if DEBUG
@@ -469,14 +456,6 @@ struct SettingsView: View {
         }
 
         showDeleteResultAlert = true
-    }
-
-    private func deleteAll<T: PersistentModel>(of type: T.Type) throws {
-        let descriptor = FetchDescriptor<T>()
-        let items = try modelContext.fetch(descriptor)
-        for item in items {
-            modelContext.delete(item)
-        }
     }
 
 }

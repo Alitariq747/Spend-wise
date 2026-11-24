@@ -23,7 +23,9 @@ enum WidgetModelContainer {
             Settings.self,
             Income.self,
             RecurringRule.self,
-            StatementPayment.self
+            StatementPayment.self,
+            SavingsGoal.self,
+            GoalContribution.self
         ])
 
         let configuration = ModelConfiguration(

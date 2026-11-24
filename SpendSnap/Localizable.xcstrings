@@ -286,7 +286,7 @@
     "This month" : {
 
     },
-    "This permanently removes your expenses, categories, cards, and budgets from this device — and from your other devices once iCloud finishes syncing. Your currency, appearance, and reminder preferences are kept. This can't be undone." : {
+    "This permanently removes your expenses, income, categories, budgets, cards, bills and savings goals from this device — and from your other devices once iCloud finishes syncing. Your currency, appearance, and reminder preferences are kept. This can't be undone." : {
 
     },
     "This removes the card. Existing expenses will stay, but their payment method/card link will be cleared." : {
@@ -320,6 +320,9 @@
 
     },
     "X" : {
+
+    },
+    "Your expenses, income, categories, budgets, cards, bills and savings goals have been removed. If iCloud sync is on, your other devices will update the next time they sync." : {
 
     },
     "iCloud" : {
