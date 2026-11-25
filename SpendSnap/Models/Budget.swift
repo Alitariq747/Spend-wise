@@ -13,13 +13,16 @@ final class Budget {
   var id: UUID = UUID()
   var monthKey: String = ""
   var amount: Decimal = 0
+  /// Set on create and on every edit; picks the row to keep when a month has
+  /// more than one (2.5a). `nil` on rows from 2.3, which never set it.
+  var updatedAt: Date? = nil
 
 
   init(monthKey: String, amount: Decimal) {
     self.id = UUID()
     self.monthKey = monthKey
     self.amount = amount
-   
+    self.updatedAt = Date()
   }
 }
 
@@ -28,13 +31,28 @@ extension Budget {
   /// default from the settings row every process agrees on, else 0.
   /// Home, Insights and the widgets all read the budget through this.
   static func amount(for monthKey: String, in context: ModelContext) -> Decimal {
-    var own = FetchDescriptor<Budget>(predicate: #Predicate { $0.monthKey == monthKey })
-    own.fetchLimit = 1
-    if let row = (try? context.fetch(own))?.first { return row.amount }
+    if let row = preferred(rows(for: monthKey, in: context)) { return row.amount }
 
     var settings = FetchDescriptor<Settings>(sortBy: Settings.oldestFirst)
     settings.fetchLimit = 1
     return (try? context.fetch(settings))?.first?.defaultMonthlyBudget ?? 0
+  }
+
+  /// A month's own rows. Normally one; CloudKit can't enforce that, so sync can leave more.
+  static func rows(for monthKey: String, in context: ModelContext) -> [Budget] {
+    (try? context.fetch(FetchDescriptor<Budget>(predicate: #Predicate { $0.monthKey == monthKey }))) ?? []
+  }
+
+  /// The row a month uses when it has several (2.5a): newest `updatedAt`, rows
+  /// without one last, then the higher amount, then `id`. Every process and
+  /// device picks the same row, so the app, the widgets and the cleanup agree.
+  static func preferred(_ rows: [Budget]) -> Budget? {
+    rows.min { a, b in
+      let ta = a.updatedAt ?? .distantPast, tb = b.updatedAt ?? .distantPast
+      if ta != tb { return ta > tb }
+      if a.amount != b.amount { return a.amount > b.amount }
+      return a.id.uuidString < b.id.uuidString
+    }
   }
 
   /// On upgrade from 2.3, where every budget was per month: if no "every month"

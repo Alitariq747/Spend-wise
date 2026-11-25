@@ -151,7 +151,7 @@ struct AddBudgetSheet: View {
             .onAppear {
                    // Open on the month's own budget if it has one, else on "every month".
                    let everyMonth = settingsRows.first?.defaultMonthlyBudget ?? 0
-                   if let own = ownRows().first {
+                   if let own = Budget.preferred(Budget.rows(for: monthKey, in: modelContext)) {
                        scope = .thisMonth
                        amountText = AmountParser.editString(own.amount)
                    } else {
@@ -163,19 +163,17 @@ struct AddBudgetSheet: View {
                }
     }
     
-    /// This month's own `Budget` rows. Normally one; sync can leave duplicates.
-    private func ownRows() -> [Budget] {
-        let key = monthKey
-        return (try? modelContext.fetch(FetchDescriptor<Budget>(predicate: #Predicate { $0.monthKey == key }))) ?? []
-    }
-
     private func saveBudget() {
         guard let amount = AmountParser.parse(amountText), amount > 0 else { return }
 
+        let own = Budget.rows(for: monthKey, in: modelContext)
         switch scope {
         case .thisMonth:
-            if let row = ownRows().first {
+            // Keep one row for the month: update the one in use, drop any duplicates.
+            if let row = Budget.preferred(own) {
                 row.amount = amount
+                row.updatedAt = Date()
+                for other in own where other !== row { modelContext.delete(other) }
             } else {
                 modelContext.insert(Budget(monthKey: monthKey, amount: amount))
             }
@@ -183,7 +181,7 @@ struct AddBudgetSheet: View {
             guard let settings = settingsRows.first else { return }
             settings.defaultMonthlyBudget = amount
             // This month now follows "every month"; other months' own budgets stay.
-            for row in ownRows() { modelContext.delete(row) }
+            for row in own { modelContext.delete(row) }
         }
         try? modelContext.save()
         WidgetRefresh.reloadAll()

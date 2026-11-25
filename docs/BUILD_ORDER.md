@@ -32,7 +32,7 @@ Sizes are estimates of added or changed Swift lines. Deletions, String Catalog d
 |---|---|---|---|
 | 0 Groundwork | 3 | Nov 19 | 3 |
 | 1 Data model | 4 | Nov 19 | 4 |
-| 2 Fixes and shared building blocks | 9 | Nov 21 | 5 |
+| 2 Fixes and shared building blocks | 9 | Nov 21 | 6 |
 | 3 Design kit and core screens | 12 | Nov 24 | 0 |
 | 4 Income | 4 | Nov 25 | 0 |
 | 5 Bills & Cards | 14 | Nov 28 | 0 |
@@ -43,7 +43,7 @@ Sizes are estimates of added or changed Swift lines. Deletions, String Catalog d
 | 10 Polish | 4 | Dec 4 | 0 |
 | 11 Languages and rename | 7 | Dec 4 | 0 |
 | 12 Release prep | 4 | Dec 7 | 0 |
-| **Total** | **88** | Freeze Dec 4, submit Dec 7 | **12** |
+| **Total** | **88** | Freeze Dec 4, submit Dec 7 | **13** |
 
 Phases run in order: Bills & Cards (the riskiest sync work) comes before the free tier, as MASTER_PLAN §7 decided. Phase 10 can run alongside 8 in a parallel session.
 
@@ -170,7 +170,7 @@ Relationships are optional and have inverses, because CloudKit requires both.
   - One `monthlyBudget(for:)` helper (the month's row, else the default) feeds Home, Insights and both budget widgets.
   - On upgrade, if no default is set, the latest month's budget becomes the default.
   - *Done when:* an "every month" budget saved in November shows in December untouched, and a "this month" change in December leaves November and January alone.
-- [ ] **2.5a One budget row per month, last edit wins** · ~60 lines · model change
+- [x] **2.5a One budget row per month, last edit wins** · ~60 lines · model change
   - Found in 2.5: CloudKit can't enforce one `Budget` row per month, so two devices saving the same month before they sync leave two rows. Today a month shows an arbitrary one, and the budget sheet can edit a different row from the one Home shows.
   - `Budget` and `CategoryMonthlyBudget` gain `updatedAt: Date? = nil`, set on create and on every edit. Optional on purpose: migrated rows and rows from 2.3 devices have no real time.
   - One rule picks a month's row everywhere: newest `updatedAt`, rows without one last, then the higher amount, then the `id`. `Budget.amount`, the budget sheet and the cleanup all use it, so the app and the widgets agree.

@@ -14,6 +14,8 @@ final class CategoryMonthlyBudget {
    
     var monthKey: String = ""
     var amount: Decimal = 0
+    /// Set on create and on every edit, as on `Budget` (2.5a). `nil` on rows from 2.3.
+    var updatedAt: Date? = nil
 
 
     var category: CategoryEntity?
@@ -22,6 +24,7 @@ final class CategoryMonthlyBudget {
         self.category = category
         self.monthKey = monthKey
         self.amount = amount
+        self.updatedAt = Date()
     }
 }
 

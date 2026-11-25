@@ -302,6 +302,7 @@ struct CategoryEditSheet: View {
            
             if let override = category.monthlyBudgets?.first(where: { $0.monthKey == activeMonthKey }) {
                 override.amount = newBudget
+                override.updatedAt = Date()
             } else {
                 let override = CategoryMonthlyBudget(
                     category: category,

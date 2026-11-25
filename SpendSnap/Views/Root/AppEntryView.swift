@@ -36,6 +36,7 @@ struct AppEntryView: View {
         .task {
             SettingsReconciler.reconcile(in: modelContext)
             IdentityBackfill.run(in: modelContext)
+            BudgetReconciler.reconcile(in: modelContext)
             Budget.carryOverLatest(in: modelContext)
         }
         // Rows created on a device still running 2.3 sync in without a
@@ -43,6 +44,7 @@ struct AppEntryView: View {
         .onChange(of: scenePhase) { _, newPhase in
             guard newPhase == .active else { return }
             IdentityBackfill.run(in: modelContext)
+            BudgetReconciler.reconcile(in: modelContext)
         }
         // The duplicate is inserted at launch on a second device, but only
         // becomes visible once CloudKit's first sync merges into this context —
