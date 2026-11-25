@@ -14,7 +14,7 @@ struct InsightsView: View {
     
     @State private var selectedMonth: Date = Date()
     
-    @State private var budgetForMonth: Budget? = nil
+    @State private var budgetForMonth: Decimal = 0
     @State private var monthExpenses: [Expense] = []
  
     var body: some View {
@@ -49,7 +49,7 @@ struct InsightsView: View {
         // that `@Query` would have swept. Drop them before a body can read one.
         .onReceive(NotificationCenter.default.publisher(for: .spendWiseDidDeleteAllData)) { _ in
             monthExpenses = []
-            budgetForMonth = nil
+            budgetForMonth = 0
         }
         .onChange(of: selectedMonth) {
             fetchBudget()
@@ -60,10 +60,7 @@ struct InsightsView: View {
     
     private func fetchBudget() {
        
-            let key = MonthUtil.monthKey(selectedMonth)
-             var desc = FetchDescriptor<Budget>(predicate: #Predicate { $0.monthKey == key })
-             desc.fetchLimit = 1
-             budgetForMonth = (try? ctx.fetch(desc))?.first
+            budgetForMonth = Budget.amount(for: MonthUtil.monthKey(selectedMonth), in: ctx)
        
     }
     

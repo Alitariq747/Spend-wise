@@ -2,7 +2,7 @@
 
 > [MASTER_PLAN.md](MASTER_PLAN.md) says **what** ships in 2.4. This file says **in what order** we build it, as small numbered steps done one at a time.
 > Created 2026-11-18. It replaces the week-by-week table in MASTER_PLAN §7, whose dates are stale: no 2.4 code had landed by Nov 18.
-> On 2026-11-22, D36 and D37 dropped Spanish and receipt scanning: step 11.6 and all of Phase 9 are gone, leaving 85 steps. On 2026-11-24, step 1.4 (CloudKit schema in Development) was added, making 86, and step 11.7 (month labels on the Islamic calendar), making 87.
+> On 2026-11-22, D36 and D37 dropped Spanish and receipt scanning: step 11.6 and all of Phase 9 are gone, leaving 85 steps. On 2026-11-24, step 1.4 (CloudKit schema in Development) was added, making 86, and step 11.7 (month labels on the Islamic calendar), making 87. On 2026-11-25, step 2.5a (one budget row per month) was added, making 88.
 > Tick a step when it lands. The rules for step size and workflow are in [CLAUDE.md → Working in steps](../CLAUDE.md#working-in-steps).
 
 **Contents:** How a step works · Status board · Decisions this order builds on · Phases 0–12 · Ahmad's track · Slip order · Schedule check
@@ -32,7 +32,7 @@ Sizes are estimates of added or changed Swift lines. Deletions, String Catalog d
 |---|---|---|---|
 | 0 Groundwork | 3 | Nov 19 | 3 |
 | 1 Data model | 4 | Nov 19 | 4 |
-| 2 Fixes and shared building blocks | 8 | Nov 21 | 4 |
+| 2 Fixes and shared building blocks | 9 | Nov 21 | 5 |
 | 3 Design kit and core screens | 12 | Nov 24 | 0 |
 | 4 Income | 4 | Nov 25 | 0 |
 | 5 Bills & Cards | 14 | Nov 28 | 0 |
@@ -43,7 +43,7 @@ Sizes are estimates of added or changed Swift lines. Deletions, String Catalog d
 | 10 Polish | 4 | Dec 4 | 0 |
 | 11 Languages and rename | 7 | Dec 4 | 0 |
 | 12 Release prep | 4 | Dec 7 | 0 |
-| **Total** | **87** | Freeze Dec 4, submit Dec 7 | **11** |
+| **Total** | **88** | Freeze Dec 4, submit Dec 7 | **12** |
 
 Phases run in order: Bills & Cards (the riskiest sync work) comes before the free tier, as MASTER_PLAN §7 decided. Phase 10 can run alongside 8 in a parallel session.
 
@@ -163,13 +163,23 @@ Relationships are optional and have inverses, because CloudKit requires both.
     - on 22 Aug, it moves to 21 Sep
 
     Checked with a harness, then in the simulator.
-- [ ] **2.5 The monthly budget carries over** · ~120 lines · D26
+- [x] **2.5 The monthly budget carries over** · ~120 lines · D26
   - The budget sheet gets "This month / Every month":
     - Every month writes `Settings.defaultMonthlyBudget`.
     - This month writes a `Budget` row for that month only.
   - One `monthlyBudget(for:)` helper (the month's row, else the default) feeds Home, Insights and both budget widgets.
   - On upgrade, if no default is set, the latest month's budget becomes the default.
   - *Done when:* an "every month" budget saved in November shows in December untouched, and a "this month" change in December leaves November and January alone.
+- [ ] **2.5a One budget row per month, last edit wins** · ~60 lines · model change
+  - Found in 2.5: CloudKit can't enforce one `Budget` row per month, so two devices saving the same month before they sync leave two rows. Today a month shows an arbitrary one, and the budget sheet can edit a different row from the one Home shows.
+  - `Budget` and `CategoryMonthlyBudget` gain `updatedAt: Date? = nil`, set on create and on every edit. Optional on purpose: migrated rows and rows from 2.3 devices have no real time.
+  - One rule picks a month's row everywhere: newest `updatedAt`, rows without one last, then the higher amount, then the `id`. `Budget.amount`, the budget sheet and the cleanup all use it, so the app and the widgets agree.
+  - `BudgetReconciler` runs at launch and on every foreground: for each month with more than one `Budget` row it keeps the rule's pick and deletes the rest. "This month" does the same for its month when it saves.
+  - Category budgets only get the field here. Reading and cleaning them up is in 3.9.
+  - *Done when:*
+    - with two rows for one month, the newer shows on Home, Insights and the widgets, and the older is gone after the next launch
+    - a "this month" save sets `updatedAt` and leaves one row for that month
+    - the upgrade test passes, and the schema upload shows `CD_updatedAt` on `CD_Budget` and `CD_CategoryMonthlyBudget`
 - [ ] **2.6 Reminders stop wiping other notifications** · ~50 lines
   - Changing the reminder level removes only the logging reminders, by identifier. Today it removes every pending notification.
   - This starts the one `NotificationScheduler` that the card and bill alerts (5.4, 5.5, 5.10) extend.
@@ -223,6 +233,7 @@ Relationships are optional and have inverses, because CloudKit requires both.
 - [ ] **3.9 Home, part 2: categories** · ~100 lines
   - Category rows built from the kit. A row without a budget shows spending only.
   - A line shows how much of the monthly budget isn't assigned to any category.
+  - A category's month budget uses 2.5a's rule (newest `updatedAt`) when a month has more than one `CategoryMonthlyBudget` row, and the category edit sheet keeps one row per month when it saves.
   - *Done when:* with a 100,000 budget and 70,000 assigned to categories, Home shows 30,000 unassigned.
 - [ ] **3.10 History, grouped by day** · ~130 lines
   - A section per day with that day's total. The whole row is tappable (today only the small "…" is). Add an empty state.

@@ -62,6 +62,9 @@
     "Applies" : {
 
     },
+    "Applies to" : {
+
+    },
     "Billing Cycle" : {
 
     },
@@ -146,13 +149,22 @@
     "Enter Budget" : {
 
     },
+    "Enter a budget for %@ to start tracking." : {
+
+    },
     "Enter your card limit" : {
 
     },
     "Enter your card name" : {
 
     },
+    "Every month" : {
+
+    },
     "Expenses must belong to a category so your totals and insights stay organized." : {
+
+    },
+    "For every month that doesn't have its own budget." : {
 
     },
     "General" : {
@@ -213,6 +225,9 @@
 
     },
     "OK" : {
+
+    },
+    "Only for %@." : {
 
     },
     "Pay with" : {
@@ -318,6 +333,9 @@
 
     },
     "Update Budget" : {
+
+    },
+    "Update your budget for %@" : {
 
     },
     "Walmart" : {

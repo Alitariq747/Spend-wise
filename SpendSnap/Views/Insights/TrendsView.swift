@@ -18,7 +18,7 @@ struct TrendsView: View {
     
     @Binding var selectedMonth: Date
     let expenses: [Expense]
-    let budget: Budget?
+    let budget: Decimal
 
     var body: some View {
         let weekly = fourWeekTotals(monthExpenses: expenses, month: selectedMonth)
@@ -52,7 +52,7 @@ struct TrendsView: View {
                                        title: weekly[i].title,
                                        amount: weekly[i].amount,
                                        maxAmount: maxAmt,
-                                       budgetAmount: budget?.amount ?? 0
+                                       budgetAmount: budget
                                    )
                                }
                 }
@@ -95,14 +95,14 @@ struct TrendsView: View {
                         .font(.system(size: 12, weight: .semibold))
                         .foregroundStyle(.primary)
                 }
-                DailyBurn(expenses: expenses, month: selectedMonth, budgetAmount: budget?.amount ?? 0)
+                DailyBurn(expenses: expenses, month: selectedMonth, budgetAmount: budget)
             }
             .padding(.horizontal, 12)
             .padding(.vertical, 30)
             .background(Color(.systemBackground), in: RoundedRectangle(cornerRadius: 12))
             .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color(.systemGray5), lineWidth: 2))
                 
-            let points = makePaceSeries(expenses: expenses, month: selectedMonth, budget: budget?.amount)
+            let points = makePaceSeries(expenses: expenses, month: selectedMonth, budget: budget)
             let bands  = makeBands(from: points)
             PaceBandChart(bands: bands)
 
@@ -112,5 +112,5 @@ struct TrendsView: View {
 }
 
 #Preview {
-    TrendsView(selectedMonth: .constant(Calendar.current.date(from: .init(year: 2025, month: 10))!), expenses: previewExpenses, budget: Budget(monthKey: "2025-10", amount: 10000))
+    TrendsView(selectedMonth: .constant(Calendar.current.date(from: .init(year: 2025, month: 10))!), expenses: previewExpenses, budget: 10000)
 }

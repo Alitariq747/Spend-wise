@@ -20,7 +20,7 @@ struct MonthlyOverview: View {
     let darkBlue  = Color(red: 0.12, green: 0.36, blue: 0.82)
     
     let onTapped: () -> Void
-    let budget: Budget?
+    let budget: Decimal
     let spent: Decimal
     let todaySpent: Decimal
     let weekSpent: Decimal
@@ -51,14 +51,14 @@ struct MonthlyOverview: View {
                     VStack(alignment: .leading, spacing: 2) {
                         Text("Budgeted")
                             .font(.system(size: 12, weight: .light))
-                        MoneyText(budget?.amount ?? 0, code: currencyCode)
+                        MoneyText(budget, code: currencyCode)
                             .font(.system(size: 14, weight: .regular))
                     }
                  
                     VStack(alignment: .trailing, spacing: 2) {
                         Text("Left")
                             .font(.system(size: 12, weight: .light))
-                        let remaining = (budget?.amount ?? 0) - spent
+                        let remaining = (budget) - spent
                        
                         MoneyText(remaining, code: currencyCode)
                             .font(.system(size: 14, weight: .regular))
@@ -131,5 +131,5 @@ struct MonthlyOverview: View {
 }
 
 #Preview {
-    MonthlyOverview(onTapped: {print("tapped")}, budget: Budget(monthKey: "2025-10", amount: 1000.00), spent: 1200.00, todaySpent: 26.00, weekSpent: 72.00, currentMonth: true, daysRemaining: 20)
+    MonthlyOverview(onTapped: {print("tapped")}, budget: 1000, spent: 1200.00, todaySpent: 26.00, weekSpent: 72.00, currentMonth: true, daysRemaining: 20)
 }

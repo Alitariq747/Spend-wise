@@ -145,9 +145,8 @@ struct MonthOverviewProvider: TimelineProvider {
         let code = settings?.currencyCode ?? Settings.defaultCurrencyCode
         
         // Fetch Budget for current Month
-        let budgetFetch = FetchDescriptor<Budget>(predicate: #Predicate { $0.monthKey == monthKey})
-        let budget = (try? context.fetch(budgetFetch))?.first
-        let budgetAmount = budget?.amount ?? 0
+        // The month's own budget, else the "every month" one (D26).
+        let budgetAmount = Budget.amount(for: monthKey, in: context)
         
         // Expenses fetch
         let expensesFetch = FetchDescriptor<Expense>(predicate: #Predicate { $0.monthKey == monthKey})

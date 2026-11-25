@@ -12,7 +12,7 @@ struct OverviewView: View {
     @Query(sort: \CategoryEntity.name) private var categories: [CategoryEntity]
     @Binding var selectedMonth: Date
     
-    let budgetForMonth: Budget?
+    let budgetForMonth: Decimal
     let monthExpenses: [Expense]
     
     private var categoryTotals:[CategoryEntity: Decimal] {
@@ -22,7 +22,7 @@ struct OverviewView: View {
     var body: some View {
         let segs = pieSegments(
             monthExpenses: monthExpenses,
-            budgetAmount: budgetForMonth?.amount
+            budgetAmount: budgetForMonth
         )
 
         HStack(alignment: .center, spacing: 16) {

@@ -270,7 +270,7 @@ The checks for each fix are in [BUILD_ORDER.md](BUILD_ORDER.md), steps 2.1–2.7
 - [ ] **Card statement due (D25).** The card, its widget and its alerts show the last closed statement until that statement's due date.
   - *Done when:* with statement day 1 and due day 21, the card shows July's total due 21 Aug from 1 to 21 Aug, then 21 Sep from 22 Aug.
 - [x] **Amount entry in every locale.** `12,50`, `1.250,00` and Arabic digits are read correctly in every amount field. Today `12,50` saves as 1250 on phones that use a decimal comma, such as German ones, and Arabic digits can't be saved.
-- [ ] **The budget carries over (D26).** An "every month" budget applies to new months. On upgrade, the latest month's budget becomes the default.
+- [x] **The budget carries over (D26).** An "every month" budget applies to new months. On upgrade, the latest month's budget becomes the default.
 - [ ] **Reminders stop wiping other alerts.** Changing the reminder level removes only the logging reminders.
 - [ ] **Deleting a category keeps its expenses (D28).**
 - [ ] **Small fixes.**

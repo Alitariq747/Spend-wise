@@ -93,6 +93,8 @@ Consequences that shape the code:
 
 `Expense`, `Budget`, and `CategoryMonthlyBudget` all carry a denormalized `monthKey` string (`"yyyy-MM"`), and month-scoped fetching is done by `#Predicate { $0.monthKey == key }` rather than date ranges. The key is produced by `MonthUtil.monthKey` using a locale-pinned (`en_US_POSIX`) Gregorian formatter.
 
+A month's budget is read only through `Budget.amount(for:in:)` (`Models/Budget.swift`): the month's own `Budget` row, else `Settings.defaultMonthlyBudget` (the "every month" budget, D26), else 0. Home, Insights and the widgets all use it. The budget sheet's "Every month" writes the default and deletes that month's own rows; "This month" writes a row. `Budget.carryOverLatest(in:)` runs at launch and, while the default is 0, copies the latest month's budget up to the current month into it, for stores upgraded from 2.3.
+
 **Use `MonthUtil.gregorian`, never `Calendar.current`, for any arithmetic whose result feeds or buckets a `monthKey`** — a user in a Hijri/Buddhist region would otherwise shift the month out from under the key. `MonthUtil.gregorian` pins only the calendar identifier and inherits `firstWeekday`/`timeZone` from the user's settings.
 
 ## View patterns
@@ -136,4 +138,4 @@ What a card *shows* comes from `cardStatementToShow(statementDay:dueDay:)`. It r
 
 The v2.4 relaunch (rename, freemium, Siri, bills & cards, income and savings goals, Arabic and German, ASO) is planned in `docs/MASTER_PLAN.md`. Read it before product or App Store work, and keep its decision log and checklists current.
 
-The order of work is `docs/BUILD_ORDER.md`: 87 numbered steps in phases 0–12 (Phase 9 was dropped), plus Ahmad's non-code tasks and the slip order. Take the first unticked step unless Ahmad names another.
+The order of work is `docs/BUILD_ORDER.md`: 88 numbered steps in phases 0–12 (Phase 9 was dropped), plus Ahmad's non-code tasks and the slip order. Take the first unticked step unless Ahmad names another.

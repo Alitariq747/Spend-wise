@@ -9,6 +9,9 @@ import SwiftUI
 import SwiftData
 
 struct AddBudgetSheet: View {
+
+    /// Where a saved budget applies (D26).
+    enum Scope: Hashable { case thisMonth, everyMonth }
     
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var modelContext
@@ -21,6 +24,9 @@ struct AddBudgetSheet: View {
     }
     
     @State private var amountText: String = ""
+    @State private var scope: Scope = .everyMonth
+    /// True when the month already has its own budget or an "every month" one is set.
+    @State private var hasBudget = false
     
    
     @FocusState private var focused: Bool
@@ -31,7 +37,6 @@ struct AddBudgetSheet: View {
         MonthUtil.monthKey(month)
     }
 
-    var existingBudget: Budget? = nil
     var onSave: (() -> Void)? = nil
     
     var body: some View {
@@ -48,12 +53,24 @@ struct AddBudgetSheet: View {
                 .background(Circle().fill(colorScheme == .dark ? Color.blue.opacity(0.8) : Color.blue.opacity(0.7)))
                 
                 VStack(spacing: 6) {
-                    Text(existingBudget == nil ? "Enter Budget" : "Update Budget")
+                    Text(hasBudget ? "Update Budget" : "Enter Budget")
                         .font(.system(size: 20, weight: .bold))
                         .foregroundColor(.primary)
-                    Text(verbatim: existingBudget == nil ? "Enter a budget for \(MonthUtil.fmt.string(from: month)) to start tracking.": "Update your budget for \(MonthUtil.fmt.string(from: month))")
+                    Text(hasBudget ? "Update your budget for \(MonthUtil.fmt.string(from: month))" : "Enter a budget for \(MonthUtil.fmt.string(from: month)) to start tracking.")
                         .font(.system(size: 14, weight: .light))
                         .foregroundColor(.primary)
+                }
+
+                VStack(spacing: 6) {
+                    Picker("Applies to", selection: $scope) {
+                        Text("This month").tag(Scope.thisMonth)
+                        Text("Every month").tag(Scope.everyMonth)
+                    }
+                    .pickerStyle(.segmented)
+                    .labelsHidden()
+                    Text(scope == .thisMonth ? "Only for \(MonthUtil.fmt.string(from: month))." : "For every month that doesn't have its own budget.")
+                        .font(.system(size: 12, weight: .regular))
+                        .foregroundStyle(.secondary)
                 }
                 
                 HStack(spacing: 8) {
@@ -132,40 +149,46 @@ struct AddBudgetSheet: View {
                  }
             .padding(.horizontal)
             .onAppear {
-                 if let b = existingBudget {
-                 
-                   amountText = AmountParser.editString(b.amount)
-                 } else {
-                   amountText = ""
-                 }
+                   // Open on the month's own budget if it has one, else on "every month".
+                   let everyMonth = settingsRows.first?.defaultMonthlyBudget ?? 0
+                   if let own = ownRows().first {
+                       scope = .thisMonth
+                       amountText = AmountParser.editString(own.amount)
+                   } else {
+                       scope = .everyMonth
+                       amountText = everyMonth > 0 ? AmountParser.editString(everyMonth) : ""
+                   }
+                   hasBudget = !amountText.isEmpty
                    DispatchQueue.main.async { focused = true }
                }
     }
     
+    /// This month's own `Budget` rows. Normally one; sync can leave duplicates.
+    private func ownRows() -> [Budget] {
+        let key = monthKey
+        return (try? modelContext.fetch(FetchDescriptor<Budget>(predicate: #Predicate { $0.monthKey == key }))) ?? []
+    }
+
     private func saveBudget() {
-        
-        guard let amount = AmountParser.parse(amountText) , amount > 0 else {
-            return
-        }
+        guard let amount = AmountParser.parse(amountText), amount > 0 else { return }
 
-            if let b = existingBudget {
-                b.amount = amount
+        switch scope {
+        case .thisMonth:
+            if let row = ownRows().first {
+                row.amount = amount
             } else {
-                var desc = FetchDescriptor<Budget>(predicate: #Predicate{$0.monthKey == monthKey})
-                desc.fetchLimit = 1
-                if let found = (try? modelContext.fetch(desc))?.first {
-                    found.amount = amount
-                } else {
-                    modelContext.insert(Budget(monthKey: monthKey, amount: amount))
-                }
+                modelContext.insert(Budget(monthKey: monthKey, amount: amount))
             }
-            try? modelContext.save()
+        case .everyMonth:
+            guard let settings = settingsRows.first else { return }
+            settings.defaultMonthlyBudget = amount
+            // This month now follows "every month"; other months' own budgets stay.
+            for row in ownRows() { modelContext.delete(row) }
+        }
+        try? modelContext.save()
         WidgetRefresh.reloadAll()
-
-            onSave?()
-            dismiss()
-                
-       
+        onSave?()
+        dismiss()
     }
 }
 

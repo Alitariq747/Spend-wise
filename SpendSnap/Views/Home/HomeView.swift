@@ -23,7 +23,7 @@ struct HomeView: View {
     @State private var showGoProSheet = false
 
   
-    @State private var budgetForMonth: Budget? = nil
+    @State private var budgetForMonth: Decimal = 0
     @State private var monthExpenses: [Expense] = []
     
     @State private var chosenCategory: CategoryEntity? = nil
@@ -186,7 +186,7 @@ struct HomeView: View {
             fetchExpenses()
         }
         .sheet(isPresented: $showAddBudget, onDismiss: { fetchBudget() }) {
-            AddBudgetSheet(month: $selectedMonth, existingBudget: budgetForMonth, onSave: {
+            AddBudgetSheet(month: $selectedMonth, onSave: {
                 fetchBudget()
             })
             .presentationDetents([ .medium])
@@ -229,7 +229,7 @@ struct HomeView: View {
         // that `@Query` would have swept. Drop them before a body can read one.
         .onReceive(NotificationCenter.default.publisher(for: .spendWiseDidDeleteAllData)) { _ in
             monthExpenses = []
-            budgetForMonth = nil
+            budgetForMonth = 0
             chosenCategory = nil
         }
 
@@ -237,10 +237,7 @@ struct HomeView: View {
     
     private func fetchBudget() {
        
-            let key = MonthUtil.monthKey(selectedMonth)
-             var desc = FetchDescriptor<Budget>(predicate: #Predicate { $0.monthKey == key })
-             desc.fetchLimit = 1
-             budgetForMonth = (try? ctx.fetch(desc))?.first
+            budgetForMonth = Budget.amount(for: MonthUtil.monthKey(selectedMonth), in: ctx)
        
     }
     

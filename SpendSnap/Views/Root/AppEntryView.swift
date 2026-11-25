@@ -36,6 +36,7 @@ struct AppEntryView: View {
         .task {
             SettingsReconciler.reconcile(in: modelContext)
             IdentityBackfill.run(in: modelContext)
+            Budget.carryOverLatest(in: modelContext)
         }
         // Rows created on a device still running 2.3 sync in without a
         // `stableID` at any time; foregrounding is the cheap catch-up point.
