@@ -32,7 +32,7 @@ Sizes are estimates of added or changed Swift lines. Deletions, String Catalog d
 |---|---|---|---|
 | 0 Groundwork | 3 | Nov 19 | 3 |
 | 1 Data model | 4 | Nov 19 | 4 |
-| 2 Fixes and shared building blocks | 9 | Nov 21 | 6 |
+| 2 Fixes and shared building blocks | 9 | Nov 21 | 7 |
 | 3 Design kit and core screens | 12 | Nov 24 | 0 |
 | 4 Income | 4 | Nov 25 | 0 |
 | 5 Bills & Cards | 14 | Nov 28 | 0 |
@@ -43,7 +43,7 @@ Sizes are estimates of added or changed Swift lines. Deletions, String Catalog d
 | 10 Polish | 4 | Dec 4 | 0 |
 | 11 Languages and rename | 7 | Dec 4 | 0 |
 | 12 Release prep | 4 | Dec 7 | 0 |
-| **Total** | **88** | Freeze Dec 4, submit Dec 7 | **13** |
+| **Total** | **88** | Freeze Dec 4, submit Dec 7 | **14** |
 
 Phases run in order: Bills & Cards (the riskiest sync work) comes before the free tier, as MASTER_PLAN §7 decided. Phase 10 can run alongside 8 in a parallel session.
 
@@ -180,7 +180,7 @@ Relationships are optional and have inverses, because CloudKit requires both.
     - with two rows for one month, the newer shows on Home, Insights and the widgets, and the older is gone after the next launch
     - a "this month" save sets `updatedAt` and leaves one row for that month
     - the upgrade test passes, and the schema upload shows `CD_updatedAt` on `CD_Budget` and `CD_CategoryMonthlyBudget`
-- [ ] **2.6 Reminders stop wiping other notifications** · ~50 lines
+- [x] **2.6 Reminders stop wiping other notifications** · ~50 lines
   - Changing the reminder level removes only the logging reminders, by identifier. Today it removes every pending notification.
   - This starts the one `NotificationScheduler` that the card and bill alerts (5.4, 5.5, 5.10) extend.
   - *Done when:* a test alert stays pending after the reminder level changes, checked by listing pending requests in a debug build.

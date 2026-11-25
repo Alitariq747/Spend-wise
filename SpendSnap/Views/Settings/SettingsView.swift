@@ -341,17 +341,14 @@ struct SettingsView: View {
             RemindersSelectionView(selectedReminderLevel: settings?.reminderLevel ?? .quiet) {  newLevel in
                 settings?.reminderLevel = newLevel
                 try? modelContext.save()
-                if newLevel == .quiet {
-                           NotificationManager.shared.clearAll()
-                       } else {
-                           NotificationManager.shared.schedule(times: newLevel.times) {
-                               DispatchQueue.main.async {
-                                   withAnimation {
-                                       showNotificationToast = true
-                                   }
-                               }
-                           }
-                       }
+                // Quiet has no times, so this clears the logging reminders only.
+                NotificationScheduler.replaceReminders(times: newLevel.times) {
+                    DispatchQueue.main.async {
+                        withAnimation {
+                            showNotificationToast = true
+                        }
+                    }
+                }
             }
             .presentationDetents([.medium])
         }

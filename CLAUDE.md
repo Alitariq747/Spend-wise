@@ -124,6 +124,10 @@ Widgets never observe the store, so **any mutation in the app must call `WidgetR
 
 Deep link: widgets use `SpendWise://addExpense`; `RootTabView.onOpenURL` handles it by switching to the History tab with a deep-link month binding.
 
+## Notifications
+
+`NotificationScheduler` (`Services/NotificationScheduler.swift`) schedules every local notification. Each kind owns its identifiers and only removes those, never `removeAllPendingNotificationRequests`, so changing one kind never wipes another. The logging reminders use `expense-reminder-0`…`-9` (unchanged since 2.3, so updated installs find theirs). New kinds (card alerts, bill reminders) get their own prefix and reuse `requestAuthorizationIfNeeded(onDenied:then:)`.
+
 ## Monetization
 
 `StoreKitManager` (StoreKit 2) is the single source of truth for entitlement. Products `sw1` (monthly) and `sw2` (yearly), subscription group `21928894`; `SpendWise Pro.storekit` is the local testing configuration.
