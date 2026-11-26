@@ -11,7 +11,10 @@ import StoreKit
 enum SpendWiseProductIDs {
     static let monthly = "sw1"
     static let yearly = "sw2"
-    static let all = [monthly, yearly]
+    /// One-time purchase (non-consumable). It never expires.
+    static let lifetime = "sw_lifetime"
+    static let subscriptions = [monthly, yearly]
+    static let all = [monthly, yearly, lifetime]
     static let subscriptionGroupID = "21928894"
 }
 
@@ -42,10 +45,33 @@ final class StoreKitManager: ObservableObject {
     @Published private(set) var isRestoring = false
     @Published var lastErrorMessage: String?
 
-    var hasActiveSubscription: Bool {
+    /// The one Pro check: an active monthly or yearly subscription, or Lifetime.
+    var hasPro: Bool {
         !activeProductIDs.isEmpty
     }
-    
+
+    var hasLifetime: Bool {
+        activeProductIDs.contains(SpendWiseProductIDs.lifetime)
+    }
+
+    /// A monthly or yearly subscription is active, whether or not Lifetime is owned too.
+    var hasSubscription: Bool {
+        !activeProductIDs.isDisjoint(with: SpendWiseProductIDs.subscriptions)
+    }
+
+    /// Every Pro gate goes through here: entitlements are loaded first if they
+    /// haven't been, then `action` runs for Pro users and `showPaywall` for the rest.
+    func requirePro(_ action: () -> Void, otherwise showPaywall: () -> Void) async {
+        if !isEntitlementsLoaded {
+            await refreshEntitlements()
+        }
+        if hasPro {
+            action()
+        } else {
+            showPaywall()
+        }
+    }
+
     /// Prefer the live group ID from loaded products, with ASC value as safe fallback.
     var resolvedSubscriptionGroupID: String {
         products.compactMap { $0.subscription?.subscriptionGroupID }.first ?? SpendWiseProductIDs.subscriptionGroupID
@@ -149,12 +175,12 @@ final class StoreKitManager: ObservableObject {
         // `AppStore.sync()` is a round trip that always demands a password, so it
         // is kept for the case that genuinely needs it.
         await refreshEntitlements()
-        if hasActiveSubscription { return .restored }
+        if hasPro { return .restored }
 
         do {
             try await AppStore.sync()
             await refreshEntitlements()
-            return hasActiveSubscription ? .restored : .nothingToRestore
+            return hasPro ? .restored : .nothingToRestore
         } catch StoreKitError.userCancelled {
             // Dismissing the sign-in sheet is a decision, not a fault. Reporting
             // it as a failure invites the user to retry something that worked.
@@ -164,24 +190,6 @@ final class StoreKitManager: ObservableObject {
         } catch {
             return .failed(message: "Restore failed. Please try again.")
         }
-    }
-
-    static func hasAnyActiveSubscription() async -> Bool {
-        for await result in Transaction.currentEntitlements {
-            guard case .verified(let transaction) = result else { continue }
-            guard SpendWiseProductIDs.all.contains(transaction.productID) else { continue }
-            guard transaction.revocationDate == nil else { continue }
-            guard !transaction.isUpgraded else { continue }
-
-            if let expirationDate = transaction.expirationDate {
-                if expirationDate > Date() {
-                    return true
-                }
-            } else {
-                return true
-            }
-        }
-        return false
     }
 
     private func observeTransactionUpdates() -> Task<Void, Never> {

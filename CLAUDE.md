@@ -130,9 +130,11 @@ Deep link: widgets use `SpendWise://addExpense`; `RootTabView.onOpenURL` handles
 
 ## Monetization
 
-`StoreKitManager` (StoreKit 2) is the single source of truth for entitlement. Products `sw1` (monthly) and `sw2` (yearly), subscription group `21928894`; `SpendWise Pro.storekit` is the local testing configuration.
+`StoreKitManager` (StoreKit 2) is the single source of truth for entitlement. Products `sw1` (monthly), `sw2` (yearly) and `sw_lifetime` (non-consumable), subscription group `21928894`; `SpendWise Pro.storekit` is the local testing configuration.
 
-Feature gating reads **`storeKit.hasActiveSubscription`** — the persisted `Settings.proUnlocked` field exists but is not what gates anything. The gating pattern is: await `refreshEntitlements()` if `!isEntitlementsLoaded`, then present `GoProSheet` instead of the action (see `HomeView.handleAddExpenseTap`, `HistoryView`, `CreditCardView`). The paywall is also shown once right after onboarding completes.
+Pro is **`storeKit.hasPro`**: an active `sw1`/`sw2` or the Lifetime non-consumable `sw_lifetime`. The persisted `Settings.proUnlocked` field exists but is not what gates anything. Every gate goes through `await storeKit.requirePro(action, otherwise: { showGoProSheet = true })`, which loads entitlements first if needed (see `HomeView.handleAddExpenseTap`, `HistoryView`, `CreditCardView`). `hasLifetime`/`hasSubscription` are only for showing what the user owns (Settings). The paywall is also shown once right after onboarding completes.
+
+Purchases can only be tested by running from Xcode with `SpendWise Pro.storekit` set as the scheme's StoreKit Configuration (not committed). `simctl launch` never uses it.
 
 ## Credit card cycles
 

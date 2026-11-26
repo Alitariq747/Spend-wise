@@ -85,16 +85,7 @@ struct HomeView: View {
 
     @MainActor
     private func handleAddExpenseTap() async {
-        if !storeKit.isEntitlementsLoaded {
-            await storeKit.refreshEntitlements()
-        }
-
-        guard storeKit.hasActiveSubscription else {
-            showGoProSheet = true
-            return
-        }
-
-        presentAddExpense()
+        await storeKit.requirePro(presentAddExpense, otherwise: { showGoProSheet = true })
     }
 
 

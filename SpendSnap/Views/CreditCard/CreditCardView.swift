@@ -32,16 +32,7 @@ struct CreditCardView: View {
 
     @MainActor
     private func handleAddCardTap() async {
-        if !storeKit.isEntitlementsLoaded {
-            await storeKit.refreshEntitlements()
-        }
-
-        guard storeKit.hasActiveSubscription else {
-            showGoProSheet = true
-            return
-        }
-
-        showAddCardSheet = true
+        await storeKit.requirePro({ showAddCardSheet = true }, otherwise: { showGoProSheet = true })
     }
     
     var body: some View {

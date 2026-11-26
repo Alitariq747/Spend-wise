@@ -46,18 +46,26 @@ struct SettingsView: View {
     
     private static let manageSubscriptionsURL = URL(string: "https://apps.apple.com/account/subscriptions")!
     
-    private var hasActiveSubscription: Bool {
-        storeKit.hasActiveSubscription
+    private var hasPro: Bool {
+        storeKit.hasPro
+    }
+
+    /// Lifetime with no subscription to manage: the row is a label, not a button.
+    private var isLifetimeOnly: Bool {
+        storeKit.hasLifetime && !storeKit.hasSubscription
     }
     
     private var subscriptionStatusText: String {
         guard storeKit.isEntitlementsLoaded else { return "Checking..." }
-        return hasActiveSubscription ? "Subscription Active" : "No Subscription Active"
+        if storeKit.hasLifetime { return String(localized: "Lifetime") }
+        return hasPro ? "Subscription Active" : "No Subscription Active"
     }
     
+    /// "Manage" whenever a subscription is active — even alongside Lifetime, so
+    /// the user can cancel a subscription they no longer need.
     private var subscriptionBadgeText: String? {
-        guard storeKit.isEntitlementsLoaded else { return nil }
-        return hasActiveSubscription ? "Manage" : "Upgrade"
+        guard storeKit.isEntitlementsLoaded, !isLifetimeOnly else { return nil }
+        return hasPro ? "Manage" : "Upgrade"
     }
     
     private func labelForStatus(_ status: ICloudStatus) -> String {
@@ -98,9 +106,9 @@ struct SettingsView: View {
                         .foregroundStyle(.primary)
                     
                     HStack(spacing: 12) {
-                        Image(systemName: storeKit.isEntitlementsLoaded ? (hasActiveSubscription ? "checkmark.seal.fill" : "crown.fill") : "clock")
+                        Image(systemName: storeKit.isEntitlementsLoaded ? (hasPro ? "checkmark.seal.fill" : "crown.fill") : "clock")
                             .font(.system(size: 18, weight: .semibold))
-                            .foregroundStyle(storeKit.isEntitlementsLoaded ? (hasActiveSubscription ? Color.green.opacity(0.8) : Color.orange.opacity(0.9)) : Color.secondary)
+                            .foregroundStyle(storeKit.isEntitlementsLoaded ? (hasPro ? Color.green.opacity(0.8) : Color.orange.opacity(0.9)) : Color.secondary)
                         
                         VStack(alignment: .leading, spacing: 2) {
                             Text("Pro Plan")
@@ -115,15 +123,17 @@ struct SettingsView: View {
                         if let badgeText = subscriptionBadgeText {
                             Text(badgeText)
                                 .font(.system(size: 12, weight: .semibold))
-                                .foregroundStyle(hasActiveSubscription ? .primary : Color.white)
+                                .foregroundStyle(hasPro ? .primary : Color.white)
                                 .padding(.horizontal, 10)
                                 .padding(.vertical, 6)
-                                .background(hasActiveSubscription ? Color(.systemGray5) : Color.black, in: Capsule())
+                                .background(hasPro ? Color(.systemGray5) : Color.black, in: Capsule())
                         }
                         
-                        Image(systemName: "chevron.right")
-                            .font(.system(size: 11, weight: .semibold))
-                            .foregroundStyle(.secondary)
+                        if !isLifetimeOnly {
+                            Image(systemName: "chevron.right")
+                                .font(.system(size: 11, weight: .semibold))
+                                .foregroundStyle(.secondary)
+                        }
                     }
                     .padding(.horizontal)
                     .padding(.vertical, 16)
@@ -132,9 +142,9 @@ struct SettingsView: View {
                     .onTapGesture {
                         handleSubscriptionTap()
                     }
-                    .allowsHitTesting(storeKit.isEntitlementsLoaded)
+                    .allowsHitTesting(storeKit.isEntitlementsLoaded && !isLifetimeOnly)
                     
-                    if storeKit.isEntitlementsLoaded && !hasActiveSubscription {
+                    if storeKit.isEntitlementsLoaded && !hasPro {
                         Button {
                             Task {
                                 await restorePurchasesFromSettings()
@@ -372,8 +382,8 @@ struct SettingsView: View {
     }
     
     private func handleSubscriptionTap() {
-        guard storeKit.isEntitlementsLoaded else { return }
-        if hasActiveSubscription {
+        guard storeKit.isEntitlementsLoaded, !isLifetimeOnly else { return }
+        if hasPro {
             Task {
                 await openManageSubscriptions()
             }

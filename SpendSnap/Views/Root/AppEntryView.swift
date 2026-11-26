@@ -70,7 +70,7 @@ struct AppEntryView: View {
         if !storeKit.isEntitlementsLoaded {
             await storeKit.refreshEntitlements()
         }
-        if !storeKit.hasActiveSubscription {
+        if !storeKit.hasPro {
             showPostOnboardingPaywall = true
         }
     }

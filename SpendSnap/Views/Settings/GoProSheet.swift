@@ -358,7 +358,7 @@ struct GoProSheet: View {
         if storeKit.isRestoring { return true }
         // And once it has: the sheet is closing, but it is still on screen for
         // the beat it takes to read the confirmation. Nothing left to sell.
-        if storeKit.hasActiveSubscription { return true }
+        if storeKit.hasPro { return true }
         if isUnavailable { return storeKit.isLoadingProducts }
         return product(for: selectedTier) == nil
     }
