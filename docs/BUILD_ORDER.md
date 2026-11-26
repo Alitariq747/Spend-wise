@@ -215,10 +215,12 @@ Relationships are optional and have inverses, because CloudKit requires both.
   - Restyle `CustomTabBar` with the tokens, and rename the Cards tab "Bills & Cards".
   - One floating + button serves Home and History. It opens the expense form, and becomes an Expense / Income menu once Income (4.1) exists.
   - The widget's `SpendWise://addExpense` link opens the form directly, instead of switching to History.
+  - Check every tab with VoiceOver. In 2.6, an accessibility press on the Settings tab didn't switch to it, while the other tabs worked, so VoiceOver users may not be able to open Settings.
   - *Done when:* the tab bar and + look the same on every tab, and the widget's + opens the form.
 - [ ] **3.5 Expense form, part 1: one form for add and edit** · ~150 lines
   - A new `ExpenseForm` built from the kit. The amount comes first and is large, the merchant is optional (capped at 40 characters as you type), then the date.
   - Add and edit both use it. Delete `AddExpenseSheet` and `ExpenseDetailSheet`, two 300-line copies today.
+  - The merchant cap is the last part of MASTER_PLAN §6 "Small fixes" (2.7 did the other two), so tick that box when this step lands.
   - *Done when:* adding and editing work with or without a merchant, and an expense with no merchant shows its category name in lists.
 - [ ] **3.6 Expense form, part 2: category and payment** · ~120 lines
   - Category chips that fit on screen without scrolling for the default set.
@@ -271,6 +273,7 @@ Relationships are optional and have inverses, because CloudKit requires both.
 - [ ] **5.2 Card tiles and card detail on the kit** · ~120 lines
   - The tile shows the 5.1 status: neutral, warning within 3 days, red when overdue. Today the due pill is always red.
   - The card list uses each card's own identity (`ForEach(cards)`). Today it is keyed by name, so two cards with the same name clash.
+  - Light cards (platinum, silver) need a visible edge in light mode: today they blend into the white background. Their text is fine since 2.7.
   - *Done when:* each status looks distinct in light and dark mode, and two cards with the same name both show.
 - [ ] **5.3 Mark a statement as paid** · ~130 lines · Pro
   - On the card, mark a statement "Paid in full" or enter a partial amount.
@@ -461,6 +464,7 @@ Dropped on 2026-11-22, with its six steps (9.1–9.6), the camera permission and
 
 - [ ] **11.1 Computed strings localizable** · ~120 lines
   - About 45 enum and computed display strings (categories, reminder levels, appearance, plans, paywall features…) move to `LocalizedStringResource`.
+  - Also the 5 logging-reminder titles and bodies in `NotificationScheduler`, which are plain `String`s today.
   - *Done when:* switching the simulator to German shows no English in those places, once 11.5 has filled the catalog.
 - [ ] **11.2 Widgets and Siri phrases localizable** · ~60 lines
   - Widget names and descriptions, and the App Shortcut phrases. The widget names and descriptions are already in the widget catalog (their APIs extract them; checked in 0.3), so this is mainly the Siri phrases and any widget text held in plain `String`s.
