@@ -32,90 +32,46 @@ enum CardColor: String, CaseIterable, Identifiable {
     case silver, gold, graphite, royalBlue, deepPurple, midnightBlue, roseGold, platinum
     var id: String { rawValue }
 
-   
-    var accent: Color {
+
+    /// The two ends of the card's gradient, top-leading then bottom-trailing.
+    var gradientHexes: (UInt32, UInt32) {
         switch self {
-        case .silver:    return Color(hex: 0xB8C0CC)
-        case .gold:      return Color(hex: 0xC89B3C)
-        case .graphite:  return Color(hex: 0x1C212B)
-        case .royalBlue: return Color(hex: 0x3C56D6)
-        case .deepPurple:return Color(hex: 0x5B45C6)
-        case .midnightBlue: return Color(hex: 0x0E1A3A) // deep navy
-        case .roseGold:     return Color(hex: 0xC58C7B) // warm rosy metal
-        case .platinum:     return Color(hex: 0xDCE1E7)
+        case .silver:       return (0xE7EBF2, 0xC6CCD6)
+        case .gold:         return (0xFFE6A7, 0xD6A74F)
+        case .graphite:     return (0x2B2F3A, 0x101319)
+        case .royalBlue:    return (0x4D6BFF, 0x2F47C2)
+        case .deepPurple:   return (0x7E66FF, 0x4B37C6)
+        case .midnightBlue: return (0x14264F, 0x0C1834)
+        case .roseGold:     return (0xF2C1B3, 0xC88F7E)
+        case .platinum:     return (0xF4F6F9, 0xC9D0D9)
         }
     }
 
-    
     var gradient: LinearGradient {
-        switch self {
-        case .silver:
-            return .linear(colors: [Color(hex: 0xE7EBF2), Color(hex: 0xC6CCD6)],
-                           startPoint: .topLeading, endPoint: .bottomTrailing)
-        case .gold:
-            return .linear(colors: [Color(hex: 0xFFE6A7), Color(hex: 0xD6A74F)],
-                           startPoint: .topLeading, endPoint: .bottomTrailing)
-        case .graphite:
-            return .linear(colors: [Color(hex: 0x2B2F3A), Color(hex: 0x101319)],
-                           startPoint: .topLeading, endPoint: .bottomTrailing)
-        case .royalBlue:
-            return .linear(colors: [Color(hex: 0x4D6BFF), Color(hex: 0x2F47C2)],
-                           startPoint: .topLeading, endPoint: .bottomTrailing)
-        case .deepPurple:
-            return .linear(colors: [Color(hex: 0x7E66FF), Color(hex: 0x4B37C6)],
-                           startPoint: .topLeading, endPoint: .bottomTrailing)
-        case .midnightBlue:
-            return .linear(
-                colors: [Color(hex: 0x14264F), Color(hex: 0x0C1834)],
-                startPoint: .topLeading, endPoint: .bottomTrailing
-            )
-
-        case .roseGold:
-            return .linear(
-                colors: [Color(hex: 0xF2C1B3), Color(hex: 0xC88F7E)],
-                startPoint: .topLeading, endPoint: .bottomTrailing
-            )
-
-        case .platinum:
-            return .linear(
-                colors: [Color(hex: 0xF4F6F9), Color(hex: 0xC9D0D9)],
-                startPoint: .topLeading, endPoint: .bottomTrailing
-            )
-
-        }
+        let (top, bottom) = gradientHexes
+        return .linear(colors: [Color(hex: top), Color(hex: bottom)],
+                       startPoint: .topLeading, endPoint: .bottomTrailing)
     }
 }
 
 extension CardColor {
-    /// The “accent” hex you already use for this palette
-    var accentHex: UInt32 {
-        switch self {
-        case .silver:       return 0xB8C0CC
-        case .gold:         return 0xC89B3C
-        case .graphite:     return 0x1C212B
-        case .royalBlue:    return 0x3C56D6
-        case .deepPurple:   return 0x5B45C6
-        case .midnightBlue: return 0x0E1A3A
-        case .roseGold:     return 0xC58C7B
-        case .platinum:     return 0xDCE1E7
-        }
-    }
-
-    /// Smart text color for this card background (white on dark, black on light)
+    /// Text colour for this card: black or white, whichever contrasts better
+    /// with *both* ends of the gradient (WCAG contrast ratio). Light metals
+    /// (silver, gold, rose gold, platinum) get black, the rest white.
     var onCardText: Color {
-        let hex = accentHex
-        let r = Double((hex >> 16) & 0xFF) / 255.0
-        let g = Double((hex >> 8)  & 0xFF) / 255.0
-        let b = Double( hex        & 0xFF) / 255.0
-
-        // sRGB → linear
-        func linear(_ c: Double) -> Double {
-            c <= 0.03928 ? c / 12.92 : pow((c + 0.055)/1.055, 2.4)
+        func luminance(_ hex: UInt32) -> Double {
+            func linear(_ v: UInt32) -> Double {
+                let c = Double(v & 0xFF) / 255
+                return c <= 0.03928 ? c / 12.92 : pow((c + 0.055) / 1.055, 2.4)
+            }
+            return 0.2126 * linear(hex >> 16) + 0.7152 * linear(hex >> 8) + 0.0722 * linear(hex)
         }
-        let L = 0.2126 * linear(r) + 0.7152 * linear(g) + 0.0722 * linear(b)
-
-        // threshold ~0.53 works well for these palettes
-        return L < 0.53 ? .white : .black
+        let (top, bottom) = gradientHexes
+        let lighter = max(luminance(top), luminance(bottom))
+        let darker = min(luminance(top), luminance(bottom))
+        let whiteContrast = 1.05 / (lighter + 0.05)   // worst case is the lighter end
+        let blackContrast = (darker + 0.05) / 0.05    // worst case is the darker end
+        return whiteContrast >= blackContrast ? .white : .black
     }
 
     /// Softer secondary text (e.g., captions) that still contrasts

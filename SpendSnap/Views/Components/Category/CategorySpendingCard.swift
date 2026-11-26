@@ -47,7 +47,10 @@ struct CategorySpendingCard: View {
                             VStack(alignment: .leading, spacing: 2) {
                                 Text(category.name)
                                     .font(.system(size:16, weight: .semibold))
-                                Text(verbatim: "\(Money.format(spent, code: currencyCode)) / \(Money.format(max(budget, 0), code: currencyCode))")
+                                // No budget: spending only, no "/ Rs0".
+                                Text(verbatim: budget > 0
+                                     ? "\(Money.format(spent, code: currencyCode)) / \(Money.format(budget, code: currencyCode))"
+                                     : Money.format(spent, code: currencyCode))
                                     .font(.system(size:14, weight:.medium))
                                     .foregroundStyle(.primary)
                             }

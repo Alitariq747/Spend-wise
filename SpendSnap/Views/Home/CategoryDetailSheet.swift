@@ -110,7 +110,7 @@ struct CategoryDetailSheet: View {
                 Spacer()
                 
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("Budgeted: \(Money.format(budget, code: currencyCode))")
+                    (budget > 0 ? Text("Budgeted: \(Money.format(budget, code: currencyCode))") : Text("No budget"))
                         .font(.system(size: 15, weight: .regular))
                         .foregroundStyle(.primary)
                     Text("Spent: \(Money.format(spent, code: currencyCode))")

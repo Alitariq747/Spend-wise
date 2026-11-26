@@ -57,7 +57,7 @@ struct CardDetailSheet: View {
                 HStack {
                     Image(systemName: "creditcard")
                         .font(.system(size: 20, weight: .semibold))
-                        .foregroundStyle(.white)
+                        .foregroundStyle(snapshot.card.color.onCardText)
                         .padding(10)
                         .background(snapshot.card.color.gradient, in: RoundedRectangle(cornerRadius: 12))
                     

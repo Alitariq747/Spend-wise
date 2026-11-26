@@ -32,7 +32,7 @@ Sizes are estimates of added or changed Swift lines. Deletions, String Catalog d
 |---|---|---|---|
 | 0 Groundwork | 3 | Nov 19 | 3 |
 | 1 Data model | 4 | Nov 19 | 4 |
-| 2 Fixes and shared building blocks | 9 | Nov 21 | 7 |
+| 2 Fixes and shared building blocks | 9 | Nov 21 | 8 |
 | 3 Design kit and core screens | 12 | Nov 24 | 0 |
 | 4 Income | 4 | Nov 25 | 0 |
 | 5 Bills & Cards | 14 | Nov 28 | 0 |
@@ -43,7 +43,7 @@ Sizes are estimates of added or changed Swift lines. Deletions, String Catalog d
 | 10 Polish | 4 | Dec 4 | 0 |
 | 11 Languages and rename | 7 | Dec 4 | 0 |
 | 12 Release prep | 4 | Dec 7 | 0 |
-| **Total** | **88** | Freeze Dec 4, submit Dec 7 | **14** |
+| **Total** | **88** | Freeze Dec 4, submit Dec 7 | **15** |
 
 Phases run in order: Bills & Cards (the riskiest sync work) comes before the free tier, as MASTER_PLAN §7 decided. Phase 10 can run alongside 8 in a parallel session.
 
@@ -184,9 +184,9 @@ Relationships are optional and have inverses, because CloudKit requires both.
   - Changing the reminder level removes only the logging reminders, by identifier. Today it removes every pending notification.
   - This starts the one `NotificationScheduler` that the card and bill alerts (5.4, 5.5, 5.10) extend.
   - *Done when:* a test alert stays pending after the reminder level changes, checked by listing pending requests in a debug build.
-- [ ] **2.7 Small fixes** · ~50 lines
+- [x] **2.7 Small fixes** · ~50 lines
   - A category can be created without a budget, and its row then shows spending with no percentage.
-  - Silver and platinum cards get dark text. White text on light metal is unreadable in the live screenshots.
+  - Silver and platinum cards get dark text. White text on light metal is unreadable in the live screenshots. (Measured in 2.7: silver, gold and rose gold had white text; platinum was already dark. The text colour is now picked against both ends of the gradient.)
   - *Done when:* both work in the simulator, in light and dark mode.
 - [ ] **2.8 One Pro check, plus Lifetime** · ~110 lines
   - `StoreKitManager.hasPro` is true for an active `sw1`/`sw2` or the Lifetime non-consumable `sw_lifetime`. It replaces `hasActiveSubscription`.

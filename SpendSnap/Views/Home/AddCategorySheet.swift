@@ -106,7 +106,7 @@ struct AddCategorySheet: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 
                 VStack(alignment: .leading, spacing: 8) {
-                    Text("Allocated Budget")
+                    Text("Budget (optional)")
                         .font(.system(size: 16, weight: .regular))
                     HStack {
                         Text(verbatim: symbol)
@@ -202,20 +202,27 @@ struct AddCategorySheet: View {
         }
     }
     
+    /// The budget field's value: 0 when left empty (no budget), nil when it isn't a valid amount.
+    private var enteredBudget: Decimal? {
+        let text = categoryBudget.trimmingCharacters(in: .whitespaces)
+        guard !text.isEmpty else { return 0 }
+        guard let amount = AmountParser.parse(text), amount >= 0 else { return nil }
+        return amount
+    }
+
     private var canSave: Bool {
-        let isAmountOk = AmountParser.parse(categoryBudget) != nil && !categoryBudget.isEmpty
         let hasName = !categoryName.trimmingCharacters(in: .whitespaces).isEmpty
-        return isAmountOk && hasName
+        return enteredBudget != nil && hasName
     }
     
     private func saveCat() {
-        guard let budget = AmountParser.parse(categoryBudget), budget > 0, !categoryName.trimmingCharacters(in: .whitespaces).isEmpty, categoryName.count <= 20 else {
+        guard let budget = enteredBudget, !categoryName.trimmingCharacters(in: .whitespaces).isEmpty, categoryName.count <= 20 else {
             return
         }
         let category = CategoryEntity(name: categoryName, emoji: emoji, monthlyBudget: budgetScope == .everyMonth ? budget : .zero, colorHex: selectedColorHex)
         modelContext.insert(category)
         
-        if budgetScope == .thisMonth {
+        if budgetScope == .thisMonth, budget > 0 {
             let override = CategoryMonthlyBudget(category: category, monthKey: activeMonthKey, amount: budget)
             modelContext.insert(override)
         }

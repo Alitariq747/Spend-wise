@@ -47,9 +47,6 @@
     "All months" : {
 
     },
-    "Allocated Budget" : {
-
-    },
     "Amount" : {
 
     },
@@ -66,6 +63,9 @@
 
     },
     "Billing Cycle" : {
+
+    },
+    "Budget (optional)" : {
 
     },
     "Budgeted" : {
@@ -213,6 +213,9 @@
 
     },
     "No Cards Yet" : {
+
+    },
+    "No budget" : {
 
     },
     "No expenses in this cycle" : {
