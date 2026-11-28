@@ -29,6 +29,7 @@ struct CurrencyPickerSheet: View {
                         .font(.system(size: 18, weight: .semibold))
                         .foregroundStyle(Color.black)
                 }
+                .accessibilityLabel("Close")
                 
                 
             }

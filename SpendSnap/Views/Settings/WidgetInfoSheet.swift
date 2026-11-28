@@ -65,6 +65,7 @@ struct WidgetInfoSheet: View {
                               .font(.system(size: 16, weight: .semibold))
                               .foregroundStyle(.black)
                     }
+                    .accessibilityLabel("Close")
 
                 }
             }

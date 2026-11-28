@@ -26,17 +26,7 @@ struct AddCardSheet: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 20) {
-                HStack {
-                    Button {
-                        dismiss()
-                    } label: {
-                        Text("X")
-                            .font(.system(size: 14, weight: .semibold))
-                            .tint(Color(.systemGray))
-                            .padding(8)
-                            .background(Color(.secondarySystemBackground), in: Circle())
-                    }
-                    Spacer()
+                SheetHeader(onClose: { dismiss() }) {
                     Button {
                         if (isFormValid()) {
                             createCard()

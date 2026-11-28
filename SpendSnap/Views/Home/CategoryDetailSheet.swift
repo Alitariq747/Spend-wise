@@ -81,6 +81,7 @@ struct CategoryDetailSheet: View {
                         .padding(.horizontal, 10)
                         .padding(.vertical, 6)
                 }
+                .accessibilityLabel("Edit category")
                 .background(Color(.secondarySystemBackground), in: Circle())
                 
                 Button {
@@ -92,6 +93,7 @@ struct CategoryDetailSheet: View {
                         .padding(.horizontal, 10)
                         .padding(.vertical, 6)
                 }
+                .accessibilityLabel("Close")
                 .background(Color(.secondarySystemBackground), in: Circle())
             }
             HStack {
@@ -136,6 +138,7 @@ struct CategoryDetailSheet: View {
                                         .font(.system(size: 12, weight: .light))
                                         .tint(Color(.systemGray4))
                                 }
+                                .accessibilityLabel("Expense details")
                                 .buttonStyle(.plain)
                               
                             }

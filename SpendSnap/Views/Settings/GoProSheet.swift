@@ -411,6 +411,7 @@ struct GoProSheet: View {
                         .font(.system(size: 24, weight: .semibold))
                         .foregroundStyle(.primary)
                 }
+                .accessibilityLabel("Close")
                 .buttonStyle(.plain)
                 .disabled(storeKit.isPurchasing)
                 .opacity(storeKit.isPurchasing ? 0.35 : 1)

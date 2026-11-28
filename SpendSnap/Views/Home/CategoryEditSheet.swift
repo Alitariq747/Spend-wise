@@ -85,6 +85,7 @@ struct CategoryEditSheet: View {
                             .padding(8)
                             .background(Color(.secondarySystemBackground), in: Circle())
                     }
+                    .accessibilityLabel("Close")
                     Spacer()
                     
                     HStack(spacing: 8) {
@@ -108,6 +109,7 @@ struct CategoryEditSheet: View {
                                 .padding(6)
                                 .background(Color(.secondarySystemBackground), in: Circle())
                         }
+                        .accessibilityLabel("Delete category")
                         .buttonStyle(.plain)
                     }
                 }
@@ -127,6 +129,7 @@ struct CategoryEditSheet: View {
                             .padding(8)
                             .background(Color(.systemGray6), in: Circle())
                     }
+                    .accessibilityLabel("Choose emoji")
                     .offset(x: 4, y: 13)
                     .buttonStyle(.plain)
                 }
@@ -216,6 +219,8 @@ struct CategoryEditSheet: View {
                                     )
                             }
                             .buttonStyle(.plain)
+                            .accessibilityLabel("Color \((colorOptions.firstIndex(of: hex) ?? 0) + 1)")
+                            .accessibilityAddTraits(selectedColorHex == hex ? .isSelected : [])
                         }
                     }
                 }

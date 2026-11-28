@@ -43,17 +43,7 @@ struct CardEditSheet: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 20) {
-                HStack {
-                    Button {
-                        dismiss()
-                    } label: {
-                        Text("X")
-                            .font(.system(size: 14, weight: .semibold))
-                            .tint(Color(.systemGray))
-                            .padding(8)
-                            .background(Color(.secondarySystemBackground), in: Circle())
-                    }
-                    Spacer()
+                SheetHeader(onClose: { dismiss() }) {
                     
                     HStack {
                         
@@ -81,6 +71,7 @@ struct CardEditSheet: View {
                                 .padding(8)
                                 .background(Color(.secondarySystemBackground), in: Circle())
                         }
+                        .accessibilityLabel("Delete card")
                         .alert(Text(verbatim: "Delete \(card.name)"), isPresented: $showDeleteAlert) {
                             Button("Delete", role: .destructive) { deleteCard() }
                                 Button("Cancel", role: .cancel) { }

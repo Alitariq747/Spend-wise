@@ -58,6 +58,7 @@ struct CreditCardView: View {
                             .padding(8)
                             .background(Color(.secondarySystemBackground), in: Circle())
                     }
+                    .accessibilityLabel("Add card")
 
                 }
                 

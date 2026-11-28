@@ -21,6 +21,7 @@ struct MonthPicker: View {
               .symbolRenderingMode(.monochrome)
               .foregroundStyle(.primary)
       }
+      .accessibilityLabel("Previous month")
       .buttonStyle(.plain)
    
       Text(MonthUtil.fmt.string(from: month))
@@ -33,6 +34,7 @@ struct MonthPicker: View {
               .symbolRenderingMode(.monochrome)
               .foregroundStyle(.primary)
       }
+      .accessibilityLabel("Next month")
       .buttonStyle(.plain)
       .disabled(limitToCurrentMonth && MonthUtil.monthKey(month) == MonthUtil.monthKey(Date()))
       .opacity(limitToCurrentMonth && MonthUtil.monthKey(month) == MonthUtil.monthKey(Date()) ? 0.2 : 1)

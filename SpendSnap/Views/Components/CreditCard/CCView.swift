@@ -79,6 +79,7 @@ struct CCView: View {
                         .foregroundStyle(fg)
                         .shadow(color: .black.opacity(fg == .white ? 0.25 : 0), radius: 2, y: 1)
                 }
+                .accessibilityLabel("Card details")
 
                
             }

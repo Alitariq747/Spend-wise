@@ -109,6 +109,7 @@ struct HomeView: View {
                             .padding(.horizontal, 10)
                             .padding(.vertical, 6)
                     }
+                    .accessibilityLabel("Edit budget")
                     .background(Color(.secondarySystemBackground), in: RoundedRectangle(cornerRadius: 8))
                     
                 }
@@ -165,6 +166,7 @@ struct HomeView: View {
                             )
                             .shadow(color: .black.opacity(0.08), radius: 12, x: 0, y: 6)
                     }
+                    .accessibilityLabel("Add expense")
                     
                 }
                 .padding(.trailing, 25)

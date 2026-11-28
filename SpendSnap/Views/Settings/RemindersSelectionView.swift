@@ -25,6 +25,7 @@ struct RemindersSelectionView: View {
                         .font(.system(size: 20, weight: .semibold))
                         .foregroundStyle(.black)
                 }
+                .accessibilityLabel("Close")
 
             }
             .padding(.vertical)

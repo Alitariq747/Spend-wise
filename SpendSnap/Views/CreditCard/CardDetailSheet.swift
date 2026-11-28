@@ -80,6 +80,7 @@ struct CardDetailSheet: View {
                         .font(.system(size: 20, weight: .medium))
                         .foregroundColor(.primary)
                 }
+                .accessibilityLabel("Edit card")
 
             }
             Divider()
@@ -94,6 +95,7 @@ struct CardDetailSheet: View {
                         .frame(width: 32, height: 32)
                         .background(Color(.secondarySystemBackground), in: Circle())
                 }
+                .accessibilityLabel("Previous statement")
                 .buttonStyle(.plain)
 
                 VStack(spacing: 3) {
@@ -116,6 +118,7 @@ struct CardDetailSheet: View {
                         .frame(width: 32, height: 32)
                         .background(Color(.secondarySystemBackground), in: Circle())
                 }
+                .accessibilityLabel("Next statement")
                 .buttonStyle(.plain)
                 .disabled(!canMoveToNextCycle)
                 .opacity(canMoveToNextCycle ? 1 : 0.3)

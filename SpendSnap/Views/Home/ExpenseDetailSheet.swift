@@ -91,19 +91,7 @@ struct ExpenseDetailSheet: View {
         let labelW: CGFloat = 92
         
         VStack {
-            HStack {
-                Button {
-                    dismiss()
-                } label: {
-                    Text("X")
-                        .font(.system(size: 12, weight:.semibold))
-                        .foregroundStyle(Color(.systemGray))
-                        .padding(8)
-                        .background(Color(.secondarySystemBackground), in: Circle())
-                }
-                .buttonStyle(.plain)
-                Spacer()
-                
+            SheetHeader(onClose: { dismiss() }) {
                 HStack(spacing: 8) {
                     if canSave {
                         Button {
@@ -114,12 +102,7 @@ struct ExpenseDetailSheet: View {
                                 .foregroundColor(Color.indigo)
                                 .padding(.trailing, 4)
                         }
-                    } else {
-                        EmptyView()
                     }
-                   
-
-                    
                     Button {
                         showDeleteConfirm = true
                     } label: {
@@ -130,9 +113,8 @@ struct ExpenseDetailSheet: View {
                             .background(Color(.secondarySystemBackground), in: Circle())
                     }
                     .buttonStyle(.plain)
+                    .accessibilityLabel("Delete expense")
                 }
-
-                
             }
             VStack(alignment: .leading, spacing: 4) {
                 HStack {

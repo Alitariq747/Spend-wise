@@ -76,6 +76,7 @@ struct HistoryView: View {
                                             .font(.system(size: 12, weight: .light))
                                             .tint(Color(.systemGray4))
                                     }
+                                    .accessibilityLabel("Expense details")
                                     .buttonStyle(.plain)
                                     
                                 }
@@ -120,6 +121,7 @@ struct HistoryView: View {
                             )
                             .shadow(color: .black.opacity(0.08), radius: 12, x: 0, y: 6)
                     }
+                    .accessibilityLabel("Add expense")
                     
                 }
                 .padding(.trailing, 25)
