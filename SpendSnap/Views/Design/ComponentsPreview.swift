@@ -61,6 +61,33 @@ struct ComponentsBoard: View {
                 MoneyText(8_000, code: "PKR", style: .title)
                 MoneyText(42.5, code: "EUR", style: .title)
             }
+
+            // 3.3a: hero bars on the canvas, row bars and rings inside a surface.
+            VStack(spacing: Space.s16) {
+                ProgressBar(fraction: 0, pace: 0)
+                ProgressBar(fraction: 0.5, pace: 0.6)
+                ProgressBar(fraction: 0.9, pace: 1)
+                ProgressBar(fraction: 1)
+                ProgressBar(fraction: 1.3, pace: 0.8)
+            }
+            VStack(spacing: Space.s16) {
+                ProgressBar(fraction: 0.4, size: .row, insideSurface: true)
+                ProgressBar(fraction: 0.95, size: .row, insideSurface: true)
+                ProgressBar(fraction: 1.2, size: .row, insideSurface: true)
+                HStack(spacing: Space.s12) {
+                    ProgressRing(fraction: 0.73, tone: .sand, systemImage: "fork.knife")
+                    ProgressRing(fraction: 0.97, tone: .sage, systemImage: "cart")
+                    ProgressRing(fraction: 1.1, tone: .mist, systemImage: "fuelpump")
+                    ProgressRing(fraction: nil, tone: .lilac, systemImage: "bag")
+                }
+                HStack(spacing: Space.s12) {
+                    ProgressRing(fraction: 0, tone: .cocoa, systemImage: "cup.and.saucer")
+                    ProgressRing(fraction: 0.25, tone: .rose, systemImage: "heart")
+                    ProgressRing(fraction: 1, tone: .butter, systemImage: "bolt")
+                    ProgressRing(fraction: 0.5, tone: .stone, systemImage: "tag")
+                }
+            }
+            .surfaceStyle()
         }
         .foregroundStyle(Color.ink)
         .padding(.horizontal, Space.margin)
@@ -72,4 +99,9 @@ struct ComponentsBoard: View {
 #Preview("Light") { ScrollView { ComponentsBoard() } }
 #Preview("Dark") { ScrollView { ComponentsBoard() }.preferredColorScheme(.dark) }
 #Preview("Largest text") { ScrollView { ComponentsBoard() }.dynamicTypeSize(.accessibility5) }
+#Preview("Arabic") {
+    ScrollView { ComponentsBoard() }
+        .environment(\.layoutDirection, .rightToLeft)
+        .environment(\.locale, Locale(identifier: "ar"))
+}
 #endif
