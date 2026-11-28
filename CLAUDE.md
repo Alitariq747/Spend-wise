@@ -146,4 +146,4 @@ What a card *shows* comes from `cardStatementToShow(statementDay:dueDay:)`. It r
 
 The v2.4 relaunch (rename, freemium, Siri, bills & cards, income and savings goals, Arabic and German, ASO) is planned in `docs/MASTER_PLAN.md`. Read it before product or App Store work, and keep its decision log and checklists current.
 
-The order of work is `docs/BUILD_ORDER.md`: 88 numbered steps in phases 0–12 (Phase 9 was dropped), plus Ahmad's non-code tasks and the slip order. Take the first unticked step unless Ahmad names another.
+The order of work is `docs/BUILD_ORDER.md`: 92 numbered steps in phases 0–12 (Phase 9 was dropped), plus Ahmad's non-code tasks and the slip order. Take the first unticked step unless Ahmad names another.

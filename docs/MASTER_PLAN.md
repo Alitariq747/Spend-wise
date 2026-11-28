@@ -3,7 +3,7 @@
 > Single source of truth for the relaunch: decisions, scope, ASO, launch and metrics.
 > Started 2026-10-24. Scope widened on 2026-11-10 (D15–D24). Audit decisions and the step-by-step build order added on 2026-11-18 (D25–D35, [BUILD_ORDER.md](BUILD_ORDER.md)). Spanish and receipt scanning dropped on 2026-11-22 (D36, D37). Update the **Decision log** and tick the checklists as work lands.
 
-**Contents:** 1. Where we are · 2. Goals · 3. Decision log · 4. Positioning · 5. Free vs Pro & pricing · 6. v2.4 scope · 7. Build order & timeline · 8. Naming · 9. ASO & metadata · 10. Screenshots & icon · 11. App Review & release checklist · 12. Launch & growth · 13. Measurement · 14. Risks · 15. Open questions · 16. Out of scope · Appendix A–C
+**Contents:** 1. Where we are · 2. Goals · 3. Decision log · 4. Positioning · 5. Free vs Pro & pricing · 6. v2.4 scope · 7. Build order & timeline · 8. Naming · 9. ASO & metadata · 10. Screenshots & icon · 11. App Review & release checklist · 12. Launch & growth · 13. Measurement · 14. Risks · 15. Open questions · 16. Out of scope · Appendix A–D
 
 ---
 
@@ -84,6 +84,11 @@ Initial targets for **2027-01-31**. Reset them after two weeks of 2.4 data.
 | D35 | 2026-11-18 | **Free users can add credit cards as payment methods.** Cycles, due-date and statement alerts, mark-as-paid and the payoff plan stay Pro, so the onboarding card step works for everyone. Closes Q8. |
 | D36 | 2026-11-22 | **Spanish is dropped from 2.4:** app, store listing and Siri phrases. Its keywords couldn't be researched once the AppTweak trial ended, and a listing built on guessed keywords doesn't repay the translation, review and screenshot work. Mexico and Spain keep the English listing. An optional Spanish (Mexico) listing can still carry extra English keywords for the US store (§9.1). Closes Q6. |
 | D37 | 2026-11-22 | **Receipt scanning is dropped from 2.4.** It is slower than the logging 2.4 is built around (Siri, Control Center, the + button), most everyday spending has no usable receipt, and the faster extraction needs Apple Intelligence. It removes six build steps, the camera permission and the 20-receipt test. `receipt` and `scanner` leave the keyword fields (§9.2). |
+| D38 | 2026-11-27 | **Visual language: "a quiet ledger".** Neutral and spacious, one figure per screen, colour only where money needs attention. Warm off-white canvas (`#F7F6F3`) and white surfaces in light mode; graphite (`#111213`/`#1B1C1E`) in dark mode. Actions are ink (near-black in light, off-white in dark). **Juniper** (`#1F6F62` light, `#63C7B2` dark) is the one signature colour and means "good": income, paid, brand, the selected tab. Amber means close or due, coral means over or an error, and on track has no colour. Eight muted category tones. SF Pro, with amounts in SF Pro Rounded and the currency symbol at half size in a tertiary colour. Corner radii 14 (controls) and 22 (surfaces), spacing in steps of 4, screen margins 20. Full values in Appendix D; drawn on the design canvas linked there. Research behind it: Copilot, Monarch, Dime, YNAB, Luna, Things 3, Structured, Gentler Streak, Flighty, Revolut. |
+| D39 | 2026-11-27 | **Four tabs: Home, History, Bills & Cards, Insights.** Settings moves to a button at the top right of Home. "Bills & Cards" is too long for a fifth of the width in German and Arabic. Replaces D29's "five tabs stay"; the rest of D29 holds. If a translated label still doesn't fit, the tab gets a shorter label and the screen keeps the full title. |
+| D40 | 2026-11-27 | **SF Symbols replace emoji** for categories and savings goals. `CategoryEntity` and `SavingsGoal` gain `symbolName` and `toneRaw` (one of the eight tones). `emoji` stays and is still written, because 2.3 devices on the same iCloud read it. Seeded categories map by `systemKey`; a custom category without a symbol shows `tag` in Stone until the user picks one. The picker is a curated set of about 60 symbols, all available on iOS 17. |
+| D41 | 2026-11-27 | **The expense form has its own keypad.** It shows the user's digits and decimal mark (Arabic-Indic digits, a comma in German), feeds `AmountParser`, and swaps digits without animation while typing. |
+| D42 | 2026-11-27 | **Hide amounts (free).** An eye button at the top right of Home, next to Settings, hides every amount in the app (each shows as •••) until tapped again. Stored per device, like the Face ID lock (D16). Widgets and Siri answers are unaffected. For checking money in public or recording the screen. |
 
 ---
 
@@ -119,7 +124,7 @@ Initial targets for **2027-01-31**. Reset them after two weeks of 2.4 data.
 | Current-month overview, **with search** | **Unlimited savings goals** |
 | **Home Screen & Lock Screen widgets** | |
 | **One savings goal** | |
-| **Face ID app lock** | |
+| **Face ID app lock, hide amounts** (D42) | |
 | **Credit cards as payment methods** (D35) | |
 | iCloud sync, light/dark mode, 49 currencies | |
 
@@ -248,7 +253,7 @@ Dropped from 2.4 on 2026-11-22; the reasons are in D37. The section number stays
   - Income is its own `Income` model (D27), so existing expenses are untouched and 2.3 devices never count income as spending.
   - *Done when:* adding income changes no spending total, budget bar, card cycle or widget figure; Home shows the three numbers; an upgrade from 2.3 leaves existing data untouched.
 - [ ] **Savings goals (D19).**
-  - New models: a goal (name, emoji, target amount, optional target date) and its contributions. Each contribution is **its own record**, so money added on two devices merges instead of overwriting.
+  - New models: a goal (name, symbol (D40), target amount, optional target date) and its contributions. Each contribution is **its own record**, so money added on two devices merges instead of overwriting.
   - Entry point: a Goals section on Home that opens the goal detail. No new tab.
   - The detail shows progress, the amount still needed, and "save X a month to reach it by *date*".
   - Contributions are not expenses and never count toward spending.
@@ -264,6 +269,8 @@ Dropped from 2.4 on 2026-11-22; the reasons are in D37. The section number stays
   - The toggle's footnote says that widgets and Siri answers still show amounts.
   - Add `NSFaceIDUsageDescription`.
   - *Done when:* with the lock on, nothing is visible before authentication on cold launch and after backgrounding; a cancelled or failed check leaves the app locked; a device with no passcode can't turn the lock on.
+- [ ] **Hide amounts (D42, free).** The eye button on Home hides every amount in the app, per device.
+  - *Done when:* with amounts hidden, no screen shows a figure, the setting survives a relaunch, and the eye button's VoiceOver label says whether amounts are hidden.
 
 ### 6.9 Fixes found in the code audit (2026-11-11)
 The checks for each fix are in [BUILD_ORDER.md](BUILD_ORDER.md), steps 2.1–2.7 and 6.6.
@@ -278,15 +285,17 @@ The checks for each fix are in [BUILD_ORDER.md](BUILD_ORDER.md), steps 2.1–2.7
   - Silver and platinum cards get readable text.
   - A long merchant name is capped as you type instead of silently blocking save.
 
-### 6.10 Design refresh (D29, D30)
-- [ ] **Design kit.**
+### 6.10 Design refresh (D29, D30, D38–D41)
+- [ ] **Design kit (D38).**
   - Colour tokens for light and dark.
   - A type scale on the system text styles.
-  - Two corner radii.
-  - Shared components: surface, buttons, sheet header, chips, progress bar, empty state, amount field.
+  - Two corner radii (14, 22).
+  - Shared components: surface, buttons, sheet header, chips, progress bar, progress ring, category symbol tile, empty state, amount field.
+- [ ] **SF Symbols for categories and goals (D40).** A model field, a curated picker, and no emoji left in the UI.
 - [ ] **Restyled screens.**
-  - Home: a large "left to spend", the income line, upcoming bills and goals.
-  - One expense form: amount first, merchant optional, category chips.
+  - Tab bar: four tabs, Settings on Home (D39).
+  - Home: a status sentence ("You're on track."), a large "left to spend" with an even-pace mark, the income line, upcoming bills and card dues as date cards, categories as a two-column grid of progress rings, and goals.
+  - One expense form: amount first on its own keypad (D41), merchant optional, date and card as pills, category symbol tiles with the most used first.
   - History: grouped by day, with search.
   - Bills & Cards, Insights, Settings and onboarding.
   - The remaining sheets and the Home Screen widgets.
@@ -295,6 +304,8 @@ The checks for each fix are in [BUILD_ORDER.md](BUILD_ORDER.md), steps 2.1–2.7
   - every icon-only button has an accessibility label
   - no screen sets fonts or colours outside the kit
   - every screen works in light mode, dark mode and Arabic
+  - at the largest text size, items that sit side by side stack instead of being cut off
+  - motion and haptics follow Appendix D, and Reduce Motion turns movement into fades
 
 ---
 
@@ -588,3 +599,58 @@ Volume is 0–100 (5 = AppTweak's floor, essentially no searches). d = difficult
 - Siri AI & App Intents in iOS 27: https://www.cultofmac.com/news/siri-ai-third-party-apps-ios-27
 - Competitor listings: Tappy https://apps.apple.com/in/app/id6777520962 · DaTrack https://apps.apple.com/gb/app/id6760328162 · Fleur https://apps.apple.com/au/app/id1621020173 · Quanto https://apps.apple.com/us/app/id6749017099 · Kharcha Book https://apps.apple.com/pk/app/id1608360032 · TapSheet https://apps.apple.com/us/app/id6757964945
 - AppTweak keyword data: Ahmad's AppTweak workspace (trial), pulled 2026-10-24.
+- Design research, 2026-11-26/27: App Store screenshots of Copilot, Monarch, Dime, YNAB, Luna, Things 3, Structured, Gentler Streak, Flighty and Revolut; Cecilia Kim, "I'm Launching My First App. Here's How I Designed It (15 steps)" https://www.youtube.com/watch?v=VlMj58MTz0Q ; Calm Technology principles https://en.wikipedia.org/wiki/Calm_technology ; Sketch interview with Gentler Streak https://sketch.com/blog/gentler-streak
+
+---
+
+## Appendix D — Design tokens and feel (D38–D42)
+
+The source of truth for step 3.1 onwards. Design canvases (Ahmad's claude.ai artifacts, private):
+- **SpendWise Redesign:** https://claude.ai/artifact/BAgFj4JUPoYLQJMWPVEPyc. Build to the rows "v2 · A quiet ledger" (tokens board, Home and Add in light and dark) and "v2.1 · Symbols, rings, date cards". The rows above them are the superseded first draft.
+- **SpendWise Inspiration:** https://claude.ai/artifact/BvPfSGVkqibxoDmv1PsiFX. Research method, directions A–D and the motion board. Background only; D38 replaced its directions.
+
+**Colours**
+
+| Token | Light | Dark | Use |
+|---|---|---|---|
+| canvas | `#F7F6F3` | `#111213` | screen background |
+| surface | `#FFFFFF` | `#1B1C1E` | grouped lists, tiles, cards |
+| sunken | `#EFEEEA` | `#242528` | fields, pills, icon buttons, segmented control |
+| hairline | `#E6E4DF` | `#2C2D30` | dividers, bar tracks (inside a surface: `#EEEDE9` / `#26272A`) |
+| ink | `#17181A` | `#F2F1EE` | text, primary buttons, the + button, on-track bars |
+| inkSecondary | `#6A6864` | `#A09E99` | labels, secondary text |
+| inkTertiary | `#8E8C87` | `#75736F` | currency symbol on large amounts, chevrons. Large text only (3:1). |
+| juniper | `#1F6F62` | `#63C7B2` | income, paid, links, selected tab, keypad caret |
+| amber (text) | `#9A5B00` | `#F0B45A` | close to limit (from 85%), due within 3 days |
+| amber (fill) | `#E2A23B` | `#F0B45A` | bars and rings when close |
+| coral (text) | `#B3261E` | `#FF7B6E` | over budget, errors |
+| coral (fill) | `#D9483B` | `#FF7B6E` | bars and rings when over |
+
+On track gets no colour. Every status also has words ("Rs800 left", "Rs400 over", "in 2 days", "Paid").
+
+**Category tones** (tint / symbol ink; dark tint is the given colour at 16% opacity)
+
+| Tone | Light tint | Light ink | Dark tint base | Dark ink |
+|---|---|---|---|---|
+| Sand | `#F1E9DC` | `#7A5A2B` | `rgb(214,180,130)` | `#D9BC8E` |
+| Sage | `#E3ECE3` | `#3F6B47` | `rgb(140,190,145)` | `#9CCBA2` |
+| Cocoa | `#EEE5DE` | `#6B4A35` | `rgb(190,150,120)` | `#CFAE95` |
+| Mist | `#E3E9F1` | `#3A5579` | `rgb(140,165,205)` | `#A6BCDD` |
+| Lilac | `#ECE6F2` | `#5E4A80` | `rgb(170,150,205)` | `#BFAEDD` |
+| Butter | `#F4EDD3` | `#7A6516` | `rgb(215,195,120)` | `#D9C88A` |
+| Rose | `#F3E3E3` | `#8A3B3B` | `rgb(215,140,140)` | `#E0A6A6` |
+| Stone | `#ECEBE7` | `#5B5A56` | `rgb(170,168,160)` | `#B5B3AD` |
+
+**Type:** SF Pro on the system text styles. Screen title `.largeTitle` semibold (32 at default size). Status sentence `.title2` medium. Section headers `.title3` semibold, or `.footnote` semibold in sentence case for small labels (never all caps). Amounts in SF Pro Rounded semibold with `.monospacedDigit()`; the hero amount is about 60, with the currency symbol at half size in inkTertiary.
+
+**Shape and space:** radii 14 (controls) and 22 (surfaces), `.continuous`; capsules for pills. Spacing in steps of 4 (4, 8, 12, 16, 20, 24, 32, 40), screen margins 20, 44-point touch targets. One shadow in light mode (`0 1 2 / 4%` plus `0 8 24 / 5%` of ink); dark mode uses hairlines instead.
+
+**Components on the boards:** progress bar (6 on the hero, 4 in rows) with an even-pace mark; progress ring (56, stroke 4) around a 40 symbol circle; date card (148 wide: month, day, symbol or card colour, name, amount, countdown); category symbol tile (58, selected fills with the tone's ink and turns the symbol white); floating tab bar with four tabs; ink + button (56) above it.
+
+**Motion and haptics**
+- Numbers roll (`.contentTransition(.numericText())`) only when money actually moves, and only after the sheet that changed them has closed. While typing on the keypad, digits swap with no animation.
+- Springs are short (about 0.35 s) with little bounce. Pressed rows and cards scale to 97%.
+- One haptic per action, never two at once: success on save and on mark-as-paid, warning once when a save crosses 85% or 100%, selection on month change and on picking a category, medium impact on delete.
+- Progress bars and rings grow from zero the first time a month is shown, not on every scroll.
+- Reduce Motion turns slides and springs into fades and swaps numbers instead of rolling them. Haptics stay.
+- Empty states: one symbol, one sentence, one button. Errors say what went wrong, why, and what to do.

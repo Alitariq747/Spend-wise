@@ -2,7 +2,7 @@
 
 > [MASTER_PLAN.md](MASTER_PLAN.md) says **what** ships in 2.4. This file says **in what order** we build it, as small numbered steps done one at a time.
 > Created 2026-11-18. It replaces the week-by-week table in MASTER_PLAN §7, whose dates are stale: no 2.4 code had landed by Nov 18.
-> On 2026-11-22, D36 and D37 dropped Spanish and receipt scanning: step 11.6 and all of Phase 9 are gone, leaving 85 steps. On 2026-11-24, step 1.4 (CloudKit schema in Development) was added, making 86, and step 11.7 (month labels on the Islamic calendar), making 87. On 2026-11-25, step 2.5a (one budget row per month) was added, making 88.
+> On 2026-11-22, D36 and D37 dropped Spanish and receipt scanning: step 11.6 and all of Phase 9 are gone, leaving 85 steps. On 2026-11-24, step 1.4 (CloudKit schema in Development) was added, making 86, and step 11.7 (month labels on the Islamic calendar), making 87. On 2026-11-25, step 2.5a (one budget row per month) was added, making 88. On 2026-11-27, the design work (D38–D41) added steps 3.4a and 3.4b (category symbols) and split 3.5 into 3.5a and 3.5b (the keypad), and D42 added step 7.2a (hide amounts), making 92.
 > Tick a step when it lands. The rules for step size and workflow are in [CLAUDE.md → Working in steps](../CLAUDE.md#working-in-steps).
 
 **Contents:** How a step works · Status board · Decisions this order builds on · Phases 0–12 · Ahmad's track · Slip order · Schedule check
@@ -33,17 +33,17 @@ Sizes are estimates of added or changed Swift lines. Deletions, String Catalog d
 | 0 Groundwork | 3 | Nov 19 | 3 |
 | 1 Data model | 4 | Nov 19 | 4 |
 | 2 Fixes and shared building blocks | 9 | Nov 21 | 9 |
-| 3 Design kit and core screens | 12 | Nov 24 | 0 |
+| 3 Design kit and core screens | 15 | Nov 24 | 0 |
 | 4 Income | 4 | Nov 25 | 0 |
 | 5 Bills & Cards | 14 | Nov 28 | 0 |
 | 6 Free tier and first run | 11 | Nov 30 | 0 |
-| 7 Everyday tools | 5 | Dec 1 | 0 |
+| 7 Everyday tools | 6 | Dec 1 | 0 |
 | 8 Fast logging | 11 | Dec 3 | 0 |
 | 9 Receipt scanning: dropped (D37) | 0 | — | — |
 | 10 Polish | 4 | Dec 4 | 0 |
 | 11 Languages and rename | 7 | Dec 4 | 0 |
 | 12 Release prep | 4 | Dec 7 | 0 |
-| **Total** | **88** | Freeze Dec 4, submit Dec 7 | **16** |
+| **Total** | **92** | Freeze Dec 4, submit Dec 7 | **16** |
 
 Phases run in order: Bills & Cards (the riskiest sync work) comes before the free tier, as MASTER_PLAN §7 decided. Phase 10 can run alongside 8 in a parallel session.
 
@@ -64,6 +64,11 @@ All of these are recorded in MASTER_PLAN §3. The ones added for this build:
 - **D35** Free users can add cards as payment methods. Cycles, alerts, mark-as-paid and payoff are Pro.
 - **D36** No Spanish in 2.4. The languages are English, Arabic and German.
 - **D37** No receipt scanning in 2.4, so no camera permission and no Scan in the + menu.
+- **D38** The visual language is "a quiet ledger": neutral, ink actions, Juniper as the one signature colour, amber and coral only for attention. Every token value, the motion rules and the design canvas links are in MASTER_PLAN Appendix D.
+- **D39** Four tabs. Settings moves to a button on Home.
+- **D40** SF Symbols replace emoji for categories and goals, through new `symbolName` and `toneRaw` fields.
+- **D41** The expense form has its own keypad.
+- **D42** An eye button on Home hides every amount, per device.
 
 **Still open:** **Q9**, whether the free card widgets show due dates to free users (MASTER_PLAN §15). It is needed before step 6.1.
 
@@ -199,43 +204,61 @@ Relationships are optional and have inverses, because CloudKit requires both.
   - Checked in Xcode with the local `.storekit` file. Xcode's transaction manager can't expire a subscription on demand (cancelling only stops renewal), so the lapse was simulated by deleting the transaction, which `currentEntitlements` treats the same way. Pro locked on the next foreground. A Lifetime refund locks it at once.
     - an expired subscription locks it again
 
-## Phase 3 — Design kit and core screens (D30)
+## Phase 3 — Design kit and core screens (D30, D38–D41)
 
-- [ ] **3.1 Design tokens** · ~90 lines
-  - A colour set in the asset catalog, in light and dark: background, surface, stroke, primary and secondary text, one accent, and positive, warning and negative.
-  - A type scale on the system text styles, so text follows the user's text size, plus a rounded style for large amounts.
-  - Two corner radii and one spacing scale. Today there are 7 radii and 3 accent colours.
+The look is set by D38. MASTER_PLAN Appendix D holds every token value and the motion rules, and links the "SpendWise Redesign" design canvas: build to its rows "v2 · A quiet ledger" and "v2.1 · Symbols, rings, date cards" (read them with the Artifact tool).
+
+- [ ] **3.1 Design tokens** · ~90 lines · D38
+  - A colour set in the asset catalog, in light and dark: canvas, surface, sunken, hairline, ink, ink secondary, ink tertiary, Juniper, amber and coral (text and fill shades), with the values in MASTER_PLAN Appendix D.
+  - The eight category tones (Sand, Sage, Cocoa, Mist, Lilac, Butter, Rose, Stone), each a tint and an ink, in light and dark.
+  - A type scale on the system text styles, so text follows the user's text size, plus SF Pro Rounded for amounts.
+  - Two corner radii (14, 22, continuous), spacing in steps of 4, screen margins of 20, and one shadow. Today there are 7 radii and 3 accent colours.
   - *Done when:* a SwiftUI preview (not shipped) shows every token in light and dark mode, at default and largest text size.
 - [ ] **3.2 Components, part 1** · ~130 lines
-  - Surface style, primary and secondary buttons, a sheet header with a labelled close button (replacing the three `Text("X")` buttons), a section header, and `MoneyText` sizes.
+  - Surface style, primary (ink) and secondary buttons, a sheet header with a labelled close button (replacing the three `Text("X")` buttons), a section header, and `MoneyText` sizes with the currency symbol at half size in ink tertiary.
+  - A pressable button style that shrinks to 97% while held.
   - Every icon-only button gets an accessibility label. Today the whole app has 2.
   - *Done when:* previews show each component in light mode, dark mode and large text.
-- [ ] **3.3 Components, part 2** · ~130 lines
-  - A chip, a progress bar with warning and over states, an empty state, and a large amount field that uses the 2.1 parser.
+- [ ] **3.3 Components, part 2** · ~150 lines
+  - A chip, a progress bar with close and over states and an optional even-pace mark, a progress ring around a category symbol, an empty state (one symbol, one sentence, one button), and a large amount display.
   - *Done when:* previews show each component in light mode, dark mode, large text and Arabic (right to left).
-- [ ] **3.4 Tab bar and the + button** · ~100 lines · D29
-  - Restyle `CustomTabBar` with the tokens, and rename the Cards tab "Bills & Cards".
+- [ ] **3.4 Tab bar and the + button** · ~100 lines · D29, D39
+  - Four tabs: Home, History, Bills & Cards, Insights. Settings opens from a button at the top right of Home.
+  - Check every label with the real German and Arabic strings. If one doesn't fit, give the tab a shorter label and keep the full screen title.
+  - On iOS 26 the system tab bar showed on top of `CustomTabBar` (simulator screenshot, 2026-11-26). Decide in the plan whether to fix the custom bar or move to the system `TabView` bar.
   - One floating + button serves Home and History. It opens the expense form, and becomes an Expense / Income menu once Income (4.1) exists.
   - The widget's `SpendWise://addExpense` link opens the form directly, instead of switching to History.
-  - Check every tab with VoiceOver. In 2.6, an accessibility press on the Settings tab didn't switch to it, while the other tabs worked, so VoiceOver users may not be able to open Settings.
-  - *Done when:* the tab bar and + look the same on every tab, and the widget's + opens the form.
-- [ ] **3.5 Expense form, part 1: one form for add and edit** · ~150 lines
-  - A new `ExpenseForm` built from the kit. The amount comes first and is large, the merchant is optional (capped at 40 characters as you type), then the date.
+  - Check every tab with VoiceOver. In 2.6, an accessibility press on the Settings tab didn't switch to it, while the other tabs worked.
+  - *Done when:* the tab bar and + look the same on every tab, Settings opens from Home, and the widget's + opens the form.
+- [ ] **3.4a Category symbols: the model** · ~80 lines · D40, model change
+  - `CategoryEntity` and `SavingsGoal` gain `symbolName: String? = nil` and `toneRaw: String? = nil`, with a `CategoryTone` enum that falls back to Stone on unknown values.
+  - Seeded categories get their symbol and tone from `systemKey`. Anything without a symbol shows `tag` in Stone. `emoji` is kept and still written for 2.3 devices.
+  - Every place that shows a category emoji shows the symbol instead.
+  - Run the upgrade test, then the CloudKit schema upload, and check both new fields arrive in Development.
+  - *Done when:* a store from 2.3 upgrades with every row intact, seeded categories show their symbols, and custom ones show `tag`.
+- [ ] **3.4b Category symbols: the picker** · ~120 lines · D40
+  - A curated grid of about 60 money-related SF Symbols (all on iOS 17) plus the eight tones. It replaces `EmojiPickerSheet` in the add and edit category sheets, and 7.3 reuses it for goals.
+  - *Done when:* a new category gets a symbol and tone, and both show on Home and in the expense form.
+- [ ] **3.5a Expense form, part 1: one form for add and edit** · ~150 lines
+  - A new `ExpenseForm` built from the kit. The amount comes first and is large, the merchant is optional (capped at 40 characters as you type), and the date and payment method sit in two pills.
   - Add and edit both use it. Delete `AddExpenseSheet` and `ExpenseDetailSheet`, two 300-line copies today.
   - The merchant cap is the last part of MASTER_PLAN §6 "Small fixes" (2.7 did the other two), so tick that box when this step lands.
   - *Done when:* adding and editing work with or without a merchant, and an expense with no merchant shows its category name in lists.
-- [ ] **3.6 Expense form, part 2: category and payment** · ~120 lines
-  - Category chips that fit on screen without scrolling for the default set.
+- [ ] **3.5b Expense form, part 2: the keypad** · ~100 lines · D41
+  - Digits 0–9, the locale's decimal mark and delete, shown in the user's numerals. Its text goes through `AmountParser`. Digits swap without animation. Every key has an accessibility label.
+  - *Done when:* German shows a comma key and saves 1.250,50 correctly, and Arabic shows Arabic-Indic digits and saves the right amount.
+- [ ] **3.6 Expense form, part 3: category and payment** · ~120 lines
+  - A row of category symbol tiles, most used first, with "All categories" for the rest. The selected tile fills with its tone, turns its symbol white and gives a light haptic.
   - The payment method (cash or a card) is preselected from `Settings`. It is Cash until 6.7 adds the setting.
   - *Done when:* after typing an amount, an expense takes three taps to log.
-- [ ] **3.7 Expense form, part 3: delete and errors** · ~80 lines
-  - Edit mode deletes only after confirming. A failed save rolls back and tells the user. Today `try?` hides save errors.
+- [ ] **3.7 Expense form, part 4: delete and errors** · ~80 lines
+  - Edit mode deletes only after confirming. A failed save rolls back and tells the user what went wrong and what to do. Today `try?` hides save errors.
   - *Done when:* delete asks first, and a save forced to fail leaves no half-saved expense.
 - [ ] **3.8 Home, part 1: the headline** · ~120 lines
-  - A large "left to spend", with spent and budget under it, a progress bar, and today's and this week's spending. The budget comes from 2.5.
+  - A status sentence ("You're on track." / "You've gone over this month."), then a large "left to spend" (coral when over) with the budget under it, a progress bar with an even-pace mark, and a Today / This week row without boxes. The budget comes from 2.5.
   - *Done when:* Home reads at a glance in light and dark, over and under budget, and with no budget set.
 - [ ] **3.9 Home, part 2: categories** · ~100 lines
-  - Category rows built from the kit. A row without a budget shows spending only.
+  - A two-column grid of category tiles: the symbol inside a progress ring in its tone (amber when close, coral when over), the name, and what's left. A category without a budget shows spending only, with no ring.
   - A line shows how much of the monthly budget isn't assigned to any category.
   - A category's month budget uses 2.5a's rule (newest `updatedAt`) when a month has more than one `CategoryMonthlyBudget` row, and the category edit sheet keeps one row per month when it saves.
   - *Done when:* with a 100,000 budget and 70,000 assigned to categories, Home shows 30,000 unassigned.
@@ -315,7 +338,7 @@ Relationships are optional and have inverses, because CloudKit requires both.
   - The scheduler adds each rule's next occurrence, at its lead time, below card alerts in priority.
   - *Done when:* a bill due in 2 days with a 2-day reminder has a pending alert, and pausing the rule removes it.
 - [ ] **5.11 Upcoming on Home** · ~90 lines
-  - An "Upcoming" section lists bills and card dues in the next 14 days, soonest first. Tapping an item opens it. Users with neither don't see the section.
+  - A "Coming up" row of date cards (month and day, name, amount, "in 2 days" in amber when 3 days or fewer) for bills and card dues in the next 14 days, soonest first. Card dues show the card's colour. Tapping a card opens it. Users with neither don't see the section.
   - *Done when:* a bill and a card both due this week appear in date order.
 - [ ] **5.12 Subscriptions view** · ~100 lines · Pro, D15 · totals ⇄
   - Lists the rules flagged as subscriptions, with each one's next charge date.
@@ -383,8 +406,11 @@ Relationships are optional and have inverses, because CloudKit requires both.
 - [ ] **7.2 Face ID lock, part 2** · ~50 lines
   - A toggle under Settings → Security, with a note that widgets and Siri still show amounts. It can't be turned on without a device passcode.
   - *Done when:* on a simulator with no passcode, the toggle explains why it can't be turned on.
+- [ ] **7.2a Hide amounts** · ~70 lines · D42, free
+  - The eye button at the top right of Home, next to Settings, toggles a per-device setting. While it's on, `MoneyText` and `Money.format` callers on screen show ••• instead of figures, and progress bars and rings stay as they are. The button's symbol changes between `eye` and `eye.slash`, and its VoiceOver label says which state it's in. Widgets and Siri are unchanged.
+  - *Done when:* with amounts hidden, Home, History, Bills & Cards, Insights and the forms show no figure, and the setting survives a relaunch.
 - [ ] **7.3 Savings goals, part 1** · ~130 lines · D19, D24
-  - A Goals section on Home, and a sheet to create a goal: name, emoji, target and optional date.
+  - A Goals section on Home, and a sheet to create a goal: name, symbol (the 3.4b picker), target and optional date.
   - A free user's second goal opens the paywall. A lapsed subscriber keeps their existing goals.
   - *Done when:* a free user can create one goal and is asked to upgrade for a second.
 - [ ] **7.4 Savings goals, part 2** · ~140 lines
@@ -456,7 +482,7 @@ Dropped on 2026-11-22, with its six steps (9.1–9.6), the camera permission and
 - [ ] **10.2 Budget and card sheets on the kit** · ~150 lines
   - *Done when:* the budget sheet and the add and edit card sheets match the new look.
 - [ ] **10.3 Pickers and info sheets on the kit** · ~120 lines · ✂
-  - The currency, emoji, reminders and widget info sheets.
+  - The currency, reminders and widget info sheets.
   - *Done when:* no screen still uses fixed font sizes or the old colours.
 - [ ] **10.4 Home Screen widgets on the kit** · ~120 lines
   - The three existing widgets match the app's new look (store screenshot 6).
