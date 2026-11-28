@@ -208,12 +208,13 @@ Relationships are optional and have inverses, because CloudKit requires both.
 
 The look is set by D38. MASTER_PLAN Appendix D holds every token value and the motion rules, and links the "SpendWise Redesign" design canvas: build to its rows "v2 · A quiet ledger" and "v2.1 · Symbols, rings, date cards" (read them with the Artifact tool).
 
-- [ ] **3.1 Design tokens** · ~90 lines · D38
+- [x] **3.1 Design tokens** · ~90 lines · D38
   - A colour set in the asset catalog, in light and dark: canvas, surface, sunken, hairline, ink, ink secondary, ink tertiary, Juniper, amber and coral (text and fill shades), with the values in MASTER_PLAN Appendix D.
   - The eight category tones (Sand, Sage, Cocoa, Mist, Lilac, Butter, Rose, Stone), each a tint and an ink, in light and dark.
   - A type scale on the system text styles, so text follows the user's text size, plus SF Pro Rounded for amounts.
   - Two corner radii (14, 22, continuous), spacing in steps of 4, screen margins of 20, and one shadow. Today there are 7 radii and 3 accent colours.
   - *Done when:* a SwiftUI preview (not shipped) shows every token in light and dark mode, at default and largest text size.
+  - Built in 3.1: 29 colour sets in `Assets.xcassets/Tokens` (Appendix D's twelve, plus `hairlineInset` for dividers inside a surface, plus a tint and an ink for each tone), used through Xcode's generated symbols (`Color.canvas`, `.foregroundStyle(.inkSecondary)`). `Views/Design/Tokens.swift` holds `Radius`, `Space`, `.surfaceShadow()`, the `Font` styles, `.amountFont(size:)` (scales with text size) and `TonePair`. The board is `Views/Design/TokensPreview.swift` (DEBUG only, verbatim strings). It was checked by rendering it to PNG with `ImageRenderer` in a scratch build, and sampled pixels match Appendix D exactly. Notes for 3.3: at the largest text size the 60-point hero amount runs out of width, so the amount display needs `minimumScaleFactor`; a fixed 58-point symbol tile is too small for a scaled symbol.
 - [ ] **3.2 Components, part 1** · ~130 lines
   - Surface style, primary (ink) and secondary buttons, a sheet header with a labelled close button (replacing the three `Text("X")` buttons), a section header, and `MoneyText` sizes with the currency symbol at half size in ink tertiary.
   - A pressable button style that shrinks to 97% while held.
