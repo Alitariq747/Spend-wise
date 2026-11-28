@@ -220,6 +220,18 @@ The look is set by D38. MASTER_PLAN Appendix D holds every token value and the m
   - A pressable button style that shrinks to 97% while held.
   - Every icon-only button gets an accessibility label. Today the whole app has 2.
   - *Done when:* previews show each component in light mode, dark mode and large text.
+  - Split in three. The first estimate (~200 lines) was low: the components alone came to ~240 before the preview board.
+  - [x] **3.2a Buttons and sheet header** · ~160 lines
+    - New code only; no screen changes. `Views/Design/Buttons.swift`: a press effect (97% with a short spring, a slight fade under Reduce Motion), `.pressable`, `.primary` (ink fill) and `.secondary` (sunken fill) button styles, and `IconButton`, which takes a required title that VoiceOver speaks. `Views/Design/SheetHeader.swift`: close on the leading side (an xmark in a sunken circle, 44 points, spoken "Close"), an optional title, an optional trailing action.
+    - *Done when:* a DEBUG-only board shows each component in light mode, dark mode and the largest text size, rendered to PNG as in 3.1, and VoiceOver reads the close button as "Close".
+    - Built in 3.2a (178 lines): `.primary` and `.secondary` are one `FilledButtonStyle` (54 tall, radius 14; the canvas draws 16, but tokens allow only 14 and 22). `IconButton` is a `Label` with `.iconOnly`, so VoiceOver and the large content viewer get the title for free. Icons stay 16 points at every text size, as in the system nav bar. In `SheetHeader` the two sides take equal widths so the title stays centred, and at the largest text size it truncates rather than run into the trailing action. The board is `Views/Design/ComponentsPreview.swift`. Checked as PNG renders (light, dark, largest text) and in the simulator's accessibility tree: the close buttons read "Close", icon buttons their titles, and sheet titles are headings. The press shrink was not checked on screen: a held press can't be captured in the background.
+  - [ ] **3.2b Surface, section header, MoneyText** · ~140 lines
+    - `.surfaceStyle()` (radius 22, the one shadow in light mode, a hairline in dark mode) and `SectionHeader` (`.small` footnote label or `.large` title, an optional Juniper action on the trailing side).
+    - `MoneyText` gets an optional style. `.title` (28) and `.hero` (60) are rounded, with the symbol at half size in ink tertiary wherever the locale puts it, and shrink to fit at the largest text size (the 3.1 note). The default `.inline` is unchanged, so existing call sites don't move.
+    - *Done when:* the same board shows them in light mode, dark mode and the largest text size, with a symbol-first currency (PKR) and a symbol-last one (EUR in `de_DE`).
+  - [ ] **3.2c Wire in** · ~40 lines
+    - The three `Text("X")` sheets (expense detail, add card, edit card) use `SheetHeader`. Every icon-only button gets an accessibility label. The four sheets that already use an xmark get the "Close" label but keep their look until their screens are restyled.
+    - *Done when:* the simulator's accessibility tree shows no unlabelled button and no close button read as "X" on any screen, and the new strings are in the String Catalog.
 - [ ] **3.3 Components, part 2** · ~150 lines
   - A chip, a progress bar with close and over states and an optional even-pace mark, a progress ring around a category symbol, an empty state (one symbol, one sentence, one button), and a large amount display.
   - *Done when:* previews show each component in light mode, dark mode, large text and Arabic (right to left).
