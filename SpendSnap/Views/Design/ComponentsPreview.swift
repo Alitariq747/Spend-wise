@@ -39,6 +39,28 @@ struct ComponentsBoard: View {
                 .background(Color.sunken, in: .controlRect)
             }
             .buttonStyle(.pressable)
+
+            // 3.2b
+            SectionHeader(title: key("This month"), size: .large, actionTitle: key("See all"), action: {})
+            VStack(alignment: .leading, spacing: Space.s12) {
+                SectionHeader(title: key("Coming up"))
+                ForEach(["Rent", "Internet"], id: \.self) { name in
+                    HStack {
+                        Text(verbatim: name)
+                        Spacer()
+                        MoneyText(12_500, code: "PKR").foregroundStyle(Color.inkSecondary)
+                    }
+                }
+            }
+            .surfaceStyle()
+
+            VStack(alignment: .leading, spacing: Space.s8) {
+                MoneyText(12_450, code: "PKR", style: .hero)
+                MoneyText(1_280.5, code: "EUR", style: .hero)
+                MoneyText(12_345_678, code: "PKR", style: .hero)
+                MoneyText(8_000, code: "PKR", style: .title)
+                MoneyText(42.5, code: "EUR", style: .title)
+            }
         }
         .foregroundStyle(Color.ink)
         .padding(.horizontal, Space.margin)
